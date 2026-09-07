@@ -116,7 +116,7 @@ you can see exactly what is coming and open a pull request against any of it.
 | [Structuring](docs/04-structuring/README.md) | page types, linking rules, schema, contradictions | **written** |
 | [Graphs](docs/05-graphs/README.md) | what the graph is for, typed links, GraphRAG, metrics | **written** |
 | [Agents](docs/06-agents/README.md) | roles, schedules, hooks, guardrails | **written** |
-| [Retrieval](docs/07-retrieval/README.md) | query patterns, search, context budget | in progress |
+| [Retrieval](docs/07-retrieval/README.md) | query patterns, search, context budget | **written** |
 | [Outputs](docs/08-outputs/README.md) | writing, reports, publishing, learning | in progress |
 | [Maintenance](docs/09-maintenance/README.md) | linting, review cadence, git, privacy, scaling | in progress |
 | [Troubleshooting](docs/10-troubleshooting/README.md) | the failures everyone hits, with fixes | in progress |

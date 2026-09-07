@@ -246,31 +246,31 @@ Turning a one-off setup into a system that maintains itself.
   - Dry-run mode
   - Reviewing agent output in git diffs
 
-## Retrieval (outline)
+## Retrieval (done)
 
 How to actually ask your vault things and get answers worth trusting.
 
-- [ ] **Asking the vault**
+- [x] **Asking the vault**
   - Question shapes that work
   - Anchoring answers to pages and sources
   - Requiring citations from your own vault
   - What to do when the answer is not in there
-- [ ] **Query patterns**
+- [x] **Query patterns**
   - What do I know about X
   - What connects X and Y
   - What have I changed my mind about
   - What is missing from my understanding of X
-- [ ] **Search tools**
+- [x] **Search tools**
   - ripgrep as the default
   - Dataview queries
   - Full-text index options
   - When search is slow enough to matter
-- [ ] **Adding RAG when you need it**
+- [x] **Adding RAG when you need it**
   - The size threshold where it starts to pay
   - Chunking a wiki that is already chunked
   - Keeping the index fresh
   - Hybrid: graph for structure, vectors for recall
-- [ ] **Context budget**
+- [x] **Context budget**
   - Why you should not paste the whole vault
   - Progressive disclosure: index first, pages second
   - Summary layers
