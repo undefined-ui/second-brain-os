@@ -1,0 +1,9 @@
+.DS_Store
+.obsidian/workspace*
+.obsidian/cache
+*.pyc
+__pycache__/
+.venv/
+node_modules/
+*.graphml
+*.csv
