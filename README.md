@@ -99,27 +99,22 @@ them separate matters more than it sounds.
 
 ## The guide
 
-[Setup](docs/02-setup/README.md) is written in full: Obsidian, Claude Code,
-`CLAUDE.md`, MCP, the two-layer vault structure, project scoping, live data
-connectors, git. That plus the vault template, skills and scripts in this repo
-is everything you need to have the system running tonight.
+Ten sections, 77 pages, written to be followed rather than skimmed. From the
+concept through setup, capture, structure, the graph, automation, retrieval,
+publishing, and what to do when each of them breaks.
 
-The remaining sections are being written one at a time. The
-[roadmap](docs/ROADMAP.md) lists every planned page and what it will cover, so
-you can see exactly what is coming and open a pull request against any of it.
-
-| Section | What it covers | Status |
-|---|---|---|
-| [Concepts](docs/01-concepts/README.md) | what the pattern is and why the old note systems died | partial |
-| [Setup](docs/02-setup/README.md) | Obsidian, Claude Code, `CLAUDE.md`, MCP, projects, git | **written** |
-| [Ingestion](docs/03-ingestion/README.md) | articles, video, PDFs, chat exports, voice, backfilling | **written** |
-| [Structuring](docs/04-structuring/README.md) | page types, linking rules, schema, contradictions | **written** |
-| [Graphs](docs/05-graphs/README.md) | what the graph is for, typed links, GraphRAG, metrics | **written** |
-| [Agents](docs/06-agents/README.md) | roles, schedules, hooks, guardrails | **written** |
-| [Retrieval](docs/07-retrieval/README.md) | query patterns, search, context budget | **written** |
-| [Outputs](docs/08-outputs/README.md) | writing, reports, publishing, learning | in progress |
-| [Maintenance](docs/09-maintenance/README.md) | linting, review cadence, git, privacy, scaling | in progress |
-| [Troubleshooting](docs/10-troubleshooting/README.md) | the failures everyone hits, with fixes | in progress |
+| Section | What it covers |
+|---|---|
+| [Concepts](docs/01-concepts/README.md) | what the pattern is and why the old note systems died|
+| [Setup](docs/02-setup/README.md) | Obsidian, Claude Code, `CLAUDE.md`, MCP, projects, git|
+| [Ingestion](docs/03-ingestion/README.md) | articles, video, PDFs, chat exports, voice, backfilling|
+| [Structuring](docs/04-structuring/README.md) | page types, linking rules, schema, contradictions|
+| [Graphs](docs/05-graphs/README.md) | what the graph is for, typed links, GraphRAG, metrics|
+| [Agents](docs/06-agents/README.md) | roles, schedules, hooks, guardrails|
+| [Retrieval](docs/07-retrieval/README.md) | query patterns, search, context budget|
+| [Outputs](docs/08-outputs/README.md) | writing, reports, publishing, learning|
+| [Maintenance](docs/09-maintenance/README.md) | linting, review cadence, git, privacy, scaling|
+| [Troubleshooting](docs/10-troubleshooting/README.md) | the failures everyone hits, with fixes|
 
 ## Design decisions
 

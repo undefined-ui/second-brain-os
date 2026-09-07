@@ -2,15 +2,16 @@
 
 Concrete failures, with fixes.
 
-## Planned
+Every one of these is common. If your vault is doing something on this list, it
+is not because you set it up wrong in some unrecoverable way.
 
-Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+## Pages
 
-- The failures everyone hits
-- The agent writes garbage
-- Broken links and orphans
-- The vault got too big
-- FAQ
+- [The failures everyone hits](common-failures.md)
+- [The agent writes garbage](agent-writes-garbage.md)
+- [Broken links and orphans](broken-links.md)
+- [The vault got too big](vault-too-big.md)
+- [FAQ](faq.md)
 
 ---
 

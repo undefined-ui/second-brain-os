@@ -1,52 +1,52 @@
 # Roadmap
 
-What each planned page will cover. Sections marked done are written in full; the rest are outlines.
+Every section is written. This page stays as a map of what each page covers, and as the place to propose new ones.
 
 Pull requests against any outline are welcome. Read [CONTRIBUTING.md](../CONTRIBUTING.md) first: every factual claim needs a primary source.
 
 ---
 
-## Concepts (1 of 7 written)
+## Concepts (done)
 
 Why an LLM-maintained knowledge base beats the note system you abandoned, and what the pattern actually is.
 
-- [ ] **What a second brain actually is**
+- [x] **What a second brain actually is**
   - The definition that matters here: one local, plain-text place your agent can read and write
   - What it is not: a prettier Notion, a chatbot with your PDFs attached
   - The three jobs it does: capture, connect, answer
   - The compounding effect and why it only shows up after ~50 sources
-- [ ] **The save-for-later paradox**
+- [x] **The save-for-later paradox**
   - Why you save things you never reopen
   - Cost of retrieval vs cost of capture
   - Where bookmarks, read-later apps and screenshots break down
   - What changes when something else does the filing
-- [ ] **The LLM wiki pattern**
+- [x] **The LLM wiki pattern**
   - Karpathy's llm-wiki gist (published April 4, 2026) and what it specifies
   - Compilation over summarization: the wiki is primary, raw sources are the archive
   - Ingest, lint, query as the three operations
   - Where the gist stops and implementation begins
-- [ ] **Why markdown and plain text**
+- [x] **Why markdown and plain text**
   - Agents read and write files better than they drive APIs
   - Portability: no lock-in, no export step, git-friendly
   - Wikilinks as a graph format that survives any tool
   - Limits of plain text and when to add a database
-- [ ] **Zettelkasten, PARA, evergreen notes**
+- [x] **Zettelkasten, PARA, evergreen notes**
   - What each system got right and what it demanded from you
   - Why maintenance load is the thing that kills note systems
   - Which parts of the old methods still apply
   - What the LLM removes from the workload and what it does not
-- [ ] **Wiki vs RAG**
+- [x] **Wiki vs RAG**
   - Why a personal corpus rarely needs a vector database
   - Retrieval quality: structured pages vs chunk similarity
   - Cost, latency and debuggability compared
   - When RAG genuinely earns its place
-- [ ] **What good looks like**
+- [x] **What good looks like**
   - Concrete success criteria for a working vault
   - Health signals: orphan rate, link density, page freshness
   - Failure signals you should catch early
   - A realistic timeline for the first month
 
-## Setup (9 of 7 written)
+## Setup (done)
 
 From zero to a vault your agent maintains, in one evening.
 
@@ -276,91 +276,91 @@ How to actually ask your vault things and get answers worth trusting.
   - Summary layers
   - Measuring what the agent actually read
 
-## Outputs (outline)
+## Outputs (done)
 
 The vault earns its keep when things come out of it.
 
-- [ ] **Writing from the vault**
+- [x] **Writing from the vault**
   - Outlining from concept pages
   - Keeping citations to your own sources
   - Voice: your notes, not the model's
   - Publishing loop back into the vault
-- [ ] **Research reports**
+- [x] **Research reports**
   - Scoping a question against existing pages
   - Filling gaps with new ingestion
   - Report structure that survives review
   - Storing outputs so they become sources
-- [ ] **Publishing and export**
+- [x] **Publishing and export**
   - Static site options for a public wiki
   - Deciding what stays private
   - HTML and PDF export
   - Keeping public and private in one vault
-- [ ] **Learning from your own vault**
+- [x] **Learning from your own vault**
   - Generating questions from concept pages
   - Spaced repetition against your notes
   - Finding what you saved but never understood
   - Measuring learning instead of collecting
 
-## Maintenance (outline)
+## Maintenance (done)
 
 What keeps the thing alive after the novelty wears off.
 
-- [ ] **Linting the vault**
+- [x] **Linting the vault**
   - Broken links, orphan pages, empty stubs
   - Schema violations
   - Automating the lint run
   - Reading a lint report
-- [ ] **Review cadence**
+- [x] **Review cadence**
   - Weekly review that takes ten minutes
   - Monthly structural review
   - What to prune and what to archive
   - Reviews that the agent prepares for you
-- [ ] **Versioning**
+- [x] **Versioning**
   - Commit granularity for agent runs
   - Reading diffs of generated pages
   - Reverting a bad ingest
   - Branching for experiments
-- [ ] **Backups and portability**
+- [x] **Backups and portability**
   - Local, cloud and offline copies
   - Testing a restore
   - Moving to another editor or agent
   - Avoiding formats that trap you
-- [ ] **Privacy**
+- [x] **Privacy**
   - Deciding what never enters the vault
   - Redaction before ingest
   - Local models for sensitive material
   - Sharing a vault safely
-- [ ] **Scaling past a thousand pages**
+- [x] **Scaling past a thousand pages**
   - Where the plain-text approach strains
   - Splitting vaults by domain
   - Summary layers and hierarchical indexes
   - Performance tuning
 
-## Troubleshooting (outline)
+## Troubleshooting (done)
 
 Concrete failures, with fixes.
 
-- [ ] **The failures everyone hits**
+- [x] **The failures everyone hits**
   - Vault stalls after two weeks
   - Pages that are summaries of summaries
   - The agent rewrites work you did by hand
   - Ingest quality drops as the vault grows
-- [ ] **The agent writes garbage**
+- [x] **The agent writes garbage**
   - Diagnosing whether it is CLAUDE.md or the source
   - Tightening page contracts
   - Adding examples instead of adding rules
   - Rolling back and re-running
-- [ ] **Broken links and orphans**
+- [x] **Broken links and orphans**
   - Why renames break wikilinks
   - Bulk fixing safely
   - Preventing orphans at ingest time
   - Auditing after a big import
-- [ ] **The vault got too big**
+- [x] **The vault got too big**
   - Symptoms
   - Splitting vs summarizing
   - Archiving cold material
   - Rebuilding the index
-- [ ] **FAQ**
+- [x] **FAQ**
   - Do I need MCP
   - Does this work with other agents
   - How much does it cost to run

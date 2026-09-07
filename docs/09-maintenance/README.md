@@ -2,16 +2,18 @@
 
 What keeps the thing alive after the novelty wears off.
 
-## Planned
+Month one is easy because it is new. The vault that still works in year two is
+the one where maintenance is automated, cheap, and produces something you
+actually read.
 
-Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+## Pages
 
-- Linting the vault
-- Review cadence
-- Versioning
-- Backups and portability
-- Privacy
-- Scaling past a thousand pages
+- [Linting the vault](lint-and-health.md)
+- [Review cadence](review-cadence.md)
+- [Versioning](versioning-with-git.md)
+- [Backups and portability](backups-and-portability.md)
+- [Privacy](privacy-and-secrets.md)
+- [Scaling past a thousand pages](scaling.md)
 
 ---
 
