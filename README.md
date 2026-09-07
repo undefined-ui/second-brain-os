@@ -154,101 +154,67 @@ you keep the folder and everything in it.
 
 The source document, and the research behind the design decisions in this guide.
 
-**[Karpathy's llm-wiki gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)**
-(4 April 2026). The pattern everything here builds on. Short, written as an idea
-file to paste into your own agent rather than as a spec. Read it first.
+| Source | What it gives you |
+|---|---|
+| **[Karpathy's llm-wiki gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)** (4 Apr 2026) | The pattern everything here builds on. Short, written as an idea file to paste into your agent rather than as a spec. Read it first. |
+| **[From Local to Global: GraphRAG](https://arxiv.org/abs/2404.16130)** arXiv:2404.16130 | Why chunk retrieval fails on questions about a whole corpus, which is exactly what people want from a second brain. Code: [microsoft/graphrag](https://github.com/microsoft/graphrag). |
+| **[HippoRAG](https://arxiv.org/abs/2405.14831)** arXiv:2405.14831 | Graph retrieval with personalised PageRank for multi-hop questions. The closest published analogue of an agent walking links outward. |
+| **[Lost in the Middle](https://arxiv.org/abs/2307.03172)** arXiv:2307.03172, TACL | The empirical reason not to paste your whole vault into context, and the basis for the [context budget](docs/07-retrieval/context-budget.md) rules. |
+| **[Andy Matuschak's notes](https://notes.andymatuschak.org)** | Evergreen notes, written in public. Also the strongest argument against this approach: if the writing is the thinking, delegating it means not doing it. |
+| **How to Take Smart Notes** (Ahrens) | Zettelkasten. Atomic notes and dense linking still hold; the manual labour is what killed it for most people. |
+| **Building a Second Brain** (Forte) | Where the term comes from, and PARA. Most of the book is about maintenance work an agent removes. |
 
-**[From Local to Global: A Graph RAG Approach to Query-Focused
-Summarization](https://arxiv.org/abs/2404.16130)** (arXiv:2404.16130, Microsoft
-Research). Why chunk retrieval fails on questions about a whole corpus, which is
-exactly what people want from a second brain. Code:
-[microsoft/graphrag](https://github.com/microsoft/graphrag).
-
-**[HippoRAG: Neurobiologically Inspired Long-Term Memory for
-LLMs](https://arxiv.org/abs/2405.14831)** (arXiv:2405.14831). Graph retrieval
-with personalised PageRank for multi-hop questions. The closest published
-analogue of an agent walking links outward from a page.
-
-**[Lost in the Middle: How Language Models Use Long
-Contexts](https://arxiv.org/abs/2307.03172)** (arXiv:2307.03172, TACL). The
-empirical reason not to paste your whole vault into context, and the basis for
-the [context budget](docs/07-retrieval/context-budget.md) rules here.
-
-**[Andy Matuschak's notes](https://notes.andymatuschak.org)**. Evergreen notes,
-written in public. Also the strongest argument against this whole approach: if
-the writing is the thinking, delegating it means not doing it.
-
-Plus **How to Take Smart Notes** (Ahrens) and **Building a Second Brain**
-(Forte), both written before agents existed, which is what makes them worth
-reading now. Full list with notes: [resources/reading.md](resources/reading.md)
-and [resources/papers.md](resources/papers.md).
+Full notes: [reading.md](resources/reading.md) and [papers.md](resources/papers.md).
 
 ## Tools
 
-**Core stack.** [Obsidian](https://obsidian.md) for storage,
-[Web Clipper](https://obsidian.md/clipper) for capture,
-[Claude Code](https://code.claude.com/docs/en/setup) for maintenance.
+| Category | Tool | What it does |
+|---|---|---|
+| Core | [Obsidian](https://obsidian.md) | Local markdown editor. The vault is a plain folder |
+| Core | [Web Clipper](https://obsidian.md/clipper) | Official extension, saves articles into `raw/` |
+| Core | [Claude Code](https://code.claude.com/docs/en/setup) | The agent that maintains the wiki. Paid plan required |
+| Plugin | [Dataview](https://github.com/blacksmithgu/obsidian-dataview) | Queries over frontmatter. Answers "which pages have property P" |
+| Plugin | [Templater](https://github.com/SilentVoid13/Templater) | Templates for pages you write by hand |
+| Plugin | [Local REST API](https://github.com/coddingtonbear/obsidian-local-rest-api) | Vault over a local API. Now ships a built-in MCP server, so a separate one is often unnecessary |
+| MCP | [mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) | The widely documented third-party server. See [MCP for Obsidian](docs/02-setup/mcp-obsidian.md) |
+| Capture | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Subtitles and audio from video platforms |
+| Capture | [youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api) | Transcripts from Python |
+| Capture | [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) | Text layer for scanned PDFs |
+| Capture | [Zotero](https://www.zotero.org) | Reference manager with markdown export |
+| Graph | [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast enough that most vaults never need an index |
+| Graph | [NetworkX](https://networkx.org) | Graph analysis once you have exported an edge list |
+| Graph | [Kuzu](https://kuzudb.com) | Embedded graph database, no server |
+| Graph | [Gephi](https://gephi.org) | Visual graph exploration beyond Obsidian's view |
 
-**Plugins.** [Dataview](https://github.com/blacksmithgu/obsidian-dataview) for
-queries over frontmatter,
-[Templater](https://github.com/SilentVoid13/Templater) for pages you write by
-hand, and
-[Local REST API](https://github.com/coddingtonbear/obsidian-local-rest-api) if
-you want MCP access. That plugin now ships a built-in MCP server, so a separate
-one is often unnecessary; see [MCP for Obsidian](docs/02-setup/mcp-obsidian.md).
-
-**Capture and processing.** [yt-dlp](https://github.com/yt-dlp/yt-dlp),
-[youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api),
-[OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF),
-[Zotero](https://www.zotero.org).
-
-**Graph and search.** [ripgrep](https://github.com/BurntSushi/ripgrep),
-[NetworkX](https://networkx.org), [Kuzu](https://kuzudb.com),
-[Gephi](https://gephi.org).
-
-Full list, including alternatives to Obsidian:
-[resources/tools.md](resources/tools.md).
+Full list, including alternatives to Obsidian: [tools.md](resources/tools.md).
 
 ## Other implementations
 
 Worth reading before writing your own page contracts.
 
-- **[Astro-Han/karpathy-llm-wiki](https://github.com/Astro-Han/karpathy-llm-wiki)**.
-  The pattern as one installable skill for Claude Code, Cursor and Codex.
-  Its list of what the author deliberately did not build is the most useful part.
-- **[micuintus/llm-wiki](https://github.com/micuintus/llm-wiki)**. Deliberately
-  minimal, convention-based rather than code-enforced. Good counterpoint.
-- **[NicholasSpisak/second-brain](https://github.com/NicholasSpisak/second-brain)**.
-  Four skills installable through npm, close to the original gist.
-- **[eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain)**.
-  Around 43 commands, works across Claude, Codex and Gemini.
+| Repo | What it is |
+|---|---|
+| [Astro-Han/karpathy-llm-wiki](https://github.com/Astro-Han/karpathy-llm-wiki) | The pattern as one installable skill for Claude Code, Cursor and Codex. Its list of what the author deliberately did not build is the most useful part |
+| [micuintus/llm-wiki](https://github.com/micuintus/llm-wiki) | Deliberately minimal, convention-based rather than code-enforced. Good counterpoint |
+| [NicholasSpisak/second-brain](https://github.com/NicholasSpisak/second-brain) | Four skills installable through npm, close to the original gist |
+| [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain) | Around 43 commands, works across Claude, Codex and Gemini |
 
-More context on each: [resources/skills.md](resources/skills.md).
+More context on each: [skills.md](resources/skills.md).
 
 ## Graph and publishing repos
 
-Beyond implementations of the pattern itself.
+| Purpose | Repo | What it adds |
+|---|---|---|
+| Graph view | [Juggl](https://github.com/HEmile/juggl) | Interactive workspace graph on Cytoscape.js, typed edges, expand and pin nodes |
+| Graph view | [ExcaliBrain](https://github.com/zsviczian/excalibrain) | Structured mind-map deriving five relationship types from links and Dataview fields |
+| Graph view | [Breadcrumbs](https://github.com/michaelpporter/breadcrumbs) | Typed links plus trees, matrices, Mermaid and Canvas export |
+| GraphRAG | [microsoft/graphrag](https://github.com/microsoft/graphrag) | The reference implementation of the paper |
+| GraphRAG | [nano-graphrag](https://github.com/gusye1234/nano-graphrag) | The same idea in about 1,100 readable lines. Open this one to understand the pipeline |
+| GraphRAG | [LightRAG](https://github.com/HKUDS/LightRAG) | Adds a vector layer for cheaper incremental updates |
+| GraphRAG | [Awesome-GraphRAG](https://github.com/DEEP-PolyU/Awesome-GraphRAG) | Curated map of the rest of the landscape |
+| Publishing | [Quartz](https://github.com/jackyzha0/quartz) | Vault to static site with backlinks, local graph and search |
 
-**Graph views for Obsidian.** [Juggl](https://github.com/HEmile/juggl) for an
-interactive workspace graph with typed edges,
-[ExcaliBrain](https://github.com/zsviczian/excalibrain) for a structured
-mind-map derived from your links and Dataview fields, and
-[Breadcrumbs](https://github.com/michaelpporter/breadcrumbs) for typed links plus
-trees, matrices and Mermaid views over them.
-
-**GraphRAG.** [microsoft/graphrag](https://github.com/microsoft/graphrag) is the
-reference implementation;
-[nano-graphrag](https://github.com/gusye1234/nano-graphrag) is the same idea in
-about 1,100 readable lines; [LightRAG](https://github.com/HKUDS/LightRAG) adds a
-vector layer for cheaper incremental updates.
-[Awesome-GraphRAG](https://github.com/DEEP-PolyU/Awesome-GraphRAG) covers the
-rest of the landscape.
-
-**Publishing.** [Quartz](https://github.com/jackyzha0/quartz) turns a vault into
-a static site with backlinks, local graph and search.
-
-Notes on each, and how to judge a repo in this ecosystem:
-[resources/repositories.md](resources/repositories.md).
+Notes on each, and how to judge a repo in this ecosystem: [repositories.md](resources/repositories.md).
 
 ## Contributing
 
