@@ -211,36 +211,36 @@ The part most second-brain guides skip: what the graph is for and how to make it
   - Clusters as evidence of your real interests
   - Tracking metrics over time
 
-## Agents (outline)
+## Agents (done)
 
 Turning a one-off setup into a system that maintains itself.
 
-- [ ] **Agent roles**
+- [x] **Agent roles**
   - Ingestor, linker, reviewer, researcher
   - One job per agent and why
   - Handoffs between agents
   - Roles that are not worth automating
-- [ ] **Scheduling**
+- [x] **Scheduling**
   - Cadence per job: hourly, daily, weekly
   - Scheduled tasks, cron and CI options
   - What a run should produce
   - Detecting silent failures
-- [ ] **Subagents and parallel work**
+- [x] **Subagents and parallel work**
   - When to fan out
   - Context isolation between subagents
   - Merging parallel edits without conflicts
   - Cost of parallelism
-- [ ] **Hooks**
+- [x] **Hooks**
   - Triggering on file changes in raw/
   - Pre-write validation
   - Post-run linting
   - Keeping hooks fast
-- [ ] **Skills and slash commands**
+- [x] **Skills and slash commands**
   - Skills for repeated behavior, commands for repeated tasks
   - Where to store them so any agent can use them
   - Versioning your skills alongside the vault
   - Testing a skill before trusting it with the vault
-- [ ] **Guardrails**
+- [x] **Guardrails**
   - Never let an agent delete without a log entry
   - Write scopes: which folders are off limits
   - Dry-run mode
