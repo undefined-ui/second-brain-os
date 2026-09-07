@@ -6,6 +6,8 @@ that exists only in secondary coverage is marked as such.
 - [Tools](tools.md). Editors, capture, agents, graph and search
 - [Skills and implementations](skills.md). Agent skills and open-source builds
   of this pattern
+- [Repositories](repositories.md). Graph plugins, GraphRAG implementations,
+  publishing
 - [Reading](reading.md). The ideas behind the pattern
 - [Papers](papers.md). Retrieval, graphs and long-context research
 

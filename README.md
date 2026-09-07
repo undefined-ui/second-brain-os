@@ -225,6 +225,31 @@ Worth reading before writing your own page contracts.
 
 More context on each: [resources/skills.md](resources/skills.md).
 
+## Graph and publishing repos
+
+Beyond implementations of the pattern itself.
+
+**Graph views for Obsidian.** [Juggl](https://github.com/HEmile/juggl) for an
+interactive workspace graph with typed edges,
+[ExcaliBrain](https://github.com/zsviczian/excalibrain) for a structured
+mind-map derived from your links and Dataview fields, and
+[Breadcrumbs](https://github.com/michaelpporter/breadcrumbs) for typed links plus
+trees, matrices and Mermaid views over them.
+
+**GraphRAG.** [microsoft/graphrag](https://github.com/microsoft/graphrag) is the
+reference implementation;
+[nano-graphrag](https://github.com/gusye1234/nano-graphrag) is the same idea in
+about 1,100 readable lines; [LightRAG](https://github.com/HKUDS/LightRAG) adds a
+vector layer for cheaper incremental updates.
+[Awesome-GraphRAG](https://github.com/DEEP-PolyU/Awesome-GraphRAG) covers the
+rest of the landscape.
+
+**Publishing.** [Quartz](https://github.com/jackyzha0/quartz) turns a vault into
+a static site with backlinks, local graph and search.
+
+Notes on each, and how to judge a repo in this ecosystem:
+[resources/repositories.md](resources/repositories.md).
+
 ## Contributing
 
 Corrections, resources and real examples are welcome. Read
