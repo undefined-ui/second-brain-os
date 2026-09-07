@@ -126,46 +126,46 @@ Getting everything you read, watch and write into raw/ with as little friction a
   - Cost control on large imports
   - Checkpoints and resuming
 
-## Structuring (outline)
+## Structuring (done)
 
 The rules that decide whether your vault becomes a graph or a landfill.
 
-- [ ] **One page, one idea**
+- [x] **One page, one idea**
   - What atomic means in practice
   - Splitting a source into concepts
   - How long a page should be
   - When to merge instead of split
-- [ ] **The four page types**
+- [x] **The four page types**
   - Sources: one page per ingested item
   - Entities: people, orgs, products, tools
   - Concepts: ideas, frameworks, methods
   - Synthesis: comparisons, themes, open questions
-- [ ] **Linking rules**
+- [x] **Linking rules**
   - Link on first mention, every page type
   - Minimum and maximum links per page
   - Links as claims, not decoration
   - Preventing hub pages from swallowing the graph
-- [ ] **Frontmatter schema**
+- [x] **Frontmatter schema**
   - Required fields per page type
   - Dates, source URLs, confidence
   - Tags: a small controlled vocabulary
   - Keeping the schema stable as the vault grows
-- [ ] **Naming and aliases**
+- [x] **Naming and aliases**
   - Canonical titles and why they matter for wikilinks
   - Aliases for acronyms and alternate names
   - Disambiguating two things with the same name
   - Renaming without breaking links
-- [ ] **Deduplication and merging**
+- [x] **Deduplication and merging**
   - Detecting near-duplicate pages
   - Merge procedure that preserves backlinks
   - Redirect stubs
   - Scheduling dedupe rather than doing it live
-- [ ] **Contradictions and supersession**
+- [x] **Contradictions and supersession**
   - Two sources disagree: what the page should say
   - Marking superseded claims instead of deleting them
   - Confidence and provenance fields
   - Why silent overwrites are the worst failure mode
-- [ ] **index.md and log.md**
+- [x] **index.md and log.md**
   - The index as a navigable catalog, not a dump
   - What the agent must record in the log
   - Using the log to audit and roll back
