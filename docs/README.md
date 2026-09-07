@@ -8,7 +8,7 @@ Setup is written in full. The rest is being written section by section; see the 
 |---|---|---|
 | [Concepts](01-concepts/README.md) | what the pattern is and why the old note systems died | partial |
 | [Setup](02-setup/README.md) | Obsidian, Claude Code, CLAUDE.md, MCP, projects, git | **written** |
-| [Ingestion](03-ingestion/README.md) | articles, video, PDFs, chat exports, voice, backfilling | in progress |
+| [Ingestion](03-ingestion/README.md) | articles, video, PDFs, chat exports, voice, backfilling | **written** |
 | [Structuring](04-structuring/README.md) | page types, linking rules, schema, contradictions | in progress |
 | [Graphs](05-graphs/README.md) | what the graph is for, typed links, GraphRAG, metrics | in progress |
 | [Agents](06-agents/README.md) | roles, schedules, hooks, guardrails | in progress |

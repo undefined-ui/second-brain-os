@@ -86,41 +86,41 @@ From zero to a vault your agent maintains, in one evening.
   - Sync options across machines
   - Recovering from a bad agent run
 
-## Ingestion (outline)
+## Ingestion (done)
 
 Getting everything you read, watch and write into raw/ with as little friction as possible.
 
-- [ ] **Web articles**
+- [x] **Web articles**
   - Obsidian Web Clipper setup and templates
   - Clipping to raw/ with consistent frontmatter
   - Paywalls, newsletters and dynamic pages
   - What to clip and what to skip
-- [ ] **YouTube and podcasts**
+- [x] **YouTube and podcasts**
   - Pulling transcripts reliably
   - Timestamps and why to keep them
   - Long videos: chunking before ingest
   - Audio-only sources and transcription options
-- [ ] **PDFs, papers and books**
+- [x] **PDFs, papers and books**
   - Text extraction that preserves structure
   - Scanned documents and OCR
   - Highlights from ebook readers
   - Handling papers with figures and tables
-- [ ] **Chat exports**
+- [x] **Chat exports**
   - Exporting Claude and ChatGPT history
   - Converting a JSON export into per-conversation markdown
   - Filtering noise: which conversations are worth ingesting
   - Privacy pass before anything enters the vault
-- [ ] **Voice notes and meetings**
+- [x] **Voice notes and meetings**
   - Capture on mobile
   - Transcription pipeline
   - Turning a meeting into decisions and entities
   - Keeping personal audio out of shared vaults
-- [ ] **Newsletters and email**
+- [x] **Newsletters and email**
   - A dedicated capture address
   - Automated forwarding into raw/
   - Deduplicating recurring newsletters
   - When email is not worth ingesting
-- [ ] **Backfilling years of material**
+- [x] **Backfilling years of material**
   - Ordering the backfill so early pages do not get overwritten
   - Batching: how many sources per run
   - Cost control on large imports
