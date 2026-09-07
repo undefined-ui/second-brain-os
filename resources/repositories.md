@@ -26,6 +26,38 @@ replace it when you want the graph to do work.
   links, tags, lists, folder notes and Dataview queries, and derives implied
   relations. Maintained by michaelpporter since May 2026, originally by
   SkepticMystic.
+- **[SkepticMystic/graph-analysis](https://github.com/SkepticMystic/graph-analysis)**.
+  Runs actual graph algorithms over your vault, including similarity measures
+  like Adamic Adar, to surface connections you never linked. The closest thing to
+  the [metrics](../docs/05-graphs/metrics.md) page without leaving Obsidian.
+- **[AlexW00/obsidian-3d-graph](https://github.com/AlexW00/obsidian-3d-graph)**.
+  The vault as a 3D force graph, built on D3 and 3d-force-graph. Genuinely useful
+  for spotting cluster structure that a 2D hairball hides, and the source of most
+  good vault screenshots. The actively maintained fork is published as "3D Graph
+  New".
+- **[brianpetro/obsidian-smart-connections](https://github.com/brianpetro/obsidian-smart-connections)**.
+  Semantic similarity between notes using a local embedding model, no API key,
+  shown as a graph and a list while you write. This is the embeddings side of
+  [graph vs embeddings](../docs/05-graphs/graph-vs-vectors.md) in the one place
+  it clearly earns its keep: suggesting links you have not made yet.
+
+## Building a graph from your own material
+
+- **[Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)**. A
+  `/graphify` skill for Claude Code, Cursor, Codex and Gemini CLI that reads a
+  folder and builds a queryable knowledge graph from it. Local deterministic AST
+  parsing for code, and multimodal extraction for docs, PDFs, screenshots and
+  diagrams. No vector store, and every edge is labelled as extracted or inferred,
+  which is the same honesty about provenance this guide asks of page contracts.
+
+  Directly relevant here: it was built around the problem of a `raw/` folder full
+  of papers, screenshots and notes, which is exactly the folder this pattern
+  creates. Output includes an interactive `graph.html` and an Obsidian-openable
+  vault. The project reports large token savings versus reading raw files; that
+  figure is self-reported and depends heavily on corpus size.
+
+  Originally by Safi Shamsi. Several widely linked repos named `graphify` are
+  forks of it.
 
 ## GraphRAG implementations
 

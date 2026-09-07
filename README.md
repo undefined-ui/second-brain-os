@@ -208,6 +208,10 @@ More context on each: [skills.md](resources/skills.md).
 | Graph view | [Juggl](https://github.com/HEmile/juggl) | Interactive workspace graph on Cytoscape.js, typed edges, expand and pin nodes |
 | Graph view | [ExcaliBrain](https://github.com/zsviczian/excalibrain) | Structured mind-map deriving five relationship types from links and Dataview fields |
 | Graph view | [Breadcrumbs](https://github.com/michaelpporter/breadcrumbs) | Typed links plus trees, matrices, Mermaid and Canvas export |
+| Graph view | [Graph Analysis](https://github.com/SkepticMystic/graph-analysis) | Graph algorithms and similarity measures over your vault, surfaces unlinked connections |
+| Graph view | [3D Graph](https://github.com/AlexW00/obsidian-3d-graph) | The vault as a 3D force graph. Shows cluster structure a 2D hairball hides |
+| Linking | [Smart Connections](https://github.com/brianpetro/obsidian-smart-connections) | Local embedding model suggests related notes while you write. No API key |
+| Build a graph | [Graphify](https://github.com/Graphify-Labs/graphify) | `/graphify` skill for Claude Code and others. Turns a folder of code, docs, PDFs and screenshots into a queryable graph. Every edge labelled extracted or inferred |
 | GraphRAG | [microsoft/graphrag](https://github.com/microsoft/graphrag) | The reference implementation of the paper |
 | GraphRAG | [nano-graphrag](https://github.com/gusye1234/nano-graphrag) | The same idea in about 1,100 readable lines. Open this one to understand the pipeline |
 | GraphRAG | [LightRAG](https://github.com/HKUDS/LightRAG) | Adds a vector layer for cheaper incremental updates |
