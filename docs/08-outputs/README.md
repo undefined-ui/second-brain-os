@@ -2,12 +2,14 @@
 
 The vault earns its keep when things come out of it.
 
-## Pages
+## Planned
 
-- [Writing from the vault](writing-from-the-vault.md)
-- [Research reports](research-reports.md)
-- [Publishing and export](publishing-and-export.md)
-- [Learning from your own vault](teaching-yourself.md)
+Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+
+- Writing from the vault
+- Research reports
+- Publishing and export
+- Learning from your own vault
 
 ---
 

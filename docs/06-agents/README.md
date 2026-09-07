@@ -2,14 +2,16 @@
 
 Turning a one-off setup into a system that maintains itself.
 
-## Pages
+## Planned
 
-- [Agent roles](agent-roles.md)
-- [Scheduling](scheduled-maintenance.md)
-- [Subagents and parallel work](subagents.md)
-- [Hooks](hooks.md)
-- [Skills and slash commands](skills-and-commands.md)
-- [Guardrails](safety-and-guardrails.md)
+Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+
+- Agent roles
+- Scheduling
+- Subagents and parallel work
+- Hooks
+- Skills and slash commands
+- Guardrails
 
 ---
 

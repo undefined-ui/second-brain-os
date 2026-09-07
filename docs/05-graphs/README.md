@@ -2,15 +2,17 @@
 
 The part most second-brain guides skip: what the graph is for and how to make it do work.
 
-## Pages
+## Planned
 
-- [Graph basics for a knowledge base](graph-basics.md)
-- [Reading the Obsidian graph view](obsidian-graph-view.md)
-- [Typed links](typed-links.md)
-- [Graph vs embeddings](graph-vs-vectors.md)
-- [GraphRAG and where it fits](graphrag.md)
-- [Exporting the graph](exporting-your-graph.md)
-- [Graph metrics worth tracking](metrics.md)
+Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+
+- Graph basics for a knowledge base
+- Reading the Obsidian graph view
+- Typed links
+- Graph vs embeddings
+- GraphRAG and where it fits
+- Exporting the graph
+- Graph metrics worth tracking
 
 ---
 

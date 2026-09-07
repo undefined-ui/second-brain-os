@@ -2,13 +2,15 @@
 
 How to actually ask your vault things and get answers worth trusting.
 
-## Pages
+## Planned
 
-- [Asking the vault](asking-questions.md)
-- [Query patterns](query-patterns.md)
-- [Search tools](search-tools.md)
-- [Adding RAG when you need it](rag-on-top.md)
-- [Context budget](context-budget.md)
+Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+
+- Asking the vault
+- Query patterns
+- Search tools
+- Adding RAG when you need it
+- Context budget
 
 ---
 

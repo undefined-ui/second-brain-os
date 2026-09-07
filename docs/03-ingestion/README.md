@@ -2,15 +2,17 @@
 
 Getting everything you read, watch and write into raw/ with as little friction as possible.
 
-## Pages
+## Planned
 
-- [Web articles](web-clipper.md)
-- [YouTube and podcasts](youtube-transcripts.md)
-- [PDFs, papers and books](pdfs-and-books.md)
-- [Chat exports](chat-exports.md)
-- [Voice notes and meetings](voice-and-meetings.md)
-- [Newsletters and email](newsletters-and-email.md)
-- [Backfilling years of material](bulk-backfill.md)
+Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+
+- Web articles
+- YouTube and podcasts
+- PDFs, papers and books
+- Chat exports
+- Voice notes and meetings
+- Newsletters and email
+- Backfilling years of material
 
 ---
 

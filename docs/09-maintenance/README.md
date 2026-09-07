@@ -2,14 +2,16 @@
 
 What keeps the thing alive after the novelty wears off.
 
-## Pages
+## Planned
 
-- [Linting the vault](lint-and-health.md)
-- [Review cadence](review-cadence.md)
-- [Versioning](versioning-with-git.md)
-- [Backups and portability](backups-and-portability.md)
-- [Privacy](privacy-and-secrets.md)
-- [Scaling past a thousand pages](scaling.md)
+Being written. Outlines for each are in the [roadmap](../ROADMAP.md), and pull requests are welcome.
+
+- Linting the vault
+- Review cadence
+- Versioning
+- Backups and portability
+- Privacy
+- Scaling past a thousand pages
 
 ---
 
