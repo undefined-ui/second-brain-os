@@ -49,7 +49,7 @@ layers](two-layers.md) and [Agents](../06-agents/README.md).
 
 The pattern also spread quickly because the primitives are ordinary: anyone with
 an agent and a folder can run it, and the implementations are all readable
-markdown. See [resources](../../resources/repos.md) for the ones worth reading.
+markdown. See [resources](../../resources/skills.md) for the ones worth reading.
 
 ## Next
 

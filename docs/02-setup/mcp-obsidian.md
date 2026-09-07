@@ -8,6 +8,18 @@ inside that directory.
 You do not need this to start. Add it when you want scheduled tasks, or when
 you are working from the desktop app rather than a terminal in the vault.
 
+## Two routes
+
+The [Local REST API
+plugin](https://github.com/coddingtonbear/obsidian-local-rest-api) now ships a
+built-in MCP server at `/mcp/`, so a separate server is no longer required.
+Check its README first: if the built-in server covers what you need, skip
+straight to registering it with your client and ignore step 2 below.
+
+The third-party route described here, `mcp-obsidian` over the plugin's REST API,
+is still the most widely documented and is what most guides describe. Both end
+up in the same place.
+
 ## Step 1: enable the plugin
 
 In Obsidian: **Settings** (gear, bottom left) → **Community plugins** → **Turn
@@ -59,6 +71,14 @@ If the agent reads your notes back, the connection works.
   in your config. The default is 27124.
 - **Plugin disabled.** Community plugins get turned off when restricted mode is
   re-enabled after an update.
+
+## Do you need this at all
+
+One maintained fork of `mcp-obsidian` was archived with the reasoning that
+routing through a REST plugin adds complexity when a vault is just markdown
+files on disk. That is the same argument this guide makes for starting on the
+filesystem, and it is worth taking seriously: MCP earns its place when you need
+the vault reachable from sessions not running inside it, and not before.
 
 ## Security
 

@@ -158,13 +158,14 @@ source, and tool listings need a reason to exist.
 
 ## Credit
 
-The LLM wiki pattern is Andrej Karpathy's, published as a gist on 2026-04-04.
-This repo is one implementation of it, plus the parts the gist deliberately
-leaves undefined.
+The LLM wiki pattern is Andrej Karpathy's, published as a
+[gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) on
+4 April 2026. This repo is one implementation of it, plus the parts the gist
+deliberately leaves undefined.
 
 <!-- TODO before publishing:
      - add the link to the original article
-     - add the direct Karpathy gist URL, verified by hand
-     - screenshots: graph view at 30 days, an example concept page -->
+     - screenshots: graph view at 30 days, an example concept page
+     - social preview image in Settings -> General -->
 
 MIT licensed.
