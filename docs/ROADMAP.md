@@ -171,41 +171,41 @@ The rules that decide whether your vault becomes a graph or a landfill.
   - Using the log to audit and roll back
   - Keeping both files from growing unbounded
 
-## Graphs (outline)
+## Graphs (done)
 
 The part most second-brain guides skip: what the graph is for and how to make it do work.
 
-- [ ] **Graph basics for a knowledge base**
+- [x] **Graph basics for a knowledge base**
   - Nodes, edges, direction and weight in plain terms
   - Why a knowledge base is a graph whether you plan it or not
   - Density, clustering, path length and what they tell you
   - The failure shapes: stars, chains and islands
-- [ ] **Reading the Obsidian graph view**
+- [x] **Reading the Obsidian graph view**
   - Local vs global graph
   - Filters and groups that make it useful
   - Spotting orphans and over-linked hubs
   - Why a pretty graph is not a healthy one
-- [ ] **Typed links**
+- [x] **Typed links**
   - Untyped wikilinks lose meaning at scale
   - A minimal relation vocabulary: supports, contradicts, extends, part-of
   - Encoding types in frontmatter or inline
   - Querying by relation type
-- [ ] **Graph vs embeddings**
+- [x] **Graph vs embeddings**
   - What each retrieval method is actually good at
   - Why similarity misses reasoning across sources
   - Hybrid setups
   - Cost and maintenance compared
-- [ ] **GraphRAG and where it fits**
+- [x] **GraphRAG and where it fits**
   - The idea in one page
   - Entity and relation extraction from your own vault
   - Community detection and summary layers
   - Whether a personal vault is big enough to need it
-- [ ] **Exporting the graph**
+- [x] **Exporting the graph**
   - Parsing wikilinks into an edge list
   - Loading into Kuzu, Neo4j or NetworkX
   - Visualizing outside Obsidian
   - Keeping the export in sync
-- [ ] **Graph metrics worth tracking**
+- [x] **Graph metrics worth tracking**
   - Orphan rate
   - Average degree and its healthy range
   - Clusters as evidence of your real interests
