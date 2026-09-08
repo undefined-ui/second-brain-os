@@ -35,7 +35,9 @@ Logseq, Foam, or a plain editor all work.
 
 **What if I already have a Notion or Evernote full of notes?**
 
-Export to markdown, drop it in `raw/`, and backfill oldest first. Expect the
+Use the official [Importer](https://github.com/obsidianmd/obsidian-importer)
+plugin, which handles Notion, Evernote, Roam, Bear and Apple Notes. Then treat
+the result as raw material: backfill oldest first. Expect the
 export to be messy. Fix extraction before ingesting rather than hoping the agent
 copes.
 

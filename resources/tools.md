@@ -1,74 +1,70 @@
 # Tools
 
+Everything outside the Obsidian plugin catalog. For plugins, see
+[plugins.md](plugins.md). Star counts are from GitHub, September 2026.
+
 ## The core stack
 
-- **[Obsidian](https://obsidian.md)**. Local markdown editor. The vault is a
-  plain folder, which is the whole reason agents work well with it.
-- **[Obsidian Web Clipper](https://obsidian.md/clipper)**. Official browser
-  extension for saving articles into the vault, built by the Obsidian team. Uses
-  Mozilla Readability, the engine behind Firefox Reader View.
-- **[Claude Code](https://code.claude.com/docs/en/setup)**. The agent that
-  maintains the wiki. Runs in the vault folder and edits files directly.
-  Requires a paid account; the free plan does not include access.
+| Tool | What it does |
+|---|---|
+| [Obsidian](https://obsidian.md) | Local markdown editor. The vault is a plain folder, which is why agents work well with it |
+| [Obsidian Web Clipper](https://obsidian.md/clipper) | Official browser extension, saves articles into `raw/`. Uses Mozilla Readability |
+| [Claude Code](https://code.claude.com/docs/en/setup) | The agent that maintains the wiki. Paid account required |
 
-## Obsidian plugins
+## Alternative homes for a vault
 
-- **[Dataview](https://github.com/blacksmithgu/obsidian-dataview)**. A query
-  language over your frontmatter, rendered inline. This is what answers
-  structural questions like "which concept pages have not been touched in ninety
-  days". Docs at
-  [blacksmithgu.github.io/obsidian-dataview](https://blacksmithgu.github.io/obsidian-dataview/).
-- **[Templater](https://github.com/SilentVoid13/Templater)**. Templates with
-  variables and dates, for the page shapes in `vault-template/templates/`. The
-  agent does not need it; you will, for pages you write by hand.
-- **[Local REST API](https://github.com/coddingtonbear/obsidian-local-rest-api)**.
-  Serves your vault over a local API. Worth reading the README before choosing
-  an MCP route: the plugin now ships a **built-in MCP server** at `/mcp/`, which
-  removes the need for a separate server in most setups.
+| Tool | Stars | Notes |
+|---|---|---|
+| [AFFiNE](https://github.com/toeverything/AFFiNE) | 72,292 | Docs, whiteboard and database in one. Heavier than markdown files |
+| [memos](https://github.com/usememos/memos) | 62,837 | Self-hosted quick capture, markdown-native. A good `raw/` inbox |
+| [Joplin](https://github.com/laurent22/joplin) | 56,264 | Privacy-focused notes with sync across every platform |
+| [SiYuan](https://github.com/siyuan-note/siyuan) | 46,225 | Self-hosted knowledge workspace, block-based |
+| [Logseq](https://github.com/logseq/logseq) | 44,818 | Outliner, plain markdown, block-level references |
+| [Outline](https://github.com/outline/outline) | 40,483 | Team knowledge base. The right answer when it is not just you |
+| [Trilium](https://github.com/TriliumNext/Trilium) | 37,762 | Hierarchical personal knowledge base with scripting |
+| [Foam](https://github.com/foambubble/foam) | 17,386 | The same wikilink pattern inside VS Code |
+| [Anytype](https://github.com/anyproto/anytype-ts) | 8,764 | Local-first, encrypted, object-based |
+| [Dendron](https://github.com/dendronhq/dendron) | 7,465 | Hierarchical PKM in VS Code |
 
-## MCP
+Worth being honest about the tradeoff: everything below Obsidian in this table
+stores knowledge in its own structure. Markdown files in a folder are the only
+format where leaving the tool costs nothing.
 
-- **[mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian)**. The
-  widely used third-party MCP server, run via `uvx mcp-obsidian`, talking to the
-  Local REST API plugin. Still the most documented path, and the one most guides
-  including this one describe.
+## AI-native knowledge apps
 
-Worth knowing before you pick: at least one maintained fork
-([proofsh/obsidian-mcp](https://github.com/proofsh/obsidian-mcp)) has been
-archived with the explicit reasoning that routing through a REST plugin adds
-complexity when the vault is markdown files on disk. That is the same argument
-this guide makes for starting on the filesystem.
+| Tool | Stars | Notes |
+|---|---|---|
+| [Khoj](https://github.com/khoj-ai/khoj) | 37,186 | Self-hostable AI second brain over your docs, with custom agents and scheduled automations |
+| [Quivr](https://github.com/The-Vibe-Company/quivr) | 39,498 | Opinionated RAG you embed in your own app |
+| [Reor](https://github.com/reorproject/reor) | 8,563 | Local-first AI note app that links notes automatically as you write |
 
-## Capture
+These are products, not patterns. They do the job for you, at the cost of the
+portability this guide is built around. Worth knowing before you decide the
+file-based approach is too much work.
 
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)**. Subtitles and audio from video
-  platforms. `--write-auto-sub --skip-download` is the flag pair you want.
-- **[youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api)**.
-  Python library for pulling transcripts directly.
-- **[OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF)**. Adds a text layer to
-  scanned PDFs without changing the visible document.
-- **[Zotero](https://www.zotero.org)**. Reference manager with a markdown export
-  path, worth it if you read papers regularly.
-- **[Readwise](https://readwise.io)**. Kindle and read-later highlights, syncs
-  into Obsidian. Paid.
+## Capture and processing
+
+| Tool | What it does |
+|---|---|
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Subtitles and audio from video platforms |
+| [youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api) | Transcripts from Python |
+| [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) | Text layer for scanned PDFs |
+| [Zotero](https://github.com/zotero/zotero) | Reference manager, 15,184 stars, markdown export path |
+| [Readwise](https://readwise.io) | Kindle and read-later highlights into Obsidian. Paid |
 
 ## Search and graph
 
-- **[ripgrep](https://github.com/BurntSushi/ripgrep)**. Fast enough that most
-  vaults never need an index.
-- **[NetworkX](https://networkx.org)**. Graph analysis in Python once you have
-  exported an edge list.
-- **[Kuzu](https://kuzudb.com)**. Embedded graph database, no server to run.
-- **[Neo4j](https://neo4j.com)**. The full version. Overkill unless you are
-  building something on top.
-- **[Gephi](https://gephi.org)**. Visual graph exploration beyond what Obsidian's
-  graph view does.
+| Tool | What it does |
+|---|---|
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast enough that most vaults never need an index |
+| [NetworkX](https://networkx.org) | Graph analysis once you have exported an edge list |
+| [Kuzu](https://kuzudb.com) | Embedded graph database, no server |
+| [Neo4j](https://neo4j.com) | Full graph database. Overkill unless you build on top |
+| [Gephi](https://gephi.org) | Visual graph exploration beyond Obsidian's view |
+| [txtai](https://github.com/neuml/txtai) | 12,931 stars. Semantic search and LLM workflows, if you decide you need embeddings |
 
-## Alternatives to Obsidian
+## Publishing
 
-- **[Logseq](https://logseq.com)**. Outliner, also plain markdown, block-level
-  references.
-- **[Foam](https://foambubble.github.io/foam/)**. The same pattern inside VS
-  Code.
-- **Plain folders plus git.** Genuinely viable. Obsidian is a viewer for the
-  graph, not a requirement of it.
+| Tool | Stars | Notes |
+|---|---|---|
+| [Quartz](https://github.com/jackyzha0/quartz) | 13,185 | Vault to static site with backlinks, local graph and search |

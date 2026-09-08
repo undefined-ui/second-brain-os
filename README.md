@@ -166,59 +166,75 @@ The source document, and the research behind the design decisions in this guide.
 
 Full notes: [reading.md](resources/reading.md) and [papers.md](resources/papers.md).
 
-## Tools
+## Tools and plugins
 
-| Category | Tool | What it does |
+Obsidian plugins ranked by installs from the official community stats, September
+2026. The full catalog is in [plugins.md](resources/plugins.md) and
+[tools.md](resources/tools.md).
+
+| Purpose | Pick | Installs |
 |---|---|---|
-| Core | [Obsidian](https://obsidian.md) | Local markdown editor. The vault is a plain folder |
-| Core | [Web Clipper](https://obsidian.md/clipper) | Official extension, saves articles into `raw/` |
-| Core | [Claude Code](https://code.claude.com/docs/en/setup) | The agent that maintains the wiki. Paid plan required |
-| Plugin | [Dataview](https://github.com/blacksmithgu/obsidian-dataview) | Queries over frontmatter. Answers "which pages have property P" |
-| Plugin | [Templater](https://github.com/SilentVoid13/Templater) | Templates for pages you write by hand |
-| Plugin | [Local REST API](https://github.com/coddingtonbear/obsidian-local-rest-api) | Vault over a local API. Now ships a built-in MCP server, so a separate one is often unnecessary |
-| MCP | [mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) | The widely documented third-party server. See [MCP for Obsidian](docs/02-setup/mcp-obsidian.md) |
-| Capture | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Subtitles and audio from video platforms |
-| Capture | [youtube-transcript-api](https://github.com/jdepoix/youtube-transcript-api) | Transcripts from Python |
-| Capture | [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) | Text layer for scanned PDFs |
-| Capture | [Zotero](https://www.zotero.org) | Reference manager with markdown export |
-| Graph | [ripgrep](https://github.com/BurntSushi/ripgrep) | Fast enough that most vaults never need an index |
-| Graph | [NetworkX](https://networkx.org) | Graph analysis once you have exported an edge list |
-| Graph | [Kuzu](https://kuzudb.com) | Embedded graph database, no server |
-| Graph | [Gephi](https://gephi.org) | Visual graph exploration beyond Obsidian's view |
+| Agent in the editor | [Claudian](https://github.com/yishentu/claudian) | 2.0M |
+| Agent in the editor | [Copilot](https://github.com/logancyang/obsidian-copilot) | 1.8M |
+| Suggests links | [Smart Connections](https://github.com/brianpetro/obsidian-smart-connections) | 1.2M |
+| MCP access | [Local REST API with MCP](https://github.com/coddingtonbear/obsidian-local-rest-api) | 712K |
+| Queries over frontmatter | [Dataview](https://github.com/blacksmithgu/obsidian-dataview) | 4.9M |
+| Templates | [Templater](https://github.com/SilentVoid13/Templater) | 5.5M |
+| Version control | [Git](https://github.com/Vinzent03/obsidian-git) | 3.1M |
+| Migrating in | [Importer](https://github.com/obsidianmd/obsidian-importer) | 1.6M |
+| Broken links and orphans | [Find unlinked files](https://github.com/Vinzent03/find-unlinked-files) | 225K |
+| Flashcards from notes | [Spaced Repetition](https://github.com/st3v3nmw/obsidian-spaced-repetition) | 592K |
+| Structured mind-map | [ExcaliBrain](https://github.com/zsviczian/excalibrain) | 336K |
+| Interactive graph | [Juggl](https://github.com/HEmile/juggl) | 136K |
 
-Full list, including alternatives to Obsidian: [tools.md](resources/tools.md).
+Outside Obsidian: [Web Clipper](https://obsidian.md/clipper) for capture,
+[Claude Code](https://code.claude.com/docs/en/setup) for maintenance,
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) and
+[OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) for processing,
+[ripgrep](https://github.com/BurntSushi/ripgrep),
+[NetworkX](https://networkx.org), [Kuzu](https://kuzudb.com) and
+[Gephi](https://gephi.org) for the graph, and
+[Quartz](https://github.com/jackyzha0/quartz) to publish.
 
-## Other implementations
+## Skills and other implementations
 
-Worth reading before writing your own page contracts.
+Counted individually: a repo shipping sixteen skills counts as sixteen. Stars
+from the GitHub API, September 2026.
 
-| Repo | What it is |
-|---|---|
-| [Astro-Han/karpathy-llm-wiki](https://github.com/Astro-Han/karpathy-llm-wiki) | The pattern as one installable skill for Claude Code, Cursor and Codex. Its list of what the author deliberately did not build is the most useful part |
-| [micuintus/llm-wiki](https://github.com/micuintus/llm-wiki) | Deliberately minimal, convention-based rather than code-enforced. Good counterpoint |
-| [NicholasSpisak/second-brain](https://github.com/NicholasSpisak/second-brain) | Four skills installable through npm, close to the original gist |
-| [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain) | Around 43 commands, works across Claude, Codex and Gemini |
-
-More context on each: [skills.md](resources/skills.md).
-
-## Graph and publishing repos
-
-| Purpose | Repo | What it adds |
+| Repo | Stars | Ships |
 |---|---|---|
-| Graph view | [Juggl](https://github.com/HEmile/juggl) | Interactive workspace graph on Cytoscape.js, typed edges, expand and pin nodes |
-| Graph view | [ExcaliBrain](https://github.com/zsviczian/excalibrain) | Structured mind-map deriving five relationship types from links and Dataview fields |
-| Graph view | [Breadcrumbs](https://github.com/michaelpporter/breadcrumbs) | Typed links plus trees, matrices, Mermaid and Canvas export |
-| Graph view | [Graph Analysis](https://github.com/SkepticMystic/graph-analysis) | Graph algorithms and similarity measures over your vault, surfaces unlinked connections |
-| Graph view | [3D Graph](https://github.com/AlexW00/obsidian-3d-graph) | The vault as a 3D force graph. Shows cluster structure a 2D hairball hides |
-| Linking | [Smart Connections](https://github.com/brianpetro/obsidian-smart-connections) | Local embedding model suggests related notes while you write. No API key |
-| Build a graph | [Graphify](https://github.com/Graphify-Labs/graphify) | `/graphify` skill for Claude Code and others. Turns a folder of code, docs, PDFs and screenshots into a queryable graph. Every edge labelled extracted or inferred |
-| GraphRAG | [microsoft/graphrag](https://github.com/microsoft/graphrag) | The reference implementation of the paper |
-| GraphRAG | [nano-graphrag](https://github.com/gusye1234/nano-graphrag) | The same idea in about 1,100 readable lines. Open this one to understand the pipeline |
-| GraphRAG | [LightRAG](https://github.com/HKUDS/LightRAG) | Adds a vector layer for cheaper incremental updates |
-| GraphRAG | [Awesome-GraphRAG](https://github.com/DEEP-PolyU/Awesome-GraphRAG) | Curated map of the rest of the landscape |
-| Publishing | [Quartz](https://github.com/jackyzha0/quartz) | Vault to static site with backlinks, local graph and search |
+| [AgriciDaniel/claude-obsidian](https://github.com/AgriciDaniel/claude-obsidian) | 14.7K | 16 skills, 3 subagents, role presets |
+| [Astro-Han/karpathy-llm-wiki](https://github.com/Astro-Han/karpathy-llm-wiki) | 2.2K | 1 skill covering ingest, compile, query, lint |
+| [ballred/obsidian-claude-pkm](https://github.com/ballred/obsidian-claude-pkm) | 1.9K | 13 skills, 4 subagents, full starter kit |
+| [coleam00/second-brain-starter](https://github.com/coleam00/second-brain-starter) | 768 | 1 skill that interviews you first |
+| [NicholasSpisak/second-brain](https://github.com/NicholasSpisak/second-brain) | 704 | 4 skills, npm installer |
+| [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain) | small | 47 commands, works across three agents |
+| [micuintus/llm-wiki](https://github.com/micuintus/llm-wiki) | small | 1 skill, deliberately minimal |
 
-Notes on each, and how to judge a repo in this ecosystem: [repositories.md](resources/repositories.md).
+Where the format itself is defined:
+[anthropics/skills](https://github.com/anthropics/skills) (20 skills),
+[obra/superpowers](https://github.com/obra/superpowers) (14),
+[VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills)
+(index of 1,000+). Notes on each: [skills.md](resources/skills.md).
+
+## Graph, RAG and memory repos
+
+| Purpose | Repo | Stars |
+|---|---|---|
+| Build a graph from any folder | [Graphify](https://github.com/Graphify-Labs/graphify) | 116K |
+| Graph RAG, incremental | [LightRAG](https://github.com/HKUDS/LightRAG) | 39K |
+| Graph RAG, reference | [microsoft/graphrag](https://github.com/microsoft/graphrag) | 36K |
+| Graph RAG, readable | [nano-graphrag](https://github.com/gusye1234/nano-graphrag) | 4.0K |
+| Multi-hop retrieval | [HippoRAG](https://github.com/OSU-NLP-Group/HippoRAG) | 4.0K |
+| The landscape | [Awesome-GraphRAG](https://github.com/DEEP-PolyU/Awesome-GraphRAG) | 2.6K |
+| Agent memory | [mem0](https://github.com/mem0ai/mem0) | 65K |
+| Temporal knowledge graphs | [graphiti](https://github.com/getzep/graphiti) | 31K |
+| Graph plus vector memory | [cognee](https://github.com/topoteretes/cognee) | 31K |
+| MCP server index | [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) | 95K |
+
+Alternative homes for a vault, from Logseq to AFFiNE, plus RAG frameworks and
+AI-native note apps: [repositories.md](resources/repositories.md) and
+[tools.md](resources/tools.md).
 
 ## Contributing
 

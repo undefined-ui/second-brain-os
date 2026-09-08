@@ -1,110 +1,65 @@
 # Repositories
 
-Beyond the implementations of this pattern in [skills.md](skills.md). Every link
-here was opened and checked; anything I could not verify is named without a link
-rather than guessed at.
+Graph, retrieval and memory projects worth knowing. Stars from the GitHub API,
+September 2026. For agent skills see [skills.md](skills.md); for Obsidian
+plugins see [plugins.md](plugins.md).
 
-## Graph views for Obsidian
+## GraphRAG and graph retrieval
 
-The built-in graph view is a viewer with no notion of relationship types. These
-replace it when you want the graph to do work.
+| Repo | Stars | What it is |
+|---|---|---|
+| [HKUDS/LightRAG](https://github.com/HKUDS/LightRAG) | 39,467 | Dual-layer graph plus vectors, aimed at cheap incremental updates. EMNLP 2025 |
+| [microsoft/graphrag](https://github.com/microsoft/graphrag) | 35,875 | The reference implementation of the [paper](papers.md) |
+| [gusye1234/nano-graphrag](https://github.com/gusye1234/nano-graphrag) | 3,983 | The same idea in about 1,100 readable lines. Open this one to understand the pipeline |
+| [OSU-NLP-Group/HippoRAG](https://github.com/OSU-NLP-Group/HippoRAG) | 3,985 | The NeurIPS'24 paper's implementation. Personalised PageRank over a knowledge graph |
+| [DEEP-PolyU/Awesome-GraphRAG](https://github.com/DEEP-PolyU/Awesome-GraphRAG) | 2,635 | Curated map of surveys, benchmarks and projects in the area |
 
-- **[HEmile/juggl](https://github.com/HEmile/juggl)**. An interactive, stylable,
-  expandable graph built on Cytoscape.js. Its workspace mode is the real feature:
-  you build a graph of just the nodes relevant to what you are working on, expand
-  and hide selectively, pin positions, and save it for later. Supports link types
-  on edges, which plain Obsidian does not. Has an API other plugins build on.
-- **[zsviczian/excalibrain](https://github.com/zsviczian/excalibrain)**. A
-  structured mind-map of the vault rather than a force-directed cloud. It derives
-  five relationship types from your links, Dataview fields, tags and frontmatter:
-  parents, children, friends, other friends, siblings. Requires Dataview and
-  Excalidraw. The closest thing to [typed
-  links](../docs/05-graphs/typed-links.md) with no extra work from you.
-- **[michaelpporter/breadcrumbs](https://github.com/michaelpporter/breadcrumbs)**.
-  Typed links plus navigation over them: breadcrumb trails, tree and matrix
-  views, Mermaid and Markmap rendering, export to Canvas. Reads typed frontmatter
-  links, tags, lists, folder notes and Dataview queries, and derives implied
-  relations. Maintained by michaelpporter since May 2026, originally by
-  SkepticMystic.
-- **[SkepticMystic/graph-analysis](https://github.com/SkepticMystic/graph-analysis)**.
-  Runs actual graph algorithms over your vault, including similarity measures
-  like Adamic Adar, to surface connections you never linked. The closest thing to
-  the [metrics](../docs/05-graphs/metrics.md) page without leaving Obsidian.
-- **[AlexW00/obsidian-3d-graph](https://github.com/AlexW00/obsidian-3d-graph)**.
-  The vault as a 3D force graph, built on D3 and 3d-force-graph. Genuinely useful
-  for spotting cluster structure that a 2D hairball hides, and the source of most
-  good vault screenshots. The actively maintained fork is published as "3D Graph
-  New".
-- **[brianpetro/obsidian-smart-connections](https://github.com/brianpetro/obsidian-smart-connections)**.
-  Semantic similarity between notes using a local embedding model, no API key,
-  shown as a graph and a list while you write. This is the embeddings side of
-  [graph vs embeddings](../docs/05-graphs/graph-vs-vectors.md) in the one place
-  it clearly earns its keep: suggesting links you have not made yet.
+## Agent memory
 
-## Building a graph from your own material
+Adjacent problem, same techniques. These give an agent persistent memory; this
+guide gives a person a knowledge base. Worth reading for the retrieval design
+even if you never run one.
 
-- **[Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)**. A
-  `/graphify` skill for Claude Code, Cursor, Codex and Gemini CLI that reads a
-  folder and builds a queryable knowledge graph from it. Local deterministic AST
-  parsing for code, and multimodal extraction for docs, PDFs, screenshots and
-  diagrams. No vector store, and every edge is labelled as extracted or inferred,
-  which is the same honesty about provenance this guide asks of page contracts.
+| Repo | Stars | What it is |
+|---|---|---|
+| [mem0ai/mem0](https://github.com/mem0ai/mem0) | 64,863 | Drop-in memory layer for agents and apps |
+| [getzep/graphiti](https://github.com/getzep/graphiti) | 30,680 | Real-time temporal knowledge graphs for agents |
+| [topoteretes/cognee](https://github.com/topoteretes/cognee) | 30,568 | Turns data into knowledge graphs, combining graph and vector retrieval |
+| [doobidoo/mcp-memory-service](https://github.com/doobidoo/mcp-memory-service) | 1,928 | Persistent memory over MCP, REST API plus knowledge graph |
 
-  Directly relevant here: it was built around the problem of a `raw/` folder full
-  of papers, screenshots and notes, which is exactly the folder this pattern
-  creates. Output includes an interactive `graph.html` and an Obsidian-openable
-  vault. The project reports large token savings versus reading raw files; that
-  figure is self-reported and depends heavily on corpus size.
+## RAG frameworks
 
-  Originally by Safi Shamsi. Several widely linked repos named `graphify` are
-  forks of it.
+If you decide your vault has outgrown files. See [adding RAG when you need
+it](../docs/07-retrieval/rag-on-top.md) for the threshold, which most personal
+vaults never reach.
 
-## GraphRAG implementations
+| Repo | Stars | What it is |
+|---|---|---|
+| [infiniflow/ragflow](https://github.com/infiniflow/ragflow) | 90,216 | Full RAG engine with document understanding |
+| [run-llama/llama_index](https://github.com/run-llama/llama_index) | 52,058 | Document agent and ingestion framework |
+| [neuml/txtai](https://github.com/neuml/txtai) | 12,931 | Embeddings database and LLM workflows, small enough to read |
 
-Read these if you want to see what an automated version of the graph looks like
-before deciding you do not need one. See
-[GraphRAG and where it fits](../docs/05-graphs/graphrag.md).
+## MCP
 
-- **[microsoft/graphrag](https://github.com/microsoft/graphrag)**. The reference
-  implementation of the [paper](papers.md). Entity extraction, community
-  detection, community summaries, global and local search.
-- **[gusye1234/nano-graphrag](https://github.com/gusye1234/nano-graphrag)**. The
-  same idea in roughly 1,100 lines, written to be read and modified. This is the
-  one to open if you want to understand the pipeline rather than run it.
-  Pluggable storage: networkx by default, Neo4j available.
-- **[HKUDS/LightRAG](https://github.com/HKUDS/LightRAG)**. A dual-layer approach
-  holding both a knowledge graph and vector embeddings, aimed at cheaper
-  incremental updates than the original. Published at EMNLP 2025. Structurally
-  based on nano-graphrag.
-- **[DEEP-PolyU/Awesome-GraphRAG](https://github.com/DEEP-PolyU/Awesome-GraphRAG)**.
-  A curated list of surveys, papers, benchmarks and open-source projects in this
-  area. The right starting point if you want the landscape rather than one tool.
+| Repo | Stars | What it is |
+|---|---|---|
+| [punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers) | 94,575 | The index of MCP servers |
+| [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) | 90,141 | The official reference servers, including filesystem and memory |
+| [MarkusPfundstein/mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) | 4,376 | Third-party MCP server for Obsidian over the REST plugin |
 
-Also worth knowing by name: Graphiti and Cognee, both graph-based memory layers
-for agents rather than knowledge bases for people. Different problem, adjacent
-techniques.
-
-## Publishing
-
-- **[jackyzha0/quartz](https://github.com/jackyzha0/quartz)**. Publishes a vault
-  as a static site with backlinks, link previews, a local graph and full-text
-  search. Understands both wikilinks and markdown links, which is the thing to
-  check in any publishing tool. Docs at
-  [quartz.jzhao.xyz](https://quartz.jzhao.xyz/).
-
-  One caveat that applies to every publishing tool: check how it handles links to
-  unpublished pages before you publish anything. See [publishing and
-  export](../docs/08-outputs/publishing-and-export.md).
+Since the Local REST API plugin now ships its own MCP server, a separate one is
+optional. See [MCP for Obsidian](../docs/02-setup/mcp-obsidian.md).
 
 ## How to judge one of these
-
-Two questions answer most of it.
 
 **Does it own your data or read it?** Anything that reads your markdown and
 writes derived output is safe to try and safe to abandon. Anything that becomes
 the only place a piece of knowledge lives has taken the portability you chose
 markdown for.
 
-**Is it maintained?** Check the commit history, not the star count. This
-ecosystem produces a lot of repos in the weeks after a popular gist, and most of
-them stop within a month.
+**Is it maintained?** Check the last push date, not the star count. This
+ecosystem produces a lot of repos in the weeks after a popular gist, and most
+stop within a month.
+
+**Are the stars measuring the right thing?** For plugins, installs are the
+better signal, and the two diverge by an order of magnitude in places.

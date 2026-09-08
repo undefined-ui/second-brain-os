@@ -1,52 +1,67 @@
-# Skills and implementations
+# Skills and agents
 
-Agent skills that run this pattern, and open-source builds worth reading before
-writing your own.
+Counted individually: a repo shipping sixteen skills counts as sixteen, because
+that is what you install. Counts were taken by reading each repository's file
+tree in September 2026.
 
-## In this repo
+## This repo
 
-Four skills in [`skills/`](../skills/README.md): ingest, lint, query, review.
-Five commands in [`commands/`](../commands/README.md). Four subagent definitions
-in [`agents/`](../agents/README.md), two of them read-only by design.
+| Type | Count | Where |
+|---|---|---|
+| Skills | 4 | [`skills/`](../skills/README.md). Ingest, lint, query, review |
+| Commands | 5 | [`commands/`](../commands/README.md). `/ingest`, `/ask`, `/lint`, `/review`, `/backfill` |
+| Subagents | 4 | [`agents/`](../agents/README.md). Ingestor, linker, reviewer, researcher |
+| Scripts | 4 | [`scripts/`](../scripts/README.md). Link check, stats, graph export, chat import |
 
-All plain `SKILL.md` files, so they work with any agent that reads the Agent
-Skills format, not only Claude Code.
+Plain `SKILL.md` files, so they work with any agent that reads the Agent Skills
+format.
 
-## Community implementations
+## Implementations of this pattern
 
-Reading someone else's page contracts is the fastest way to improve your own.
-These are worth opening even if you never install them.
+| Repo | Stars | Ships |
+|---|---|---|
+| [AgriciDaniel/claude-obsidian](https://github.com/AgriciDaniel/claude-obsidian) | 14,706 | 16 skills, 3 subagents. Self-organizing vault with role presets |
+| [Astro-Han/karpathy-llm-wiki](https://github.com/Astro-Han/karpathy-llm-wiki) | 2,174 | 1 skill covering the full ingest, compile, query, lint loop |
+| [ballred/obsidian-claude-pkm](https://github.com/ballred/obsidian-claude-pkm) | 1,856 | 13 skills, 4 subagents. A complete starter kit |
+| [coleam00/second-brain-starter](https://github.com/coleam00/second-brain-starter) | 768 | 1 skill that interviews you and generates a build plan |
+| [NicholasSpisak/second-brain](https://github.com/NicholasSpisak/second-brain) | 704 | 4 skills, npm installer, close to the original gist |
+| [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain) | small | 47 commands across Claude, Codex and Gemini |
+| [micuintus/llm-wiki](https://github.com/micuintus/llm-wiki) | small | 1 skill, deliberately minimal, no dependencies. Good counterpoint |
 
-- **[Astro-Han/karpathy-llm-wiki](https://github.com/Astro-Han/karpathy-llm-wiki)**.
-  The pattern packaged as a single installable skill for Claude Code, Cursor and
-  Codex. Ingest into `raw/`, compile into `wiki/`, cited answers, lint. Includes
-  a design spec and a list of what the author deliberately did not build, which
-  is the most useful section in it.
-- **[micuintus/llm-wiki](https://github.com/micuintus/llm-wiki)**. A deliberately
-  minimal skill: no dependencies, no JSON metadata, convention-based guardrails
-  rather than code-based ones. Good counterpoint to the heavier
-  implementations, and its README lists several others in the same family.
-- **[NicholasSpisak/second-brain](https://github.com/NicholasSpisak/second-brain)**.
-  Four skills installable through npm, close to the original gist, with a setup
-  wizard.
-- **[eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain)**.
-  Around 43 ready commands, works across Claude, Codex and Gemini. The author's
-  write-up of what the gist leaves undefined is worth reading alongside it.
+The two at the bottom are small on purpose and still worth reading. Star count
+measures reach, not quality, and in this corner of the ecosystem it mostly
+measures who posted about it.
 
-Two more get recommended often and are worth a look if the above do not fit:
-`AgriciDaniel/claude-obsidian`, which ships role presets, and
-`coleam00/second-brain-starter`, which interviews you and generates a plan
-before building anything.
+## General skill libraries
+
+Not second-brain specific, but this is where the format itself is defined and
+where the best-written examples live.
+
+| Repo | Stars | Ships |
+|---|---|---|
+| [obra/superpowers](https://github.com/obra/superpowers) | 282,827 | 14 skills. An agentic skills framework and development methodology |
+| [anthropics/skills](https://github.com/anthropics/skills) | 175,035 | 20 skills, 3 subagents. The official reference for the format |
+| [VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) | 33,894 | A curated index of 1,000+ community skills |
+| [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) | 53,661 | Commands, hooks, workflows and tooling for Claude Code |
+
+## Graph builders
+
+| Repo | Stars | What it does |
+|---|---|---|
+| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | 115,697 | A `/graphify` skill that turns any folder of code, docs, PDFs and screenshots into a queryable graph. Every edge labelled extracted or inferred |
+
+Graphify is the one to try first if you already have a full `raw/` folder. It
+was built around exactly that problem, it runs locally with deterministic
+parsing for code, and it outputs an interactive `graph.html` plus an
+Obsidian-openable vault. Its reported token savings are self-reported and depend
+heavily on corpus size.
 
 ## Writing your own
 
-The format is a `SKILL.md` with frontmatter and a body. The four in this repo
-follow a consistent shape: why the skill exists, one core rule, a workflow, an
-output template, calibration, and a worked example.
+Three properties make a skill worth writing: you do it repeatedly, you have
+opinions about how, and the opinions are not obvious enough for a model to
+guess.
 
-Two authoring rules that matter more than the rest. Explain the reason behind
-every rule, because rules cover the cases you thought of and reasons cover the
-rest. And name the near-misses where the skill should not fire, because
-over-triggering is what makes people uninstall skills.
-
-Details in [skills and commands](../docs/06-agents/skills-and-commands.md).
+Read `anthropics/skills` for the format and one of the small implementations
+above for a full worked example. Details in [skills and
+commands](../docs/06-agents/skills-and-commands.md).

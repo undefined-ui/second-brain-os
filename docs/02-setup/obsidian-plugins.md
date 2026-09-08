@@ -33,6 +33,23 @@ Templates with variables and dates, for the page shapes in
 notes you write by hand. The agent does not need it, it writes frontmatter
 directly.
 
+## Worth adding later
+
+- **[Git](https://github.com/Vinzent03/obsidian-git)**, the third most installed
+  plugin in the catalog. Commits from inside Obsidian, which pairs with
+  [versioning](../09-maintenance/versioning-with-git.md).
+- **[Importer](https://github.com/obsidianmd/obsidian-importer)**, official,
+  pulls in Notion, Evernote, Roam, Bear and Apple Notes. The first step if you
+  are migrating an existing pile.
+- **[Find orphaned files and broken links](https://github.com/Vinzent03/find-unlinked-files)**,
+  the same checks as [lint](../09-maintenance/lint-and-health.md) without leaving
+  the app.
+- **[Omnisearch](https://github.com/scambier/obsidian-omnisearch)** for better
+  full-text search, including inside PDFs.
+
+Full ranked list with install counts:
+[resources/plugins.md](../../resources/plugins.md).
+
 ## What to avoid
 
 Plugins that rewrite files in the background. Anything that auto-formats,

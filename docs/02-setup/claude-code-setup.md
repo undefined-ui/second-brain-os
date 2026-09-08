@@ -26,6 +26,21 @@ and retrieval sections of this guide.
 Installation instructions for each platform are in the [official setup
 docs](https://code.claude.com/docs/en/setup).
 
+## Option C: inside Obsidian
+
+Community plugins now embed the agent in the editor, and they are heavily used:
+[Claudian](https://github.com/yishentu/claudian) sits above two million installs
+and [Copilot](https://github.com/logancyang/obsidian-copilot) is close behind.
+Both run Claude Code, Codex or a local agent in a pane next to your notes.
+
+Worth knowing about because it removes the window switching entirely. Worth
+being careful with for the same reason this guide keeps ingestion on a
+schedule: an agent in the editor invites ad-hoc edits that never make it into
+`log.md`, and an unlogged vault is one you cannot audit.
+
+A reasonable split is the plugin for conversation and drafting, the terminal or
+a scheduled task for anything that writes wiki pages.
+
 ## Plan requirement
 
 Claude Code needs a paid account: Pro, Max, Team, Enterprise, or a Console

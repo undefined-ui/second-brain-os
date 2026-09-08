@@ -41,6 +41,10 @@ ingest, where it costs more than it catches.
 
 Run it on a clean git state, so a wrong repair is one `git checkout` away.
 
+Inside Obsidian, [Find orphaned files and broken
+links](https://github.com/Vinzent03/find-unlinked-files) covers the same two
+checks visually.
+
 For a fast read without invoking the agent:
 
 ```bash
