@@ -9,6 +9,8 @@ This repo is the full version of the guide: the concepts, the setup, the vault
 template, the agent skills, the scripts, and the resources. Free, no signup,
 nothing to install beyond Obsidian and an agent.
 
+**Read it on the web:** [undefined-ui.github.io/second-brain-os](https://undefined-ui.github.io/second-brain-os/) — the full guide with search and navigation, plus [every vetted link](https://undefined-ui.github.io/second-brain-os/resources.html) in one filterable page.
+
 ## The problem it solves
 
 You save things with the intention of coming back. You never do. Bookmarks,

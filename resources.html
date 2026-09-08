@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Second Brain OS - resources</title>
+<meta name="description" content="86 checked links: Obsidian plugins by installs, repositories by stars, papers, tools and reading.">
+<style>
+:root{
+  --paper:#EAEEE9; --card:#F7F9F6; --ink:#15201B; --soft:#4B5A52; --faint:#7C8A82;
+  --rule:#D2DACF; --accent:#1F6B52; --accent-bg:#E1EDE5; --num:#8A6B23;
+  --w:68ch;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);
+  font:17px/1.62 Charter,Georgia,"Iowan Old Style",serif;
+  -webkit-font-smoothing:antialiased}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,"DejaVu Sans Mono",monospace}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+header{position:sticky;top:0;z-index:40;background:rgba(234,238,233,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.bar{max-width:1500px;margin:0 auto;padding:13px 22px;display:flex;gap:20px;align-items:center}
+.brand{font:600 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);letter-spacing:-.01em}
+.brand span{color:var(--accent)}
+nav{display:flex;gap:18px;font-size:14.5px}
+nav a{color:var(--soft)} nav a.on{color:var(--ink);font-weight:600}
+.search{margin-left:auto;position:relative}
+.search input{font:14px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);
+  background:var(--card);border:1px solid var(--rule);border-radius:3px;
+  padding:8px 11px;width:210px}
+.search input::placeholder{color:var(--faint)}
+.hits{position:absolute;right:0;top:40px;width:430px;max-height:62vh;overflow:auto;
+  background:var(--card);border:1px solid var(--rule);border-radius:3px;display:none}
+.hits.open{display:block}
+.hit{display:block;padding:10px 13px;border-bottom:1px solid var(--rule);color:var(--ink)}
+.hit:last-child{border:0}
+.hit:hover{background:var(--accent-bg);text-decoration:none}
+.hit b{font-weight:600;font-size:15px}
+.hit i{display:block;font-style:normal;font-size:12.5px;color:var(--faint);
+  font-family:ui-monospace,Menlo,monospace;margin-top:2px}
+
+.wrap{max-width:1500px;margin:0 auto;padding:0 22px;display:grid;
+  grid-template-columns:266px minmax(0,1fr) 210px;gap:44px;align-items:start}
+@media(max-width:1180px){.wrap{grid-template-columns:240px minmax(0,1fr);gap:34px}.rail{display:none}}
+.toc-btn{display:none;font:13px/1 ui-monospace,Menlo,monospace;background:var(--card);
+  color:var(--ink);border:1px solid var(--rule);border-radius:3px;padding:8px 12px;cursor:pointer}
+@media(max-width:860px){
+  .bar{flex-wrap:wrap;gap:12px;padding:11px 16px}
+  .brand{white-space:nowrap;font-size:14px}
+  nav{gap:14px;font-size:14px}
+  .toc-btn{display:block;margin-left:auto}
+  nav a[href^="http"]{display:none}
+  .search{margin-left:0;order:9;width:100%}
+  .search input{width:100%}
+  .hits{width:100%;left:0;right:auto}
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--rule);
+    padding:14px 0 18px;display:none}
+  aside.show{display:block}
+  main{padding:24px 0 70px}
+  body{font-size:16.5px}
+}
+
+aside{position:sticky;top:57px;height:calc(100vh - 57px);overflow:auto;
+  padding:26px 18px 60px 0;border-right:1px solid var(--rule)}
+.sec{margin-bottom:3px}
+.sec>button{width:100%;text-align:left;background:none;border:0;cursor:pointer;
+  font:600 14px/1.4 Charter,Georgia,serif;color:var(--ink);padding:6px 6px 6px 0;
+  display:flex;gap:8px;align-items:baseline}
+.sec>button .n{font:11px/1 ui-monospace,Menlo,monospace;color:var(--faint);margin-left:auto}
+.sec>button .k{font:11px/1 ui-monospace,Menlo,monospace;color:var(--accent);width:20px}
+.sec ol{list-style:none;padding:0 0 6px 28px;display:none}
+.sec.open ol{display:block}
+.sec ol a{display:block;padding:4px 6px 4px 10px;font-size:14px;color:var(--soft);
+  border-left:1px solid var(--rule);line-height:1.35}
+.sec ol a:hover{color:var(--ink);border-color:var(--accent);text-decoration:none}
+.sec ol a.cur{color:var(--ink);font-weight:600;border-left:2px solid var(--accent);
+  background:var(--accent-bg)}
+
+main{padding:34px 0 90px;min-width:0}
+.rail{position:sticky;top:80px;padding:38px 0;font-size:13px;color:var(--faint)}
+.rail h4{font:11px/1 ui-monospace,Menlo,monospace;color:var(--faint);
+  letter-spacing:.08em;margin-bottom:9px;font-weight:600}
+.rail a{display:block;color:var(--soft);padding:3px 0;font-size:13px;line-height:1.35}
+.rail .grp{margin-bottom:24px}
+
+/* hero */
+.hero{max-width:var(--w)}
+.hero h1{font:600 clamp(34px,4.6vw,52px)/1.05 Charter,Georgia,serif;letter-spacing:-.025em;margin-bottom:14px}
+.hero p{font-size:19px;color:var(--soft);margin-bottom:8px}
+.figure{margin:30px 0 34px;background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:10px 10px 4px;max-width:820px}
+.figure figcaption{font:11.5px/1.5 ui-monospace,Menlo,monospace;color:var(--faint);padding:6px 8px 8px}
+svg .edge{stroke:var(--accent);fill:none}
+svg .node circle{fill:var(--card);stroke:var(--accent);stroke-width:1.5;cursor:pointer;
+  transition:fill .15s}
+svg .node:hover circle{fill:var(--accent-bg)}
+svg .node text{font:12px ui-monospace,Menlo,monospace;fill:var(--ink);cursor:pointer}
+svg .node .cnt{font-size:10px;fill:var(--faint)}
+svg .node .idx{font-size:11px;fill:var(--accent);font-weight:600}
+.stats{display:flex;flex-wrap:wrap;gap:26px;margin:26px 0 34px;padding-top:20px;border-top:1px solid var(--rule)}
+.stat b{display:block;font:600 27px/1 Charter,Georgia,serif;color:var(--num)}
+.stat span{font:12px/1.4 ui-monospace,Menlo,monospace;color:var(--faint)}
+.seclist{max-width:var(--w)}
+.seclist article{padding:16px 0;border-top:1px solid var(--rule)}
+.seclist h3{font:600 18px/1.3 Charter,Georgia,serif;margin-bottom:3px}
+.seclist p{font-size:15px;color:var(--soft)}
+.seclist .pg{font:12px ui-monospace,Menlo,monospace;color:var(--faint);margin-top:5px}
+
+/* article */
+article.page{max-width:var(--w)}
+.crumb{font:12px ui-monospace,Menlo,monospace;color:var(--faint);margin-bottom:10px}
+article.page h1{font:600 clamp(28px,3.4vw,38px)/1.12 Charter,Georgia,serif;
+  letter-spacing:-.02em;margin-bottom:22px}
+article.page h2{font:600 21px/1.3 Charter,Georgia,serif;margin:34px 0 11px;
+  padding-top:16px;border-top:1px solid var(--rule)}
+article.page h3{font:600 17px/1.3 Charter,Georgia,serif;margin:22px 0 7px}
+article.page p{margin-bottom:15px}
+article.page ul,article.page ol{margin:0 0 16px 22px}
+article.page li{margin-bottom:7px}
+article.page blockquote{border-left:2px solid var(--accent);padding-left:16px;
+  color:var(--soft);margin-bottom:16px}
+article.page code{font-family:ui-monospace,Menlo,monospace;font-size:.86em;
+  background:var(--card);border:1px solid var(--rule);border-radius:3px;padding:1px 5px}
+article.page pre{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 16px;overflow:auto;margin-bottom:17px}
+article.page pre code{background:none;border:0;padding:0;font-size:13.5px;line-height:1.55}
+article.page table{width:100%;border-collapse:collapse;margin-bottom:18px;font-size:14.5px}
+article.page th{text-align:left;font-weight:600;padding:7px 10px 7px 0;
+  border-bottom:1px solid var(--ink)}
+article.page td{padding:8px 10px 8px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+article.page a.wiki{color:var(--accent);white-space:normal}
+article.page a.wiki::before{content:"[[";color:var(--faint)}
+article.page a.wiki::after{content:"]]";color:var(--faint)}
+.pager{display:flex;gap:16px;justify-content:space-between;margin-top:46px;
+  padding-top:18px;border-top:1px solid var(--rule);font-size:14px}
+.pager a{max-width:46%}
+.pager .lbl{display:block;font:11px ui-monospace,Menlo,monospace;color:var(--faint)}
+.src{margin-top:34px;font:12px ui-monospace,Menlo,monospace;color:var(--faint)}
+
+/* resources */
+.rwrap{max-width:1180px;margin:0 auto;padding:34px 22px 90px}
+.rwrap h1{font:600 clamp(30px,4vw,44px)/1.08 Charter,Georgia,serif;letter-spacing:-.025em}
+.lede{max-width:62ch;color:var(--soft);margin:12px 0 24px;font-size:17px}
+.controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:8px;
+  padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.chip{font:13px/1 ui-monospace,Menlo,monospace;background:var(--card);color:var(--soft);
+  border:1px solid var(--rule);border-radius:20px;padding:7px 13px;cursor:pointer}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#F7F9F6}
+.controls input{margin-left:auto;font:14px ui-monospace,Menlo,monospace;
+  background:var(--card);border:1px solid var(--rule);border-radius:3px;padding:8px 11px;width:230px}
+.count{font:12px ui-monospace,Menlo,monospace;color:var(--faint);padding:14px 0 4px}
+.grp-h{font:600 15px/1 ui-monospace,Menlo,monospace;color:var(--faint);
+  margin:26px 0 6px;padding-top:14px;border-top:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:minmax(180px,260px) 120px 1fr;gap:18px;
+  padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+@media(max-width:760px){.row{grid-template-columns:1fr;gap:3px}}
+.row .nm{font-weight:600;font-size:16px}
+.row .mt{font:13px ui-monospace,Menlo,monospace;color:var(--num)}
+.row .ds{color:var(--soft);font-size:15px}
+.row .kd{font:11px ui-monospace,Menlo,monospace;color:var(--faint);display:block;margin-top:2px}
+footer{border-top:1px solid var(--rule);padding:22px;text-align:center;
+  font:12px ui-monospace,Menlo,monospace;color:var(--faint)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<header><div class="bar">
+  <a class="brand" href="index.html">[[ second<span>brain</span>os ]]</a>
+  <nav>
+    <a href="index.html" class="">Guide</a>
+    <a href="resources.html" class="on">Resources</a>
+    <a href="https://github.com/undefined-ui/second-brain-os">Repo</a>
+  </nav>
+  
+  
+</div></header>
+<div class="rwrap">
+  <h1>Everything worth opening</h1>
+  <p class="lede">86 links, each one checked. Plugins are ranked by installs from Obsidian's own community stats rather than by stars, because in this ecosystem the two disagree by an order of magnitude. Figures are from September 2026 and will drift.</p>
+  <div class="controls" id="ctl">
+    <button class="chip on" data-k="all">All</button>
+    <button class="chip" data-k="Obsidian plugin">Obsidian plugin</button><button class="chip" data-k="Repository">Repository</button><button class="chip" data-k="Skills">Skills</button><button class="chip" data-k="Tool">Tool</button><button class="chip" data-k="Reading">Reading</button><button class="chip" data-k="Paper">Paper</button>
+    <input id="rq" type="search" placeholder="filter" autocomplete="off">
+  </div>
+  <div class="count" id="count"></div>
+  <div id="rows"></div>
+</div>
+<footer>Generated from the repository. <a href="https://github.com/undefined-ui/second-brain-os">github.com/undefined-ui/second-brain-os</a></footer>
+<script id="rdata" type="application/json">[{"file": "plugins.md", "kind": "Obsidian plugin", "group": "Agents inside Obsidian", "name": "Claudian", "url": "https://github.com/yishentu/claudian", "metric": "2,035,966", "desc": "Embeds Claude Code, Codex and other local agents as collaborators in the vault"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Agents inside Obsidian", "name": "Copilot", "url": "https://github.com/logancyang/obsidian-copilot", "metric": "1,832,464", "desc": "Runs Claude Code, Codex and OpenCode inside your vault"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Agents inside Obsidian", "name": "Smart Connections", "url": "https://github.com/brianpetro/obsidian-smart-connections", "metric": "1,189,513", "desc": "Local embedding model surfaces related notes while you write. No API key"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Agents inside Obsidian", "name": "Local REST API with MCP", "url": "https://github.com/coddingtonbear/obsidian-local-rest-api", "metric": "712,443", "desc": "Vault over a secure local API, now with a built-in MCP server"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Agents inside Obsidian", "name": "Agent Client", "url": "https://github.com/rait-09/obsidian-agent-client", "metric": "261,371", "desc": "Chat with Claude Code, Codex and Gemini CLI over the Agent Client Protocol"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Agents inside Obsidian", "name": "Smart Composer", "url": "https://github.com/glowingjade/obsidian-smart-composer", "metric": "171,863", "desc": "AI chat with note context and one-click edits"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Structure and queries", "name": "Templater", "url": "https://github.com/SilentVoid13/Templater", "metric": "5,527,936", "desc": "Dynamic templates. For the pages you write by hand"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Structure and queries", "name": "Dataview", "url": "https://github.com/blacksmithgu/obsidian-dataview", "metric": "4,918,446", "desc": "Query language over your frontmatter. Answers \"which pages have property P\""}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Structure and queries", "name": "Metadata Menu", "url": "https://github.com/mdelobelle/metadatamenu", "metric": "330,430", "desc": "Manage frontmatter fields at scale. Useful once your schema is fixed"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Structure and queries", "name": "Supercharged Links", "url": "https://github.com/mdelobelle/obsidian_supercharged_links", "metric": "210,926", "desc": "Styles links by the target note's frontmatter, so page type is visible inline"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Graph", "name": "ExcaliBrain", "url": "https://github.com/zsviczian/excalibrain", "metric": "336,025", "desc": "Structured mind-map deriving five relationship types from links, Dataview fields and tags"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Graph", "name": "Juggl", "url": "https://github.com/HEmile/juggl", "metric": "135,614", "desc": "Interactive Cytoscape.js graph with typed edges and a saveable workspace mode"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Graph", "name": "Graph Analysis", "url": "https://github.com/SkepticMystic/graph-analysis", "metric": "community plugin", "desc": "Graph algorithms and similarity measures over the vault, surfaces unlinked connections"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Graph", "name": "Breadcrumbs", "url": "https://github.com/michaelpporter/breadcrumbs", "metric": "community plugin", "desc": "Typed links plus trees, matrices, Mermaid and Canvas export"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Graph", "name": "3D Graph", "url": "https://github.com/AlexW00/obsidian-3d-graph", "metric": "community plugin", "desc": "The vault as a 3D force graph. Shows cluster structure a 2D hairball hides"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Maintenance", "name": "Git", "url": "https://github.com/Vinzent03/obsidian-git", "metric": "3,110,571", "desc": "Commit and sync the vault from inside Obsidian. See versioning"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Maintenance", "name": "Omnisearch", "url": "https://github.com/scambier/obsidian-omnisearch", "metric": "1,837,484", "desc": "Better full-text search, including inside PDFs"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Maintenance", "name": "Importer", "url": "https://github.com/obsidianmd/obsidian-importer", "metric": "1,638,001", "desc": "Official importer from Notion, Evernote, Roam, Bear, Apple Notes. The first step for anyone backfilling"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Maintenance", "name": "Linter", "url": "https://github.com/platers/obsidian-linter", "metric": "1,044,521", "desc": "Formats notes to consistent rules. Set it carefully, it rewrites files"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Maintenance", "name": "Find orphaned files and broken links", "url": "https://github.com/Vinzent03/find-unlinked-files", "metric": "224,687", "desc": "Exactly what lint checks, without leaving Obsidian"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Capture and study", "name": "Excalidraw", "url": "https://github.com/zsviczian/obsidian-excalidraw-plugin", "metric": "7,795,993", "desc": "The most installed plugin in the catalog. Diagrams that live in the vault as files"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Capture and study", "name": "QuickAdd", "url": "https://github.com/chhoumann/quickadd", "metric": "2,082,182", "desc": "One-keystroke capture into a chosen folder and template"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Capture and study", "name": "Spaced Repetition", "url": "https://github.com/st3v3nmw/obsidian-spaced-repetition", "metric": "592,497", "desc": "Flashcards from your own notes. See learning from your vault"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Capture and study", "name": "Zotero Integration", "url": "https://github.com/obsidian-community/obsidian-zotero-integration", "metric": "550,881", "desc": "Citations, bibliographies and PDF annotations from Zotero"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Capture and study", "name": "ReadItLater", "url": "https://github.com/DominikPieper/obsidian-ReadItLater", "metric": "134,982", "desc": "Saves online content into the vault with a template"}, {"file": "plugins.md", "kind": "Obsidian plugin", "group": "Capture and study", "name": "Webpage HTML Export", "url": "https://github.com/KosmosisDire/obsidian-webpage-export", "metric": "152,194", "desc": "Export notes, canvases or the whole vault as HTML"}, {"file": "repositories.md", "kind": "Repository", "group": "GraphRAG and graph retrieval", "name": "HKUDS/LightRAG", "url": "https://github.com/HKUDS/LightRAG", "metric": "39,467", "desc": "Dual-layer graph plus vectors, aimed at cheap incremental updates. EMNLP 2025"}, {"file": "repositories.md", "kind": "Repository", "group": "GraphRAG and graph retrieval", "name": "microsoft/graphrag", "url": "https://github.com/microsoft/graphrag", "metric": "35,875", "desc": "The reference implementation of the paper"}, {"file": "repositories.md", "kind": "Repository", "group": "GraphRAG and graph retrieval", "name": "gusye1234/nano-graphrag", "url": "https://github.com/gusye1234/nano-graphrag", "metric": "3,983", "desc": "The same idea in about 1,100 readable lines. Open this one to understand the pipeline"}, {"file": "repositories.md", "kind": "Repository", "group": "GraphRAG and graph retrieval", "name": "OSU-NLP-Group/HippoRAG", "url": "https://github.com/OSU-NLP-Group/HippoRAG", "metric": "3,985", "desc": "The NeurIPS'24 paper's implementation. Personalised PageRank over a knowledge graph"}, {"file": "repositories.md", "kind": "Repository", "group": "GraphRAG and graph retrieval", "name": "DEEP-PolyU/Awesome-GraphRAG", "url": "https://github.com/DEEP-PolyU/Awesome-GraphRAG", "metric": "2,635", "desc": "Curated map of surveys, benchmarks and projects in the area"}, {"file": "repositories.md", "kind": "Repository", "group": "Agent memory", "name": "mem0ai/mem0", "url": "https://github.com/mem0ai/mem0", "metric": "64,863", "desc": "Drop-in memory layer for agents and apps"}, {"file": "repositories.md", "kind": "Repository", "group": "Agent memory", "name": "getzep/graphiti", "url": "https://github.com/getzep/graphiti", "metric": "30,680", "desc": "Real-time temporal knowledge graphs for agents"}, {"file": "repositories.md", "kind": "Repository", "group": "Agent memory", "name": "topoteretes/cognee", "url": "https://github.com/topoteretes/cognee", "metric": "30,568", "desc": "Turns data into knowledge graphs, combining graph and vector retrieval"}, {"file": "repositories.md", "kind": "Repository", "group": "Agent memory", "name": "doobidoo/mcp-memory-service", "url": "https://github.com/doobidoo/mcp-memory-service", "metric": "1,928", "desc": "Persistent memory over MCP, REST API plus knowledge graph"}, {"file": "repositories.md", "kind": "Repository", "group": "RAG frameworks", "name": "infiniflow/ragflow", "url": "https://github.com/infiniflow/ragflow", "metric": "90,216", "desc": "Full RAG engine with document understanding"}, {"file": "repositories.md", "kind": "Repository", "group": "RAG frameworks", "name": "run-llama/llama_index", "url": "https://github.com/run-llama/llama_index", "metric": "52,058", "desc": "Document agent and ingestion framework"}, {"file": "repositories.md", "kind": "Repository", "group": "RAG frameworks", "name": "neuml/txtai", "url": "https://github.com/neuml/txtai", "metric": "12,931", "desc": "Embeddings database and LLM workflows, small enough to read"}, {"file": "repositories.md", "kind": "Repository", "group": "MCP", "name": "punkpeye/awesome-mcp-servers", "url": "https://github.com/punkpeye/awesome-mcp-servers", "metric": "94,575", "desc": "The index of MCP servers"}, {"file": "repositories.md", "kind": "Repository", "group": "MCP", "name": "modelcontextprotocol/servers", "url": "https://github.com/modelcontextprotocol/servers", "metric": "90,141", "desc": "The official reference servers, including filesystem and memory"}, {"file": "repositories.md", "kind": "Repository", "group": "MCP", "name": "MarkusPfundstein/mcp-obsidian", "url": "https://github.com/MarkusPfundstein/mcp-obsidian", "metric": "4,376", "desc": "Third-party MCP server for Obsidian over the REST plugin"}, {"file": "skills.md", "kind": "Skills", "group": "Implementations of this pattern", "name": "AgriciDaniel/claude-obsidian", "url": "https://github.com/AgriciDaniel/claude-obsidian", "metric": "14,706", "desc": "16 skills, 3 subagents. Self-organizing vault with role presets"}, {"file": "skills.md", "kind": "Skills", "group": "Implementations of this pattern", "name": "Astro-Han/karpathy-llm-wiki", "url": "https://github.com/Astro-Han/karpathy-llm-wiki", "metric": "2,174", "desc": "1 skill covering the full ingest, compile, query, lint loop"}, {"file": "skills.md", "kind": "Skills", "group": "Implementations of this pattern", "name": "ballred/obsidian-claude-pkm", "url": "https://github.com/ballred/obsidian-claude-pkm", "metric": "1,856", "desc": "13 skills, 4 subagents. A complete starter kit"}, {"file": "skills.md", "kind": "Skills", "group": "Implementations of this pattern", "name": "coleam00/second-brain-starter", "url": "https://github.com/coleam00/second-brain-starter", "metric": "768", "desc": "1 skill that interviews you and generates a build plan"}, {"file": "skills.md", "kind": "Skills", "group": "Implementations of this pattern", "name": "NicholasSpisak/second-brain", "url": "https://github.com/NicholasSpisak/second-brain", "metric": "704", "desc": "4 skills, npm installer, close to the original gist"}, {"file": "skills.md", "kind": "Skills", "group": "Implementations of this pattern", "name": "eugeniughelbur/obsidian-second-brain", "url": "https://github.com/eugeniughelbur/obsidian-second-brain", "metric": "small", "desc": "47 commands across Claude, Codex and Gemini"}, {"file": "skills.md", "kind": "Skills", "group": "Implementations of this pattern", "name": "micuintus/llm-wiki", "url": "https://github.com/micuintus/llm-wiki", "metric": "small", "desc": "1 skill, deliberately minimal, no dependencies. Good counterpoint"}, {"file": "skills.md", "kind": "Skills", "group": "General skill libraries", "name": "obra/superpowers", "url": "https://github.com/obra/superpowers", "metric": "282,827", "desc": "14 skills. An agentic skills framework and development methodology"}, {"file": "skills.md", "kind": "Skills", "group": "General skill libraries", "name": "anthropics/skills", "url": "https://github.com/anthropics/skills", "metric": "175,035", "desc": "20 skills, 3 subagents. The official reference for the format"}, {"file": "skills.md", "kind": "Skills", "group": "General skill libraries", "name": "VoltAgent/awesome-agent-skills", "url": "https://github.com/VoltAgent/awesome-agent-skills", "metric": "33,894", "desc": "A curated index of 1,000+ community skills"}, {"file": "skills.md", "kind": "Skills", "group": "General skill libraries", "name": "hesreallyhim/awesome-claude-code", "url": "https://github.com/hesreallyhim/awesome-claude-code", "metric": "53,661", "desc": "Commands, hooks, workflows and tooling for Claude Code"}, {"file": "skills.md", "kind": "Skills", "group": "Graph builders", "name": "Graphify-Labs/graphify", "url": "https://github.com/Graphify-Labs/graphify", "metric": "115,697", "desc": "A `/graphify` skill that turns any folder of code, docs, PDFs and screenshots into a queryable graph. Every edge labelled extracted or inferred"}, {"file": "tools.md", "kind": "Tool", "group": "The core stack", "name": "Obsidian", "url": "https://obsidian.md", "metric": "", "desc": "Local markdown editor. The vault is a plain folder, which is why agents work well with it"}, {"file": "tools.md", "kind": "Tool", "group": "The core stack", "name": "Obsidian Web Clipper", "url": "https://obsidian.md/clipper", "metric": "", "desc": "Official browser extension, saves articles into `raw/`. Uses Mozilla Readability"}, {"file": "tools.md", "kind": "Tool", "group": "The core stack", "name": "Claude Code", "url": "https://code.claude.com/docs/en/setup", "metric": "", "desc": "The agent that maintains the wiki. Paid account required"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "AFFiNE", "url": "https://github.com/toeverything/AFFiNE", "metric": "72,292", "desc": "Docs, whiteboard and database in one. Heavier than markdown files"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "memos", "url": "https://github.com/usememos/memos", "metric": "62,837", "desc": "Self-hosted quick capture, markdown-native. A good `raw/` inbox"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "Joplin", "url": "https://github.com/laurent22/joplin", "metric": "56,264", "desc": "Privacy-focused notes with sync across every platform"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "SiYuan", "url": "https://github.com/siyuan-note/siyuan", "metric": "46,225", "desc": "Self-hosted knowledge workspace, block-based"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "Logseq", "url": "https://github.com/logseq/logseq", "metric": "44,818", "desc": "Outliner, plain markdown, block-level references"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "Outline", "url": "https://github.com/outline/outline", "metric": "40,483", "desc": "Team knowledge base. The right answer when it is not just you"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "Trilium", "url": "https://github.com/TriliumNext/Trilium", "metric": "37,762", "desc": "Hierarchical personal knowledge base with scripting"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "Foam", "url": "https://github.com/foambubble/foam", "metric": "17,386", "desc": "The same wikilink pattern inside VS Code"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "Anytype", "url": "https://github.com/anyproto/anytype-ts", "metric": "8,764", "desc": "Local-first, encrypted, object-based"}, {"file": "tools.md", "kind": "Tool", "group": "Alternative homes for a vault", "name": "Dendron", "url": "https://github.com/dendronhq/dendron", "metric": "7,465", "desc": "Hierarchical PKM in VS Code"}, {"file": "tools.md", "kind": "Tool", "group": "AI-native knowledge apps", "name": "Khoj", "url": "https://github.com/khoj-ai/khoj", "metric": "37,186", "desc": "Self-hostable AI second brain over your docs, with custom agents and scheduled automations"}, {"file": "tools.md", "kind": "Tool", "group": "AI-native knowledge apps", "name": "Quivr", "url": "https://github.com/The-Vibe-Company/quivr", "metric": "39,498", "desc": "Opinionated RAG you embed in your own app"}, {"file": "tools.md", "kind": "Tool", "group": "AI-native knowledge apps", "name": "Reor", "url": "https://github.com/reorproject/reor", "metric": "8,563", "desc": "Local-first AI note app that links notes automatically as you write"}, {"file": "tools.md", "kind": "Tool", "group": "Capture and processing", "name": "yt-dlp", "url": "https://github.com/yt-dlp/yt-dlp", "metric": "", "desc": "Subtitles and audio from video platforms"}, {"file": "tools.md", "kind": "Tool", "group": "Capture and processing", "name": "youtube-transcript-api", "url": "https://github.com/jdepoix/youtube-transcript-api", "metric": "", "desc": "Transcripts from Python"}, {"file": "tools.md", "kind": "Tool", "group": "Capture and processing", "name": "OCRmyPDF", "url": "https://github.com/ocrmypdf/OCRmyPDF", "metric": "", "desc": "Text layer for scanned PDFs"}, {"file": "tools.md", "kind": "Tool", "group": "Capture and processing", "name": "Zotero", "url": "https://github.com/zotero/zotero", "metric": "", "desc": "Reference manager, 15,184 stars, markdown export path"}, {"file": "tools.md", "kind": "Tool", "group": "Capture and processing", "name": "Readwise", "url": "https://readwise.io", "metric": "", "desc": "Kindle and read-later highlights into Obsidian. Paid"}, {"file": "tools.md", "kind": "Tool", "group": "Search and graph", "name": "ripgrep", "url": "https://github.com/BurntSushi/ripgrep", "metric": "", "desc": "Fast enough that most vaults never need an index"}, {"file": "tools.md", "kind": "Tool", "group": "Search and graph", "name": "NetworkX", "url": "https://networkx.org", "metric": "", "desc": "Graph analysis once you have exported an edge list"}, {"file": "tools.md", "kind": "Tool", "group": "Search and graph", "name": "Kuzu", "url": "https://kuzudb.com", "metric": "", "desc": "Embedded graph database, no server"}, {"file": "tools.md", "kind": "Tool", "group": "Search and graph", "name": "Neo4j", "url": "https://neo4j.com", "metric": "", "desc": "Full graph database. Overkill unless you build on top"}, {"file": "tools.md", "kind": "Tool", "group": "Search and graph", "name": "Gephi", "url": "https://gephi.org", "metric": "", "desc": "Visual graph exploration beyond Obsidian's view"}, {"file": "tools.md", "kind": "Tool", "group": "Search and graph", "name": "txtai", "url": "https://github.com/neuml/txtai", "metric": "", "desc": "12,931 stars. Semantic search and LLM workflows, if you decide you need embeddings"}, {"file": "tools.md", "kind": "Tool", "group": "Publishing", "name": "Quartz", "url": "https://github.com/jackyzha0/quartz", "metric": "13,185", "desc": "Vault to static site with backlinks, local graph and search"}, {"file": "reading.md", "kind": "Reading", "group": "The source document", "name": "Karpathy's llm-wiki gist", "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f", "metric": "", "desc": "The pattern everything in this repo builds on."}, {"file": "reading.md", "kind": "Reading", "group": "The tradition it comes from", "name": "Andy Matuschak's notes", "url": "https://notes.andymatuschak.org", "metric": "", "desc": "The Zettelkasten method. The argument for atomic notes and dense linking still holds; the manual labour it demands is the part that killed it for most people. - Building a Second Brain, Tiago Forte. Where the term comes from, and the PARA m"}, {"file": "papers.md", "kind": "Paper", "group": "GraphRAG", "name": "From Local to Global: A Graph RAG Approach to Query-Focused\nSummarization", "url": "https://arxiv.org/abs/2404.16130", "metric": "", "desc": "Edge, Trinh, Cheng, Bradley, Chao, Mody, Truitt, Metropolitansky, Ness, Larson. Microsoft Research. Implementation at microsoft/graphrag."}, {"file": "papers.md", "kind": "Paper", "group": "HippoRAG", "name": "HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language\nModels", "url": "https://arxiv.org/abs/2405.14831", "metric": "", "desc": "Guti\u00e9rrez, Shu, Gu, Yasunaga, Su."}, {"file": "papers.md", "kind": "Paper", "group": "Lost in the Middle", "name": "Lost in the Middle: How Language Models Use Long\nContexts", "url": "https://arxiv.org/abs/2307.03172", "metric": "", "desc": "Liu, Lin, Hewitt, Paranjape, Bevilacqua, Petroni, Liang. Published in TACL."}]</script>
+<script>
+const R=JSON.parse(document.getElementById('rdata').textContent);
+let kind='all', term='';
+function draw(){
+  const f=R.filter(r=>(kind==='all'||r.kind===kind) &&
+    (!term || (r.name+' '+r.desc+' '+r.group).toLowerCase().includes(term)));
+  document.getElementById('count').textContent=f.length+' of '+R.length+' shown';
+  let h='', g=null;
+  f.forEach(r=>{
+    const key=r.kind+' / '+r.group;
+    if(key!==g){g=key; h+=`<div class="grp-h">${r.group||r.kind}</div>`;}
+    h+=`<div class="row">
+      <div><a class="nm" href="${r.url}">${r.name}</a><span class="kd">${r.kind}</span></div>
+      <div class="mt">${r.metric||''}</div>
+      <div class="ds">${r.desc||''}</div></div>`;
+  });
+  document.getElementById('rows').innerHTML=h||'<div class="count">nothing matches that filter</div>';
+}
+document.getElementById('ctl').addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(!b)return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c===b));
+  kind=b.dataset.k; draw();
+});
+document.getElementById('rq').addEventListener('input',e=>{term=e.target.value.trim().toLowerCase();draw();});
+draw();
+</script></body></html>

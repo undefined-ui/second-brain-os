@@ -7,3 +7,4 @@ __pycache__/
 node_modules/
 *.graphml
 *.csv
+site_data.json
