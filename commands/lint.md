@@ -1,8 +1,7 @@
 ---
-description: Audit the vault for broken links, orphans and schema problems
+description: Audit structure and repair what is mechanical
 ---
 
-Run a full structural audit following the `second-brain-lint` skill.
+Full structural audit of $ARGUMENTS, or the whole vault. Fix mechanical problems, propose anything needing judgement, log the run.
 
-$ARGUMENTS may narrow the scope to a folder. Fix mechanical problems, propose
-anything that requires a judgement call, and append the run to `log.md`.
+Follow the `second-brain-lint` skill.

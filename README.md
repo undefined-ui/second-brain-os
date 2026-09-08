@@ -90,9 +90,9 @@ them separate matters more than it sounds.
 |---|---|
 | [`docs/`](docs/README.md) | The guide. Ten sections, from the concept to troubleshooting |
 | [`vault-template/`](vault-template/) | A starter vault: wiki structure, project pipeline, `CLAUDE.md` and page templates |
-| [`skills/`](skills/README.md) | Agent skills: ingest, lint, query, review |
-| [`commands/`](commands/README.md) | Slash commands for Claude Code |
-| [`agents/`](agents/README.md) | Subagent definitions, two of them read-only by design |
+| [`skills/`](skills/README.md) | 18 agent skills, one per workflow in the guide |
+| [`commands/`](commands/README.md) | 72 slash commands, scoped entry points into those skills |
+| [`agents/`](agents/README.md) | 6 subagents, four of them read-only by design |
 | [`scripts/`](scripts/README.md) | Dependency-free Python for link checking, stats and graph export |
 | [`resources/`](resources/README.md) | Tools, repos, papers and reading worth your time |
 | [`examples/`](examples/README.md) | Real vaults and real output |
@@ -198,8 +198,12 @@ Outside Obsidian: [Web Clipper](https://obsidian.md/clipper) for capture,
 
 ## Skills and other implementations
 
-Counted individually: a repo shipping sixteen skills counts as sixteen. Stars
-from the GitHub API, September 2026.
+This repo ships **18 skills, 72 commands, 6 subagents and 4 scripts**: one skill
+per workflow in the guide, and a command for every scoped version of it you would
+actually run.
+
+Other implementations, counted the same way. A repo shipping sixteen skills
+counts as sixteen. Stars from the GitHub API, September 2026.
 
 | Repo | Stars | Ships |
 |---|---|---|

@@ -4,7 +4,7 @@ One agent doing everything produces mediocre work at every job. The instructions
 that make a good ingestor are not the ones that make a good reviewer, and stuffed
 into one prompt they dilute each other.
 
-Four roles cover a vault. The definitions are in
+Six roles cover a vault, four of them read-only. The definitions are in
 [`agents/`](../../agents/README.md).
 
 ## Ingestor
@@ -48,9 +48,25 @@ Also the role you talk to most, and the one that most needs the rule about not
 falling back on general knowledge. See the
 [query skill](../../skills/README.md).
 
+## Graph analyst
+
+Read-only. Runs the metrics, finds hubs, bridges and clusters, and says what the
+numbers mean for retrieval. Monthly.
+
+Separate from the linter because analysis and repair want opposite dispositions:
+one should notice everything, the other should touch as little as possible.
+
+## Curator
+
+Read-only. Proposes what to prune, archive or merge, quarterly.
+
+Proposals only, never actions. Deletion is the one operation you cannot recover
+from by reading a diff, so it stays a decision the owner makes.
+
 ## Roles not worth creating
 
 **A deleter.** Deletion should be a decision you make, executed with a record.
+The curator proposes; you dispose.
 
 **A summariser.** Summaries of pages that are already summaries produce a layer
 that is less true than what is under it and gets read instead of it.

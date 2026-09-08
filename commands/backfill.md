@@ -1,13 +1,7 @@
 ---
-description: Bulk import a large batch of old material
+description: Bulk import an archive in batches
 ---
 
-Import the material in $ARGUMENTS into the vault.
+Backfill $ARGUMENTS. Triage first, oldest first, ten per batch, checkpoint and stop between batches.
 
-Work in batches of ten sources. After each batch: update `index.md`, append to
-`log.md`, and report progress. Order matters, so process oldest material first
-and let later sources update the pages earlier ones created, which mirrors how
-the owner's understanding actually developed.
-
-Stop after each batch and wait for a go-ahead. Bulk imports are where cost and
-quality both go wrong quietly.
+Follow the `second-brain-backfill` skill.

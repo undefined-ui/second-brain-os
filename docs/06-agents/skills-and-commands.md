@@ -15,9 +15,13 @@ vault".
 
 ## What this repo ships
 
-Four skills in [`skills/`](../../skills/README.md): ingest, lint, query, review.
-Five commands in [`commands/`](../../commands/README.md), each a few lines
-pointing at a skill.
+Eighteen skills in [`skills/`](../../skills/README.md), one per workflow in this
+guide. Seventy-two commands in [`commands/`](../../commands/README.md), each a
+few lines pointing at a skill and setting its scope.
+
+The ratio is deliberate. Behaviour belongs in a small number of well-written
+skills; commands are cheap, so there is no reason to make you remember how to
+phrase a request you make every week.
 
 Install them inside the vault at `.claude/skills/` and `.claude/commands/` so
 they are versioned alongside your notes and travel with the vault.

@@ -1,6 +1,7 @@
 ---
-description: Weekly review of what the vault learned
+description: Periodic review of what the vault learned
 ---
 
-Produce a review for the period in $ARGUMENTS, defaulting to the last seven
-days, following the `second-brain-review` skill.
+Review the period in $ARGUMENTS, defaulting to seven days.
+
+Follow the `second-brain-review` skill.

@@ -8,9 +8,9 @@ tree in September 2026.
 
 | Type | Count | Where |
 |---|---|---|
-| Skills | 4 | [`skills/`](../skills/README.md). Ingest, lint, query, review |
-| Commands | 5 | [`commands/`](../commands/README.md). `/ingest`, `/ask`, `/lint`, `/review`, `/backfill` |
-| Subagents | 4 | [`agents/`](../agents/README.md). Ingestor, linker, reviewer, researcher |
+| Skills | 18 | [`skills/`](../skills/README.md). One per workflow in the guide |
+| Commands | 72 | [`commands/`](../commands/README.md). Scoped entry points into those skills |
+| Subagents | 6 | [`agents/`](../agents/README.md). Four of them read-only by design |
 | Scripts | 4 | [`scripts/`](../scripts/README.md). Link check, stats, graph export, chat import |
 
 Plain `SKILL.md` files, so they work with any agent that reads the Agent Skills
