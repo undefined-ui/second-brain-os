@@ -202,7 +202,7 @@ The part most second-brain guides skip: what the graph is for and how to make it
   - Whether a personal vault is big enough to need it
 - [x] **Exporting the graph**
   - Parsing wikilinks into an edge list
-  - Loading into Kuzu, Neo4j or NetworkX
+  - Loading into Ladybug, Neo4j or NetworkX
   - Visualizing outside Obsidian
   - Keeping the export in sync
 - [x] **Graph metrics worth tracking**

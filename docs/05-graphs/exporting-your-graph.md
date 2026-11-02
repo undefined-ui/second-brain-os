@@ -51,9 +51,11 @@ stop informing each other.
 
 ## Graph databases
 
-Kuzu is embedded, no server, reads CSV directly, and Cypher queries over your
-own notes are genuinely fun for an evening. Neo4j is the full version and is
-overkill unless you are building something on top.
+[Ladybug](https://github.com/LadybugDB/ladybug) is embedded, no server,
+[reads CSV directly](https://docs.ladybugdb.com/import/csv), and Cypher queries
+over your own notes are genuinely fun for an evening. It is the maintained
+continuation of Kuzu, which was archived in October 2025. Neo4j is the full
+version and is overkill unless you are building something on top.
 
 Be clear about what this is: an analysis layer, not a replacement. The markdown
 stays canonical, the database is a rebuildable derivative. The moment you start
