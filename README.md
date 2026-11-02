@@ -1,35 +1,37 @@
 # Second Brain OS
 
-A knowledge base that an AI agent builds and maintains for you, in plain
-markdown you own. Plus a course and five handbooks on building the agents that
-do it.
+Guides and resources for AI engineers: a course on building agents, five
+handbooks that go deep on one layer each, hands-on projects, and the links worth
+your time.
 
 **Read it on the web:** [secondbrainos.dev](https://secondbrainos.dev/) puts
 every page, term and tool from this repo on one interactive map.
 
 ## Why this repo?
 
-You save things meaning to come back to them, and you never do. Filing and
-linking is boring work that people stop doing after two weeks. Hand it to an
-agent and the system stays alive: everything you read, watch and save becomes
-linked wiki pages you can ask questions of. Here you will find:
+AI engineering moves fast, and the useful parts are scattered across
+whitepapers, engineering blogs and repos. This collects them into one path you
+can follow: theory with sources, a build in every module, and a reading list
+where every entry has a reason to be here. Here you will find:
 
-- **130 pages** across a guide to the second brain, a seven-module agents course and five handbooks
-- **A working toolkit:** 18 skills, 72 slash commands, 6 subagents, 4 scripts, a Claude Code plugin and a starter vault
-- **Vetted resources:** papers, repos, tools and Obsidian plugins, each with a reason to be here
-- **Plain markdown, MIT licensed.** No signup. Works with Claude Code or any agent that reads files, and Obsidian is a viewer, not a dependency
+- **The agents course:** seven modules from a single prompt to a production agent, covering context, loops, gates, harnesses, evals and production
+- **Five handbooks** that go deep on one layer each: knowledge graphs, gates, harnesses, loops and evals
+- **A hands-on project:** a second brain, a knowledge base an agent builds and maintains for you in plain markdown
+- **A working toolkit:** a Claude Code plugin for the course, plus 18 skills, 72 slash commands and 6 subagents for the project
+- **114 vetted resources**, and what landed this month, checked at the source
+- **Plain markdown, MIT licensed.** No signup, nothing to install to read it
 
 ## Table of contents
 
 - [Getting started](#getting-started)
 - [New this month](#new-this-month)
 - [Learn by level](#learn-by-level)
-  - [🟢 Beginner (27 pages)](#-beginner)
-  - [🟡 Intermediate (50 pages)](#-intermediate)
+  - [🟢 Beginner (30 pages)](#-beginner)
+  - [🟡 Intermediate (47 pages)](#-intermediate)
   - [🔴 Advanced (53 pages)](#-advanced)
 - [Toolkit](#toolkit)
 - [Resources](#resources)
-- [How it works](#how-it-works)
+- [How the second brain works](#how-the-second-brain-works)
 - [Contributing](#contributing)
 - [License and credit](#license-and-credit)
 
@@ -37,10 +39,13 @@ linked wiki pages you can ask questions of. Here you will find:
 
 ## Getting started
 
-1. **New to the idea:** read [What a second brain actually is](docs/01-concepts/what-is-a-second-brain.md) and [The LLM wiki pattern](docs/01-concepts/llm-wiki-pattern.md). Ten minutes.
-2. **Build your vault tonight:** run the quickstart below, then follow the nine [Setup](docs/02-setup/README.md) pages in order.
-3. **Make it maintain itself:** the [Intermediate](#-intermediate) level covers structure, the graph, scheduled agents and asking questions.
-4. **Build agents of your own:** the [agents course](docs/course-0-map/README.md) runs through all three levels, and the [handbooks](#-advanced) go deep on one layer each.
+1. **New to building agents:** read [What an agent is](docs/course-0-map/what-an-agent-is.md), then the [agents course](docs/README.md#the-agents-course) in order. Seven modules, three lessons each.
+2. **One layer of your agent is hurting:** open its [handbook](#-advanced). Graphs, gates, harnesses, loops or evals, and every one ends in a build.
+3. **Want a project to practise on:** build the [second brain](docs/01-concepts/what-is-a-second-brain.md), a knowledge base an agent maintains for you. The quickstart is below.
+4. **Staying current:** [New this month](#new-this-month) lists what landed recently, each item checked at its source.
+
+<details>
+<summary><b>Second brain quickstart</b></summary>
 
 ```bash
 # copy the starter vault, skills, commands, agents and scripts
@@ -59,10 +64,11 @@ rm ~/brain/.claude/*/README.md ~/brain/scripts/README.md
 cd ~/brain && claude
 ```
 
-The `scripts/` copy is what lets `/metrics`, `/health` and `/graph-export` run
-from inside the vault. On Windows, use `python` where this guide says `python3`.
-Then feed it ten more sources before judging it: the graph is not interesting at
-five pages and it is hard to look away from at fifty.
+Then follow the nine [Setup](docs/02-setup/README.md) pages in order. The
+`scripts/` copy is what lets `/metrics`, `/health` and `/graph-export` run from
+inside the vault. On Windows, use `python` where the guide says `python3`.
+
+</details>
 
 ---
 
@@ -112,15 +118,25 @@ on each are in [`resources/`](resources/README.md).
 
 ## Learn by level
 
-Every page in the repo, in reading order. The guide runs from beginner to
-intermediate, the course runs through all three levels, and the handbooks are
-references for when one layer of your agent starts hurting.
+Every page in the repo, in reading order. The course runs through all three
+levels, the second-brain project runs from beginner to intermediate, and the
+handbooks are references for when one layer of your agent starts hurting.
 
 ### 🟢 Beginner
 
-Understand the pattern, set up the vault, start feeding it. One evening, no agent experience needed.
+What an agent is and what it actually sees, then a first project: a knowledge base an agent builds for you. No agent experience needed.
 
-#### [Concepts](docs/01-concepts/README.md) <sub>guide 01</sub>
+#### [The map](docs/course-0-map/README.md) <sub>course module 0</sub>
+- [**What an agent is**](docs/course-0-map/what-an-agent-is.md) - An application that plans and acts toward a goal, not a model
+- [**Five layers, one system**](docs/course-0-map/five-layers.md) - Context, loop, gate, harness, evals: the system around the model
+- [**Agents or workflows**](docs/course-0-map/agents-or-workflows.md) - If you can write the steps down, build a workflow
+
+#### [Context](docs/course-1-context/README.md) <sub>course module 1</sub>
+- [**How models read context**](docs/course-1-context/how-models-read.md) - Attention, caching and why a bigger window is not free
+- [**The four places**](docs/course-1-context/the-four-places.md) - System prompt, tools, history, tail: what goes where
+- [**Context in practice**](docs/course-1-context/context-practice.md) - Audit and restructure a real agent's context
+
+#### [Concepts](docs/01-concepts/README.md) <sub>second brain 01</sub>
 - [**What a second brain actually is**](docs/01-concepts/what-is-a-second-brain.md) - One folder of plain text an agent reads, writes and answers from
 - [**The save-for-later paradox**](docs/01-concepts/the-save-for-later-paradox.md) - Why saved links never compound, and what has to change
 - [**The LLM wiki pattern**](docs/01-concepts/llm-wiki-pattern.md) - Karpathy's April 2026 gist, the pattern this repo implements
@@ -130,7 +146,7 @@ Understand the pattern, set up the vault, start feeding it. One evening, no agen
 - [**Wiki vs RAG**](docs/01-concepts/wiki-vs-rag.md) - Why a linked wiki beats a vector database for a personal corpus
 - [**What good looks like**](docs/01-concepts/what-good-looks-like.md) - Concrete signs it is working, from week one to month six
 
-#### [Setup](docs/02-setup/README.md) <sub>guide 02</sub>
+#### [Setup](docs/02-setup/README.md) <sub>second brain 02</sub>
 - [**Obsidian and your first vault**](docs/02-setup/obsidian-install-and-vault.md) - The storage half: free, local, plain text, with a graph view
 - [**Claude Code in the vault**](docs/02-setup/claude-code-setup.md) - Run Claude Code in the vault, in the terminal or the desktop app
 - [**MCP for Obsidian**](docs/02-setup/mcp-obsidian.md) - Give the agent a door into Obsidian over MCP. Optional on day one
@@ -141,7 +157,7 @@ Understand the pattern, set up the vault, start feeding it. One evening, no agen
 - [**Plugins worth installing**](docs/02-setup/obsidian-plugins.md) - The plugins worth adding, each for one specific problem
 - [**Git, sync and backups**](docs/02-setup/git-and-sync.md) - Git, sync and backups that make unattended runs safe
 
-#### [Ingestion](docs/03-ingestion/README.md) <sub>guide 03</sub>
+#### [Ingestion](docs/03-ingestion/README.md) <sub>second brain 03</sub>
 - [**Web articles**](docs/03-ingestion/web-clipper.md) - Clip articles into raw/ in one click
 - [**YouTube and podcasts**](docs/03-ingestion/youtube-transcripts.md) - Turn videos and podcasts into transcripts the agent can file
 - [**PDFs, papers and books**](docs/03-ingestion/pdfs-and-books.md) - Get PDFs, papers and books in without garbled text
@@ -150,76 +166,11 @@ Understand the pattern, set up the vault, start feeding it. One evening, no agen
 - [**Newsletters and email**](docs/03-ingestion/newsletters-and-email.md) - Automate newsletter capture without flooding the wiki
 - [**Backfilling years of material**](docs/03-ingestion/bulk-backfill.md) - Import years of bookmarks and downloads in controlled batches
 
-#### [The map](docs/course-0-map/README.md) <sub>course module 0</sub>
-- [**What an agent is**](docs/course-0-map/what-an-agent-is.md) - An application that plans and acts toward a goal, not a model
-- [**Five layers, one system**](docs/course-0-map/five-layers.md) - Context, loop, gate, harness, evals: the system around the model
-- [**Agents or workflows**](docs/course-0-map/agents-or-workflows.md) - If you can write the steps down, build a workflow
-
 ---
 
 ### 🟡 Intermediate
 
-Shape the vault into a graph, automate the upkeep, ask it real questions, and learn how an agent sees, loops and decides.
-
-#### [Structuring](docs/04-structuring/README.md) <sub>guide 04</sub>
-- [**One page, one idea**](docs/04-structuring/atomic-pages.md) - One idea per page, explained so it stands alone
-- [**The four page types**](docs/04-structuring/page-types.md) - Source, concept, entity, synthesis: four types, four jobs
-- [**Linking rules**](docs/04-structuring/linking-rules.md) - The rules that turn a folder of files into a graph
-- [**Frontmatter schema**](docs/04-structuring/frontmatter-schema.md) - The YAML fields that make the vault queryable
-- [**Naming and aliases**](docs/04-structuring/naming-and-aliases.md) - Names and aliases, the keys every wikilink resolves by
-- [**Deduplication and merging**](docs/04-structuring/dedupe-and-merge.md) - Find and merge duplicate pages without breaking links
-- [**Contradictions and supersession**](docs/04-structuring/contradictions-and-supersession.md) - Record disagreements with dates and sources, never overwrite
-- [**index.md and log.md**](docs/04-structuring/index-and-log.md) - The catalog the agent reads first and the log that makes runs auditable
-
-#### [Graphs](docs/05-graphs/README.md) <sub>guide 05</sub>
-- [**Graph basics for a knowledge base**](docs/05-graphs/graph-basics.md) - Your vault is already a graph: what that means in practice
-- [**Reading the Obsidian graph view**](docs/05-graphs/obsidian-graph-view.md) - The graph views that actually tell you something
-- [**Typed links**](docs/05-graphs/typed-links.md) - Links that say how two pages relate, and when to type them
-- [**Graph vs embeddings**](docs/05-graphs/graph-vs-vectors.md) - Why structured links answer what similarity search cannot
-- [**GraphRAG and where it fits**](docs/05-graphs/graphrag.md) - What GraphRAG is and why you probably do not need it yet
-- [**Exporting the graph**](docs/05-graphs/exporting-your-graph.md) - Get the graph out of Obsidian to compute on it
-- [**Graph metrics worth tracking**](docs/05-graphs/metrics.md) - Four numbers, checked monthly, that show whether it works
-
-#### [Agents](docs/06-agents/README.md) <sub>guide 06</sub>
-- [**Agent roles**](docs/06-agents/agent-roles.md) - Ingestor, linker, reviewer: one job per agent
-- [**Scheduling**](docs/06-agents/scheduled-maintenance.md) - Scheduled runs that file, link and report while you sleep
-- [**Subagents and parallel work**](docs/06-agents/subagents.md) - Subagents with their own context for parallel reading
-- [**Hooks**](docs/06-agents/hooks.md) - Hooks for the rules a prompt instruction will eventually forget
-- [**Skills and slash commands**](docs/06-agents/skills-and-commands.md) - Skills vs slash commands, and when to use each
-- [**Guardrails**](docs/06-agents/safety-and-guardrails.md) - What the agent may touch, and the walls that hold when it is wrong
-
-#### [Retrieval](docs/07-retrieval/README.md) <sub>guide 07</sub>
-- [**Asking the vault**](docs/07-retrieval/asking-questions.md) - Answers grounded in your pages, not the model's memory
-- [**Query patterns**](docs/07-retrieval/query-patterns.md) - The questions a vault answers better than a search engine
-- [**Search tools**](docs/07-retrieval/search-tools.md) - Grep, ripgrep and Obsidian search: almost always enough
-- [**Adding RAG when you need it**](docs/07-retrieval/rag-on-top.md) - The threshold where adding RAG starts to pay
-- [**Context budget**](docs/07-retrieval/context-budget.md) - Why reading more pages makes answers worse, and the budget rules
-
-#### [Outputs](docs/08-outputs/README.md) <sub>guide 08</sub>
-- [**Writing from the vault**](docs/08-outputs/writing-from-the-vault.md) - Write from research that is already done, cited and linked
-- [**Research reports**](docs/08-outputs/research-reports.md) - Reports for questions the vault cannot answer yet
-- [**Publishing and export**](docs/08-outputs/publishing-and-export.md) - Publish the public part of your vault, keep the rest private
-- [**Learning from your own vault**](docs/08-outputs/teaching-yourself.md) - Quizzes and review that turn saved pages into things you know
-
-#### [Maintenance](docs/09-maintenance/README.md) <sub>guide 09</sub>
-- [**Linting the vault**](docs/09-maintenance/lint-and-health.md) - Catch broken links, orphans and missing fields before they rot
-- [**Review cadence**](docs/09-maintenance/review-cadence.md) - Weekly and monthly reviews that keep you in the loop
-- [**Versioning**](docs/09-maintenance/versioning-with-git.md) - Every agent change as a diff you can read and revert
-- [**Backups and portability**](docs/09-maintenance/backups-and-portability.md) - The backup mistake almost everyone makes
-- [**Privacy**](docs/09-maintenance/privacy-and-secrets.md) - Keep secrets out of pages, prompts and public exports
-- [**Scaling past a thousand pages**](docs/09-maintenance/scaling.md) - What strains past a thousand pages, and what to change
-
-#### [Troubleshooting](docs/10-troubleshooting/README.md) <sub>guide 10</sub>
-- [**The failures everyone hits**](docs/10-troubleshooting/common-failures.md) - The failures everyone hits, usually in capture, with fixes
-- [**The agent writes garbage**](docs/10-troubleshooting/agent-writes-garbage.md) - Fix pages that are on topic and useless to read
-- [**Broken links and orphans**](docs/10-troubleshooting/broken-links.md) - Repair broken links and orphans after agent renames
-- [**The vault got too big**](docs/10-troubleshooting/vault-too-big.md) - When answers get slow and vague as the vault grows
-- [**FAQ**](docs/10-troubleshooting/faq.md) - MCP, other agents, cost, local models, Notion imports
-
-#### [Context](docs/course-1-context/README.md) <sub>course module 1</sub>
-- [**How models read context**](docs/course-1-context/how-models-read.md) - Attention, caching and why a bigger window is not free
-- [**The four places**](docs/course-1-context/the-four-places.md) - System prompt, tools, history, tail: what goes where
-- [**Context in practice**](docs/course-1-context/context-practice.md) - Audit and restructure a real agent's context
+How an agent loops and decides, and the second brain grown into a graph that maintains itself and answers real questions.
 
 #### [Loop](docs/course-2-loop/README.md) <sub>course module 2</sub>
 - [**Loops versus workflows**](docs/course-2-loop/loops-vs-workflows.md) - When the model, not your code, should choose the next step
@@ -230,6 +181,61 @@ Shape the vault into a graph, automate the upkeep, ask it real questions, and le
 - [**Cheap Decisions**](docs/course-3-gate/cheap-decisions.md) - Cheap classifiers in front of expensive models
 - [**Gates in Practice**](docs/course-3-gate/gates-in-practice.md) - Measuring a gate: how often it is right, and how sure it is
 - [**Gate Practice**](docs/course-3-gate/gate-practice.md) - Label a few hundred examples and train a baseline first
+
+#### [Structuring](docs/04-structuring/README.md) <sub>second brain 04</sub>
+- [**One page, one idea**](docs/04-structuring/atomic-pages.md) - One idea per page, explained so it stands alone
+- [**The four page types**](docs/04-structuring/page-types.md) - Source, concept, entity, synthesis: four types, four jobs
+- [**Linking rules**](docs/04-structuring/linking-rules.md) - The rules that turn a folder of files into a graph
+- [**Frontmatter schema**](docs/04-structuring/frontmatter-schema.md) - The YAML fields that make the vault queryable
+- [**Naming and aliases**](docs/04-structuring/naming-and-aliases.md) - Names and aliases, the keys every wikilink resolves by
+- [**Deduplication and merging**](docs/04-structuring/dedupe-and-merge.md) - Find and merge duplicate pages without breaking links
+- [**Contradictions and supersession**](docs/04-structuring/contradictions-and-supersession.md) - Record disagreements with dates and sources, never overwrite
+- [**index.md and log.md**](docs/04-structuring/index-and-log.md) - The catalog the agent reads first and the log that makes runs auditable
+
+#### [Graphs](docs/05-graphs/README.md) <sub>second brain 05</sub>
+- [**Graph basics for a knowledge base**](docs/05-graphs/graph-basics.md) - Your vault is already a graph: what that means in practice
+- [**Reading the Obsidian graph view**](docs/05-graphs/obsidian-graph-view.md) - The graph views that actually tell you something
+- [**Typed links**](docs/05-graphs/typed-links.md) - Links that say how two pages relate, and when to type them
+- [**Graph vs embeddings**](docs/05-graphs/graph-vs-vectors.md) - Why structured links answer what similarity search cannot
+- [**GraphRAG and where it fits**](docs/05-graphs/graphrag.md) - What GraphRAG is and why you probably do not need it yet
+- [**Exporting the graph**](docs/05-graphs/exporting-your-graph.md) - Get the graph out of Obsidian to compute on it
+- [**Graph metrics worth tracking**](docs/05-graphs/metrics.md) - Four numbers, checked monthly, that show whether it works
+
+#### [Agents](docs/06-agents/README.md) <sub>second brain 06</sub>
+- [**Agent roles**](docs/06-agents/agent-roles.md) - Ingestor, linker, reviewer: one job per agent
+- [**Scheduling**](docs/06-agents/scheduled-maintenance.md) - Scheduled runs that file, link and report while you sleep
+- [**Subagents and parallel work**](docs/06-agents/subagents.md) - Subagents with their own context for parallel reading
+- [**Hooks**](docs/06-agents/hooks.md) - Hooks for the rules a prompt instruction will eventually forget
+- [**Skills and slash commands**](docs/06-agents/skills-and-commands.md) - Skills vs slash commands, and when to use each
+- [**Guardrails**](docs/06-agents/safety-and-guardrails.md) - What the agent may touch, and the walls that hold when it is wrong
+
+#### [Retrieval](docs/07-retrieval/README.md) <sub>second brain 07</sub>
+- [**Asking the vault**](docs/07-retrieval/asking-questions.md) - Answers grounded in your pages, not the model's memory
+- [**Query patterns**](docs/07-retrieval/query-patterns.md) - The questions a vault answers better than a search engine
+- [**Search tools**](docs/07-retrieval/search-tools.md) - Grep, ripgrep and Obsidian search: almost always enough
+- [**Adding RAG when you need it**](docs/07-retrieval/rag-on-top.md) - The threshold where adding RAG starts to pay
+- [**Context budget**](docs/07-retrieval/context-budget.md) - Why reading more pages makes answers worse, and the budget rules
+
+#### [Outputs](docs/08-outputs/README.md) <sub>second brain 08</sub>
+- [**Writing from the vault**](docs/08-outputs/writing-from-the-vault.md) - Write from research that is already done, cited and linked
+- [**Research reports**](docs/08-outputs/research-reports.md) - Reports for questions the vault cannot answer yet
+- [**Publishing and export**](docs/08-outputs/publishing-and-export.md) - Publish the public part of your vault, keep the rest private
+- [**Learning from your own vault**](docs/08-outputs/teaching-yourself.md) - Quizzes and review that turn saved pages into things you know
+
+#### [Maintenance](docs/09-maintenance/README.md) <sub>second brain 09</sub>
+- [**Linting the vault**](docs/09-maintenance/lint-and-health.md) - Catch broken links, orphans and missing fields before they rot
+- [**Review cadence**](docs/09-maintenance/review-cadence.md) - Weekly and monthly reviews that keep you in the loop
+- [**Versioning**](docs/09-maintenance/versioning-with-git.md) - Every agent change as a diff you can read and revert
+- [**Backups and portability**](docs/09-maintenance/backups-and-portability.md) - The backup mistake almost everyone makes
+- [**Privacy**](docs/09-maintenance/privacy-and-secrets.md) - Keep secrets out of pages, prompts and public exports
+- [**Scaling past a thousand pages**](docs/09-maintenance/scaling.md) - What strains past a thousand pages, and what to change
+
+#### [Troubleshooting](docs/10-troubleshooting/README.md) <sub>second brain 10</sub>
+- [**The failures everyone hits**](docs/10-troubleshooting/common-failures.md) - The failures everyone hits, usually in capture, with fixes
+- [**The agent writes garbage**](docs/10-troubleshooting/agent-writes-garbage.md) - Fix pages that are on topic and useless to read
+- [**Broken links and orphans**](docs/10-troubleshooting/broken-links.md) - Repair broken links and orphans after agent renames
+- [**The vault got too big**](docs/10-troubleshooting/vault-too-big.md) - When answers get slow and vague as the vault grows
+- [**FAQ**](docs/10-troubleshooting/faq.md) - MCP, other agents, cost, local models, Notion imports
 
 ---
 
@@ -310,9 +316,21 @@ Harden, measure and ship agents, then go deep on one layer at a time. Every hand
 
 ## Toolkit
 
-Everything the guide describes, ready to copy into a vault.
+#### [The agents-course plugin](plugins/README.md) <sub>each tool does one module's practice page in your repo</sub>
 
-#### [Skills](skills/README.md) <sub>18, one per workflow</sub>
+```bash
+claude plugin marketplace add undefined-ui/second-brain-os
+claude plugin install agents-course@second-brain-os
+```
+
+- [**context-audit**](plugins/agents-course/skills/context-audit/SKILL.md) - Measure the four places, find cache killers and window bloat
+- [**goal-test**](plugins/agents-course/skills/goal-test/SKILL.md) - Turn a task into a testable done, with the script and a bounded loop
+- [**gate-check**](plugins/agents-course/skills/gate-check/SKILL.md) - Find the decisions that do not need the big model
+- [**harness-audit**](plugins/agents-course/skills/harness-audit/SKILL.md) - Walk the four rings, state the blast radius, rank the fixes
+- [**evals-bootstrap**](plugins/agents-course/skills/evals-bootstrap/SKILL.md) - Mine real failures into cases and generate the trace checker
+- [**loop-critic**](plugins/agents-course/agents/loop-critic.md) - An agent that reviews loop results in a clean context
+
+#### [Skills](skills/README.md) <sub>second brain, one per workflow</sub>
 - [**second-brain-ingest**](skills/second-brain-ingest/SKILL.md) - Turn raw sources into linked wiki pages
 - [**second-brain-backfill**](skills/second-brain-backfill/SKILL.md) - Import a large archive in checkpointed batches
 - [**second-brain-chat-import**](skills/second-brain-chat-import/SKILL.md) - Triage an exported chat history, privacy pass first
@@ -332,7 +350,7 @@ Everything the guide describes, ready to copy into a vault.
 - [**second-brain-publish**](skills/second-brain-publish/SKILL.md) - Check what would leak before anything is published
 - [**second-brain-privacy**](skills/second-brain-privacy/SKILL.md) - Find credentials and private material in the vault
 
-#### [Subagents](agents/README.md) <sub>6, four of them read-only</sub>
+#### [Subagents](agents/README.md) <sub>second brain, four of them read-only</sub>
 - [**ingestor**](agents/ingestor.md) - Processes new material in `raw/` into linked wiki pages
 - [**linker**](agents/linker.md) - Finds and adds missing connections between existing pages
 - [**researcher**](agents/researcher.md) - Answers a question that spans many pages and flags what is missing. Read-only
@@ -340,24 +358,10 @@ Everything the guide describes, ready to copy into a vault.
 - [**graph-analyst**](agents/graph-analyst.md) - Reports graph metrics, hubs, bridges and clusters. Read-only
 - [**curator**](agents/curator.md) - Proposes what to prune, archive or merge, never acts. Read-only
 
-#### [Slash commands](commands/README.md) <sub>72</sub>
+#### [Slash commands](commands/README.md) <sub>second brain, 72</sub>
 Scoped entry points into the skills, in nine groups: ingestion, structuring,
 graph, retrieval, maintenance, outputs, projects, safety and setup. Start with
 `/ingest`, `/ask`, `/lint` and `/review`.
-
-#### [The agents-course plugin](plugins/README.md) <sub>each tool does one module's practice page in your repo</sub>
-
-```bash
-claude plugin marketplace add undefined-ui/second-brain-os
-claude plugin install agents-course@second-brain-os
-```
-
-- [**context-audit**](plugins/agents-course/skills/context-audit/SKILL.md) - Measure the four places, find cache killers and window bloat
-- [**goal-test**](plugins/agents-course/skills/goal-test/SKILL.md) - Turn a task into a testable done, with the script and a bounded loop
-- [**gate-check**](plugins/agents-course/skills/gate-check/SKILL.md) - Find the decisions that do not need the big model
-- [**harness-audit**](plugins/agents-course/skills/harness-audit/SKILL.md) - Walk the four rings, state the blast radius, rank the fixes
-- [**evals-bootstrap**](plugins/agents-course/skills/evals-bootstrap/SKILL.md) - Mine real failures into cases and generate the trace checker
-- [**loop-critic**](plugins/agents-course/agents/loop-critic.md) - An agent that reviews loop results in a clean context
 
 #### [Scripts](scripts/README.md) <sub>dependency-free Python</sub>
 - [**link_check.py**](scripts/link_check.py) - Broken wikilinks, orphan pages, stubs
@@ -376,37 +380,12 @@ Curated, not comprehensive. The full catalog, filterable, is at
 [secondbrainos.dev/resources.html](https://secondbrainos.dev/resources.html),
 with notes on every entry in [`resources/`](resources/README.md).
 
-#### Start here
-- [**Karpathy's llm-wiki gist**](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) - The pattern everything here builds on, 4 April 2026. Read it first
-- [**From Local to Global: GraphRAG**](https://arxiv.org/abs/2404.16130) - Why chunk retrieval fails on questions about a whole corpus
-- [**HippoRAG**](https://arxiv.org/abs/2405.14831) - Graph retrieval with personalised PageRank, the closest analogue of an agent walking links
-- [**Lost in the Middle**](https://arxiv.org/abs/2307.03172) - The evidence for keeping context small, and the basis for the [context budget](docs/07-retrieval/context-budget.md)
-- [**Andy Matuschak's notes**](https://notes.andymatuschak.org) - Evergreen notes, and the strongest argument against delegating the writing
-- **How to Take Smart Notes** (Ahrens) and **Building a Second Brain** (Forte) - Zettelkasten and PARA, the methods an agent now does the upkeep for
-
-#### Obsidian plugins <sub>installs, September 2026</sub>
-- [**Claudian**](https://github.com/yishentu/claudian) - An agent in the editor · 2.0M
-- [**Copilot**](https://github.com/logancyang/obsidian-copilot) - An agent in the editor · 1.8M
-- [**Smart Connections**](https://github.com/brianpetro/obsidian-smart-connections) - Suggests links · 1.2M
-- [**Local REST API with MCP**](https://github.com/coddingtonbear/obsidian-local-rest-api) - MCP access to the vault · 712K
-- [**Dataview**](https://github.com/blacksmithgu/obsidian-dataview) - Queries over frontmatter · 4.9M
-- [**Templater**](https://github.com/SilentVoid13/Templater) - Templates · 5.5M
-- [**Git**](https://github.com/Vinzent03/obsidian-git) - Version control · 3.1M
-- [**Importer**](https://github.com/obsidianmd/obsidian-importer) - Migrating in from other apps · 1.6M
-- [**Find unlinked files**](https://github.com/Vinzent03/find-unlinked-files) - Broken links and orphans · 225K
-- [**Spaced Repetition**](https://github.com/st3v3nmw/obsidian-spaced-repetition) - Flashcards from your notes · 592K
-- [**ExcaliBrain**](https://github.com/zsviczian/excalibrain) - A structured mind map · 336K
-- [**Juggl**](https://github.com/HEmile/juggl) - An interactive graph · 136K
-
-#### Other second-brain implementations <sub>stars, September 2026</sub>
-- [**AgriciDaniel/claude-obsidian**](https://github.com/AgriciDaniel/claude-obsidian) - 16 skills, 3 subagents, role presets · 14.7K
-- [**Astro-Han/karpathy-llm-wiki**](https://github.com/Astro-Han/karpathy-llm-wiki) - 1 skill covering ingest, compile, query and lint · 2.2K
-- [**ballred/obsidian-claude-pkm**](https://github.com/ballred/obsidian-claude-pkm) - 13 skills, 4 subagents, a full starter kit · 1.9K
-- [**coleam00/second-brain-starter**](https://github.com/coleam00/second-brain-starter) - 1 skill that interviews you first · 768
-- [**NicholasSpisak/second-brain**](https://github.com/NicholasSpisak/second-brain) - 4 skills with an npm installer · 704
-- [**eugeniughelbur/obsidian-second-brain**](https://github.com/eugeniughelbur/obsidian-second-brain) - 47 commands across three agents
-- [**micuintus/llm-wiki**](https://github.com/micuintus/llm-wiki) - 1 skill, deliberately minimal
-- Where the skill format itself is defined: [anthropics/skills](https://github.com/anthropics/skills), [obra/superpowers](https://github.com/obra/superpowers) and the [awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) index of 1,000+
+#### Reading lists by topic
+- [**Agent harnesses**](docs/track-harness/resources.md) - Harness reading, checked September 2026
+- [**Loop engineering**](docs/track-loop/resources.md) - Long-running loops, critics and stop conditions
+- [**Eval engineering**](docs/track-evals/resources.md) - A short eval reading list where everything earns its place
+- [**Knowledge graphs**](docs/track-graph/resources.md) - Papers, repos and tools, checked September 2026
+- [**Jev and System One models**](docs/track-jev/resources.md) - Links on decision models, checked a week after Jev launched
 
 #### Graph, RAG and memory <sub>stars, September 2026</sub>
 - [**Graphify**](https://github.com/Graphify-Labs/graphify) - Builds a graph from any folder · 116K
@@ -420,7 +399,39 @@ with notes on every entry in [`resources/`](resources/README.md).
 - [**cognee**](https://github.com/topoteretes/cognee) - Graph plus vector memory · 31K
 - [**awesome-mcp-servers**](https://github.com/punkpeye/awesome-mcp-servers) - An index of MCP servers · 95K
 
-#### Outside Obsidian
+#### Second brain: start here
+- [**Karpathy's llm-wiki gist**](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) - The pattern the project builds on, 4 April 2026. Read it first
+- [**From Local to Global: GraphRAG**](https://arxiv.org/abs/2404.16130) - Why chunk retrieval fails on questions about a whole corpus
+- [**HippoRAG**](https://arxiv.org/abs/2405.14831) - Graph retrieval with personalised PageRank, the closest analogue of an agent walking links
+- [**Lost in the Middle**](https://arxiv.org/abs/2307.03172) - The evidence for keeping context small, and the basis for the [context budget](docs/07-retrieval/context-budget.md)
+- [**Andy Matuschak's notes**](https://notes.andymatuschak.org) - Evergreen notes, and the strongest argument against delegating the writing
+- **How to Take Smart Notes** (Ahrens) and **Building a Second Brain** (Forte) - Zettelkasten and PARA, the methods an agent now does the upkeep for
+
+#### Second brain: Obsidian plugins <sub>installs, September 2026</sub>
+- [**Claudian**](https://github.com/yishentu/claudian) - An agent in the editor · 2.0M
+- [**Copilot**](https://github.com/logancyang/obsidian-copilot) - An agent in the editor · 1.8M
+- [**Smart Connections**](https://github.com/brianpetro/obsidian-smart-connections) - Suggests links · 1.2M
+- [**Local REST API with MCP**](https://github.com/coddingtonbear/obsidian-local-rest-api) - MCP access to the vault · 712K
+- [**Dataview**](https://github.com/blacksmithgu/obsidian-dataview) - Queries over frontmatter · 4.9M
+- [**Templater**](https://github.com/SilentVoid13/Templater) - Templates · 5.5M
+- [**Git**](https://github.com/Vinzent03/obsidian-git) - Version control · 3.1M
+- [**Importer**](https://github.com/obsidianmd/obsidian-importer) - Migrating in from other apps · 1.6M
+- [**Find unlinked files**](https://github.com/Vinzent03/find-unlinked-files) - Broken links and orphans · 225K
+- [**Spaced Repetition**](https://github.com/st3v3nmw/obsidian-spaced-repetition) - Flashcards from your notes · 592K
+- [**ExcaliBrain**](https://github.com/zsviczian/excalibrain) - A structured mind map · 336K
+- [**Juggl**](https://github.com/HEmile/juggl) - An interactive graph · 136K
+
+#### Second brain: other implementations <sub>stars, September 2026</sub>
+- [**AgriciDaniel/claude-obsidian**](https://github.com/AgriciDaniel/claude-obsidian) - 16 skills, 3 subagents, role presets · 14.7K
+- [**Astro-Han/karpathy-llm-wiki**](https://github.com/Astro-Han/karpathy-llm-wiki) - 1 skill covering ingest, compile, query and lint · 2.2K
+- [**ballred/obsidian-claude-pkm**](https://github.com/ballred/obsidian-claude-pkm) - 13 skills, 4 subagents, a full starter kit · 1.9K
+- [**coleam00/second-brain-starter**](https://github.com/coleam00/second-brain-starter) - 1 skill that interviews you first · 768
+- [**NicholasSpisak/second-brain**](https://github.com/NicholasSpisak/second-brain) - 4 skills with an npm installer · 704
+- [**eugeniughelbur/obsidian-second-brain**](https://github.com/eugeniughelbur/obsidian-second-brain) - 47 commands across three agents
+- [**micuintus/llm-wiki**](https://github.com/micuintus/llm-wiki) - 1 skill, deliberately minimal
+- Where the skill format itself is defined: [anthropics/skills](https://github.com/anthropics/skills), [obra/superpowers](https://github.com/obra/superpowers) and the [awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) index of 1,000+
+
+#### Second brain: outside Obsidian
 [Web Clipper](https://obsidian.md/clipper) for capture,
 [Claude Code](https://code.claude.com/docs/en/setup) for maintenance,
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) and
@@ -432,7 +443,7 @@ with notes on every entry in [`resources/`](resources/README.md).
 
 ---
 
-## How it works
+## How the second brain works
 
 ```
    you                    raw/                 agent                 wiki/
@@ -455,7 +466,7 @@ per project with its own `CLAUDE.md`. The wiki holds what you know, the
 projects hold what you are doing. [The two layers](docs/01-concepts/two-layers.md)
 covers why keeping them apart matters.
 
-Three rules the whole setup rests on:
+Three rules the project rests on:
 
 - **Nothing is ingested until it is linked.** A page that lands unconnected is invisible within a week, so linking happens in the same run or the ingest is not finished.
 - **Contradictions are recorded, never overwritten.** Both positions stay, with dates and sources. The history of what you believed and why is the one thing your vault has that a search engine does not.
@@ -471,10 +482,10 @@ source, and tool listings need a reason to exist.
 
 ## License and credit
 
-MIT licensed. The LLM wiki pattern is Andrej Karpathy's, published as a
-[gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) on
-4 April 2026. This repo is one implementation of it, plus the parts the gist
-deliberately leaves undefined.
+MIT licensed. The agents course builds on Google's agent whitepapers. The
+second-brain project implements Andrej Karpathy's LLM wiki pattern, published
+as a [gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
+on 4 April 2026, plus the parts the gist deliberately leaves undefined.
 
 <!-- TODO before publishing:
      - add the link to the original article

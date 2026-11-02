@@ -2,7 +2,7 @@
 
 Cheap decisions in front of expensive models: classifiers first, System One models where they earn it.
 
-A course module beside [the main guide](../../README.md) — read it on the site or in order below.
+A module of [the agents course](../README.md) — read it on the site or in order below.
 
 1. [Cheap Decisions](cheap-decisions.md)
 2. [Gates in Practice](gates-in-practice.md)

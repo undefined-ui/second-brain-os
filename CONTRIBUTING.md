@@ -2,7 +2,7 @@
 
 ## What is wanted
 
-- Fixes to the guide where it is wrong or out of date
+- Fixes to the guides where they are wrong or out of date
 - Resources that are genuinely worth someone's time
 - Examples: real vault structures, real output, screenshots
 - Skills and commands that solve a problem the existing ones do not

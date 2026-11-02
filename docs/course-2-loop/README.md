@@ -2,7 +2,7 @@
 
 Who decides the next step: goal, checker, stop rule, budget - and the hybrid that survives production.
 
-A course module beside [the main guide](../../README.md) — read it on the site or in order below.
+A module of [the agents course](../README.md) — read it on the site or in order below.
 
 1. [Loops versus workflows](loops-vs-workflows.md)
 2. [The four parts of a loop](the-four-parts.md)

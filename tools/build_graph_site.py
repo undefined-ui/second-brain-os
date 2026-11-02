@@ -103,20 +103,21 @@ def edge(s, t, kind, w=1, hidden=False):
 
 
 node("root", type="root", group="root", label="Second Brain OS",
-     desc="A knowledge base an AI agent builds and maintains for you, in plain "
-          "markdown you own - and everything around it: a course on building "
-          "agents, five handbooks, the toolkit, and the links worth your time.")
+     desc="Guides and resources for AI engineers: a course on building agents "
+          "from a single prompt to production, five handbooks that go deep on "
+          "one layer each, a hands-on second-brain project, the toolkit, and "
+          "the links worth your time.")
 
 COLLECTIONS = {
-    "guide":    ("The second-brain guide", "guide",
-                 "A path you follow once, in order: from the concept to a vault "
-                 "that maintains itself. One evening to set up."),
     "course":   ("The agents course", "course",
                  "Seven modules from a single prompt to a production agent: theory "
                  "from the whitepapers, a build in every module. Read in order."),
     "handbook": ("Handbooks", "handbook",
                  "Not a path - references. The full menu of techniques, tools and "
                  "builds for one layer of the course. Dip in anywhere."),
+    "guide":    ("Second brain", "guide",
+                 "A hands-on project: a knowledge base an agent builds and maintains "
+                 "for you, in plain markdown. One evening to set up."),
     "glossary": ("Glossary", "term",
                  "The ideas the whole site keeps coming back to. Each one links to "
                  "the pages that lean on it hardest."),
@@ -193,7 +194,7 @@ for nid, n in list(nodes.items()):
 
 # ---------------------------------------------------------------- toolkit
 TOOL_HUBS = {
-    "skills": ("Skills", "One per workflow in the guide. The agent loads a skill only when the task matches it."),
+    "skills": ("Skills", "One per workflow in the second-brain project. The agent loads a skill only when the task matches it."),
     "commands": ("Slash commands", "Scoped entry points into the skills, typed as /name."),
     "agents": ("Subagents", "Six subagents, four of them read-only by design."),
     "scripts": ("Scripts", "Dependency-free Python for link checking, stats, graph export and chat import."),

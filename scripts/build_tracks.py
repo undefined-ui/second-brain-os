@@ -191,7 +191,7 @@ def build_group(D, group, kind):
         toc = "\n".join(f"{n}. [{p['title']}]({os.path.basename(p['path'])})"
                         for n, p in enumerate(pages, 1))
         if kind == "course":
-            label = ("A course module beside [the main guide](../../README.md)"
+            label = ("A module of [the agents course](../README.md)"
                      " — read it on the site or in order below.")
         elif meta.get("module"):
             n, mdir = meta["module"]
@@ -200,7 +200,7 @@ def build_group(D, group, kind):
                      "this holds the full menu — techniques, tools and "
                      "builds. Read it on the site or dip in below.")
         else:
-            label = ("A handbook beside [the main guide](../../README.md) — "
+            label = ("One of [the handbooks](../README.md) — "
                      "the full menu for one layer; dip in anywhere.")
         io.open(os.path.join(ROOT, "docs", sec, "README.md"), "w",
                 encoding="utf-8", newline="\n").write(

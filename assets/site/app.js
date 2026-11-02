@@ -33,9 +33,9 @@ const COLOR = {
 };
 const PAPER = new THREE.Color(tok('--paper'));
 const LAYERS = [
-  { key: 'guide', label: 'Guide' },
   { key: 'course', label: 'Course' },
   { key: 'handbook', label: 'Handbooks' },
+  { key: 'guide', label: 'Second brain' },
   { key: 'term', label: 'Glossary' },
   { key: 'tool', label: 'Toolkit' },
   { key: 'res', label: 'Resources', off: true },
@@ -627,7 +627,7 @@ function route() {
   if (r.mode === 'overview') {
     select(null);
     fly(homeCenter, homeDistance, { ms: prevMode === 'boot' ? 3200 : 1900, spin: prevMode === 'boot' ? 1.7 : .9, phi: 1.2 });
-    document.title = 'Second Brain OS - the map';
+    document.title = 'Second Brain OS - guides and resources for AI engineers';
     return;
   }
   if (n !== prev) select(n);
@@ -802,9 +802,9 @@ $('#r-graph').onclick = () => go(S.sel ? S.sel.id : 'root');
 
 // ------------------------------------------------------------------ hero
 $('#paths').innerHTML = [
-  ['guide', '01–10', 'The second-brain guide', 'A path you follow once: from the concept to a vault that maintains itself.'],
   ['course', 'C0–C6', 'The agents course', 'Seven modules from a single prompt to a production agent.'],
-  ['handbook', 'T1–T5', 'Handbooks', 'References for one layer at a time. Dip in anywhere.'],
+  ['handbook', 'T1–T5', 'Handbooks', 'One layer at a time, each ending in a build you can finish in an evening.'],
+  ['guide', '01–10', 'Second brain', 'A hands-on project: a knowledge base an agent builds and maintains for you.'],
 ].map(([k, badge, label, p]) => {
   const pages = sectionsOf(k).reduce((a, s) => a + byId.get(s).pages.length, 0);
   return `<button class="path" data-go="col:${k}" style="--dot:${COLOR[k]}"><span class="pk">${badge}</span><b>${label}</b><span class="pn">${pages} pages</span><p>${p}</p></button>`;
@@ -854,7 +854,7 @@ function renderContents() {
       return `<div class="cs${open ? ' open' : ''}" style="--dot:${COLOR[col]}"><button data-sec="${esc(sid)}"><span class="k">${esc(s.badge)}</span>${esc(s.label)}<span class="n">${s.pages.length}</span></button><ol>` +
         s.pages.map(pid => `<li><button data-page="${esc(pid)}" data-node="${esc(pid)}" class="${pid === cur ? 'cur' : ''}">${esc(byId.get(pid).label)}</button></li>`).join('') + '</ol></div>';
     }).join('') + '</div>';
-  $('#c-body').innerHTML = block('guide', 'the second-brain guide') + block('course', 'the agents course') + block('handbook', 'handbooks');
+  $('#c-body').innerHTML = block('course', 'the agents course') + block('handbook', 'handbooks') + block('guide', 'second brain');
 }
 function openContents() { renderContents(); document.body.classList.add('c-open'); cBtn.setAttribute('aria-expanded', 'true'); }
 function closeContents() { document.body.classList.remove('c-open'); cBtn.setAttribute('aria-expanded', 'false'); }

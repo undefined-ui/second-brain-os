@@ -187,7 +187,7 @@ def header(active):
     return f"""<header><div class="bar">
   <a class="brand" href="index.html">[[ second<span>brain</span>os ]]</a>
   <nav>
-    <a href="index.html" class="{'on' if active=='guide' else ''}">Guide</a>
+    <a href="index.html" class="{'on' if active=='guide' else ''}">Map</a>
     <a href="resources.html" class="{'on' if active=='res' else ''}">Resources</a>
     <a href="tree.html">Tree</a>
     <a href="{REPO}">Repo</a>

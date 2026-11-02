@@ -95,10 +95,14 @@ def docstring(path):
 
 
 def site_pages():
-    s = io.open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-    i = s.find('application/json">') + len('application/json">')
-    D = json.loads(s[i:s.find("</script>", i)])
-    return D
+    """Page titles and section order, read from the site's own graph data."""
+    s = io.open(os.path.join(ROOT, "assets", "site", "graph-data.js"), encoding="utf-8").read()
+    G = json.loads(s[s.index("=") + 1:].rstrip().rstrip(";"))
+    N = {n["id"]: n for n in G["nodes"]}
+    order = {sid[4:]: N[sid]["pages"] for sid in G["order"]}
+    return {"pages": [{"id": n["id"], "title": n["label"]} for n in G["nodes"] if n["type"] == "page"],
+            "order": order,
+            "sections": {sec: {"title": N["sec:" + sec]["label"]} for sec in order}}
 
 
 def row(name, href, desc, cls=""):
@@ -204,7 +208,7 @@ def main():
         [row(n, GHT + "vault-template/" + n.rstrip("/") if n.endswith("/")
              else GH + "vault-template/" + n, d) for n, d in VAULT]) + "</div>")
 
-    # the guide
+    # the second-brain project, listed after the course and the handbooks
     guide_secs = []
     n_guide = 0
     for sec, ids in D["order"].items():
@@ -217,10 +221,10 @@ def main():
             f"{meta['title']} · {len(ids)} pages",
             [row(i.split("/")[1] + ".md", "index.html#" + i, title[i])
              for i in ids], open_=False))
-    out.append('<div class="sec"><details open><summary>'
-               f'<a href="index.html">docs/</a><span class="c"># The guide. '
-               f'10 sections, {n_guide} pages</span></summary>'
-               '<div class="kids">' + "".join(guide_secs) + "</div></details></div>")
+    guide_block = ('<div class="sec"><details open><summary>'
+                   f'<a href="index.html">docs/</a><span class="c"># Second brain, '
+                   f'a hands-on project. 10 sections, {n_guide} pages</span></summary>'
+                   '<div class="kids">' + "".join(guide_secs) + "</div></details></div>")
 
     # the course
     course_secs, n_course = [], 0
@@ -257,6 +261,7 @@ def main():
                f'Five handbooks, {n_track} pages, each ends in a build'
                '</span></summary><div class="kids">'
                + "".join(track_secs) + "</div></details></div>")
+    out.append(guide_block)
 
     # resources
     res = sorted(f for f in os.listdir(os.path.join(ROOT, "resources"))
@@ -265,15 +270,15 @@ def main():
                  .read().count("](http") for f in res)
     out.append('<div class="sec">' + branch(
         "resources/", "resources.html",
-        f"{nlinks} vetted links, checked September 2026",
+        f"{nlinks} vetted links, checked September to November 2026",
         [row(f, "resources.html", RESOURCES_DESC.get(f, "")) for f in res])
         + "</div>")
 
     counts = (f"{len(sk)} skills · {len(cmd_desc)} commands · "
               f"{len(ag)} subagents · {n_plug_tools} plugin tools · "
               f"{len(py)} scripts · "
-              f"{n_guide} pages of guide · {n_course} course pages · "
-              f"{n_track} handbook pages · "
+              f"{n_course} course pages · {n_track} handbook pages · "
+              f"{n_guide} second-brain pages · "
               f"{nlinks} vetted links")
 
     page = TEMPLATE.replace("{{TREE}}", "".join(out)) \
@@ -286,7 +291,7 @@ def main():
 TEMPLATE = """<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The full component tree - Second Brain OS</title>
-<meta name="description" content="Every component in second-brain-os on one page: the guide, five handbooks, skills, commands, agents, scripts and resources, each line a link.">
+<meta name="description" content="Every component in second-brain-os on one page: the agents course, five handbooks, the second-brain project, skills, commands, agents, scripts and resources, each line a link.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F7F9F6'/%3E%3Crect x='.5' y='.5' width='31' height='31' rx='6.5' fill='none' stroke='%23D2DACF'/%3E%3Cpath d='M10 21 L16 11 L22 19 M16 11 L23 9' stroke='%231F6B52' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='10' cy='21' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='11' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='22' cy='19' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='24' cy='8' r='2' fill='%231F6B52'/%3E%3C/svg%3E">
 <style>
 :root{--paper:#EAEEE9;--card:#F7F9F6;--ink:#15201B;--soft:#4B5A52;--faint:#7C8A82;
@@ -333,7 +338,7 @@ footer{border-top:1px solid var(--rule);padding:22px;text-align:center;color:var
 <header><div class="bar">
   <a class="brand" href="index.html">[[ second<span>brain</span>os ]]</a>
   <nav>
-    <a href="index.html">Guide</a>
+    <a href="index.html">Map</a>
     <a href="resources.html">Resources</a>
     <a href="tree.html" class="on">Tree</a>
     <a href="https://github.com/undefined-ui/second-brain-os">Repo</a>
