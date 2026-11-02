@@ -12,7 +12,7 @@ Jev launched on 15 September 2026. This field is one week old: links below were 
 
 ## Third-party explainers and writeups
 
-- [Wikipedia: Jev (AI model)](https://en.wikipedia.org/wiki/Jev_(AI_model)) — neutral summary; company, funding, versions
+- [Wikipedia: Jev (AI model)](https://en.wikipedia.org/wiki/Jev_%28AI_model%29) — neutral summary; company, funding, versions
 - [LangChain: building a harness with Jev](https://www.langchain.com/blog/building-a-harness-with-jev) — the agent-stack integration; see [Jev in an agent stack](jev-in-an-agent-stack.md)
 - [DataCamp: System One models and Jev](https://www.datacamp.com/blog/system-one-models-jev) — good comparative benchmark table
 - [Valyu: how to use Jev](https://dev.to/valyuai/how-to-use-jev-a-practical-guide-to-typesafes-system-one-model-g5e) — the best practical guide so far; patterns and gotchas
