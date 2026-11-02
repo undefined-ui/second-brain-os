@@ -44,6 +44,22 @@ where the best-written examples live.
 | [VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) | 33,894 | A curated index of 1,000+ community skills |
 | [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) | 53,661 | Commands, hooks, workflows and tooling for Claude Code |
 
+## New in October 2026
+
+What changed for skills and plugins in September and October 2026. Stars from
+the GitHub API on 1 November 2026.
+
+| Name | What it is |
+|---|---|
+| [Claude Code mods](https://code.claude.com/docs/en/plugins/mods/overview) | A new plugin part beside skills, hooks and MCP: JS or TS handlers that watch or rewrite tool calls and prompts, add commands and draw panes. Not sandboxed, so read one before you install it |
+| [claude plugin eval](https://code.claude.com/docs/en/plugin-evals) | Runs each eval case with and without your plugin, scores the difference and exits non-zero below a threshold, so CI can gate on it |
+| [/skill-doctor](https://code.claude.com/docs/en/skills#find-unused-skills) | Reports what each loaded skill costs in context on every turn and which ones are never called |
+| [AGENTS.md support](https://code.claude.com/docs/en/memory#agents-md) | Claude Code reads `AGENTS.md` when there is no `CLAUDE.md`, and a setting loads both, so one instruction file can serve several agents |
+
+| Repo | Stars | Ships |
+|---|---|---|
+| [google/elephant-goldfish-model](https://github.com/google/elephant-goldfish-model) | 9,069 | A plugin of seven skills: a full-context agent drafts a spec and reviewers with no prior conversation check it. Installs in Claude Code, Codex and Antigravity. Apache-2.0 |
+
 ## Graph builders
 
 | Repo | Stars | What it does |

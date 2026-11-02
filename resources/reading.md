@@ -54,6 +54,20 @@ decisions, and it is the constraint that changed.
 Reading the originals is worth it for that reason specifically: you can see
 which parts were about knowledge and which were workarounds for human effort.
 
+## New in October 2026
+
+**[Anthropic donates Agent Skills to the Agentic AI Foundation](https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation)**, 22 October 2026. The `SKILL.md` format moves to the Linux Foundation's agent foundation, name, spec and site included. The skills in this repo are now written to a neutral standard.
+
+**[Building agents: when to fold subagents into your main agent loop](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop)**, Anthropic, 22 October 2026. The case that one loop with skills and progressively disclosed tools often matches a fleet of subagents, when subagents are still worth it, and a migration plan that starts from ten golden eval cases.
+
+**[Building effective agent automations](https://claude.dev/blog/building-effective-agent-automations/)**, Anthropic, 8 October 2026. A scheduled agent built end to end: a bookmark per source, a ledger of what was already reported, a per-run spend cap, and a failed source reported as a failure rather than a quiet day. Every pattern carries over to a nightly ingest.
+
+**[Automating eval design and hillclimbing with Claude](https://claude.dev/blog/automating-eval-design-and-hillclimbing/)**, Anthropic, 28 September 2026. Two commands that build an eval in your codebase and then improve against it, keeping a change only when both the train split and a held-out split improve. Read it with [Hamel Husain's critique](https://hamel.dev/blog/posts/claude-auto-evals/).
+
+**[How to use decision models for evals](https://hamel.dev/blog/posts/decision-model-evals/)**, Hamel Husain and Antaripa Saha, 20 October 2026. Jev, OpenAI's [Decisions API](https://developers.openai.com/api/docs/guides/decisions) and three other decision models compared as cheap pass or fail judges on 98 human-labelled agent traces, with the advice to tune the threshold rather than keep 0.5.
+
+**[How the Claude Code team does code review](https://claude.dev/blog/solving-code-review-at-anthropic/)**, Anthropic, 15 October 2026. Parallel finders, a separate voting verifier and a three-round cap took first-round passes from 65% to 78%. Real numbers on making a critic loop converge.
+
 ## Talks and videos
 
 This section is deliberately empty rather than padded with whatever ranks well

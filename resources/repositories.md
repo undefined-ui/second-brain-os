@@ -8,7 +8,7 @@ plugins see [plugins.md](plugins.md).
 
 | Repo | Stars | What it is |
 |---|---|---|
-| [HKUDS/LightRAG](https://github.com/HKUDS/LightRAG) | 39,467 | Dual-layer graph plus vectors, aimed at cheap incremental updates. EMNLP 2025 |
+| [HKUDS/LightRAG](https://github.com/HKUDS/LightRAG) | 39,467 | Dual-layer graph plus vectors, aimed at cheap incremental updates. EMNLP 2025. Since [1.5.7](https://github.com/HKUDS/LightRAG/releases/tag/v1.5.7) (September 2026) it can build the graph first and add vectors later |
 | [microsoft/graphrag](https://github.com/microsoft/graphrag) | 35,875 | The reference implementation of the [paper](papers.md) |
 | [gusye1234/nano-graphrag](https://github.com/gusye1234/nano-graphrag) | 3,983 | The same idea in about 1,100 readable lines. Open this one to understand the pipeline |
 | [OSU-NLP-Group/HippoRAG](https://github.com/OSU-NLP-Group/HippoRAG) | 3,985 | The NeurIPS'24 paper's implementation. Personalised PageRank over a knowledge graph |
@@ -49,6 +49,22 @@ vaults never reach.
 
 Since the Local REST API plugin now ships its own MCP server, a separate one is
 optional. See [MCP for Obsidian](../docs/02-setup/mcp-obsidian.md).
+
+## New in October 2026
+
+Released or shipped a major version between September and October 2026. Stars
+from the GitHub API on 1 November 2026.
+
+| Repo | Stars | What it is |
+|---|---|---|
+| [basicmachines-co/basic-memory](https://github.com/basicmachines-co/basic-memory) | 4,445 | A local MCP server whose knowledge graph is plain markdown with typed `relation [[WikiLink]]` lines, indexed into SQLite. Reads and writes Obsidian vaults. 1.0 shipped on 29 October. AGPL-3.0 |
+| [akitaonrails/ai-memory](https://github.com/akitaonrails/ai-memory) | 14,856 | A Rust memory server whose source of truth is a git-backed wiki of ordinary `.md` files, fed by hooks from 20+ agent harnesses. 3.0 (13 October) installs as a Claude Code plugin marketplace. MIT |
+| [tigerless-labs/agent-memory](https://github.com/tigerless-labs/agent-memory) | 4,306 | One markdown file per memory under a `MEMORY.md` index. The SQLite and BM25 index is a cache you can delete and rebuild, and Claude Code and Codex share one store. MIT |
+| [vectorize-io/hindsight](https://github.com/vectorize-io/hindsight) | 57,739 | The database-backed alternative: retain, recall and reflect over vector, BM25, graph and time search, with knowledge pages it can write out as markdown. 1.0 on 13 October. MIT |
+| [decodingai-magazine/llm-wiki-workshop](https://github.com/decodingai-magazine/llm-wiki-workshop) | 43 | A self-paced workshop: three exercises, each a working system, from a basic `raw/` to `wiki/` setup to a wiki that learns from queries. MIT |
+| [LadybugDB/ladybug](https://github.com/LadybugDB/ladybug) | 1,895 | An embedded, serverless Cypher graph database, formerly Kuzu, which was archived in October 2025. 0.22 on 25 October. MIT |
+| [google-research/harness2](https://github.com/google-research/harness2) | 21,920 | Harness², recursive harness tuning: the weights stay frozen while prompts, tools and memory are edited per task and the lessons kept. Apache-2.0 |
+| [NVlabs/SoL-Pi](https://github.com/NVlabs/SoL-Pi) | 3,620 | Four opt-in add-ons for the Pi harness that keep its score with 45 to 49 per cent less token traffic. MIT |
 
 ## How to judge one of these
 
