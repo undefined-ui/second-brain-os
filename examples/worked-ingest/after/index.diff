@@ -1,0 +1,48 @@
+diff --git a/wiki/index.md b/wiki/index.md
+index e96fed6..af5f41c 100644
+--- a/wiki/index.md
++++ b/wiki/index.md
+@@ -1,7 +1,7 @@
+ ---
+ title: Index
+ type: index
+-updated: 1970-01-01
++updated: 2026-10-19
+ ---
+ 
+ # Index
+@@ -10,11 +10,17 @@ Catalog of every page in this vault. The agent keeps this current.
+ 
+ ## Concepts
+ 
+-_Nothing yet._
++- [[LLM wiki]]: an LLM agent builds and maintains a linked markdown wiki over an immutable source folder, guided by a schema file; the pattern this vault implements. 1 source.
++- [[Retrieval-augmented generation]]: retrieving document chunks at query time and generating from them; the baseline the LLM wiki departs from because nothing accumulates. 1 source.
++- [[Memex]]: Vannevar Bush's 1945 curated knowledge store with associative trails; cited as the LLM wiki's ancestor. 1 source.
+ 
+ ## Entities
+ 
+-_Nothing yet._
++- [[Andrej Karpathy]] (person): attributed author of the LLM Wiki idea file. 1 source.
++- [[Obsidian]] (tool): the owner's reading and browsing window onto the wiki; graph view, clipper, attachment download, plugins. 1 source.
++- [[Claude Code]] (tool): the agent that writes the wiki, disciplined by CLAUDE.md; what this vault runs on. 1 source.
++- [[qmd]] (tool): local hybrid BM25/vector markdown search with CLI and MCP server, for when the index file is no longer enough. 1 source.
++- [[Vannevar Bush]] (person): proposed the Memex. 1 source.
+ 
+ ## Synthesis
+ 
+@@ -22,10 +28,12 @@ _Nothing yet._
+ 
+ ## Sources
+ 
+-_Nothing yet._
++- [[LLM Wiki (Karpathy)]]: idea file describing the LLM wiki pattern: three layers, ingest/query/lint, index and log, tooling, and why maintenance cost is the point. Ingested 2026-10-19.
+ 
+ ## Gaps
+ 
+ Pages that are linked but do not exist yet.
+ 
+-_Nothing yet._
++- [[Obsidian Web Clipper]]: browser extension that saves web articles as markdown. Linked from the source page and [[Obsidian]].
++- [[Marp]]: markdown slide-deck format with an Obsidian plugin. Linked from the source page and [[Obsidian]].
++- [[Dataview]]: Obsidian plugin that queries page frontmatter. Linked from the source page and [[Obsidian]].

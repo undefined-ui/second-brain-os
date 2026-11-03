@@ -1,0 +1,18 @@
+pages: 11
+links: 44 (avg 4.0 per page)
+broken links: 12
+  wiki/index.md -> [[Obsidian Web Clipper]]
+  wiki/index.md -> [[Marp]]
+  wiki/index.md -> [[Dataview]]
+  wiki/sources/LLM Wiki (Karpathy).md -> [[Obsidian Web Clipper]]
+  wiki/sources/LLM Wiki (Karpathy).md -> [[Marp]]
+  wiki/sources/LLM Wiki (Karpathy).md -> [[Dataview]]
+  wiki/sources/LLM Wiki (Karpathy).md -> [[Obsidian Web Clipper]]
+  wiki/sources/LLM Wiki (Karpathy).md -> [[Marp]]
+  wiki/sources/LLM Wiki (Karpathy).md -> [[Dataview]]
+  wiki/entities/Obsidian.md -> [[Obsidian Web Clipper]]
+  wiki/entities/Obsidian.md -> [[Marp]]
+  wiki/entities/Obsidian.md -> [[Dataview]]
+orphans: 0
+stubs (<40 words): 1
+  wiki/log.md

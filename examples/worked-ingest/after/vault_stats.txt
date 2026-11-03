@@ -1,0 +1,22 @@
+pages          11
+  entity       5
+  concept      3
+  log          1
+  index        1
+  source       1
+words          3,260
+links          72
+avg degree     6.55
+orphan rate    0.0%
+
+most linked:
+    17  wiki/sources/LLM Wiki (Karpathy).md
+    12  wiki/concepts/LLM wiki.md
+     9  wiki/entities/Obsidian.md
+     7  wiki/entities/qmd.md
+     6  wiki/concepts/Memex.md
+     6  wiki/entities/Claude Code.md
+     6  wiki/entities/Vannevar Bush.md
+     5  wiki/concepts/Retrieval-augmented generation.md
+     4  wiki/entities/Andrej Karpathy.md
+     0  wiki/log.md

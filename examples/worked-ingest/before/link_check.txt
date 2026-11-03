@@ -1,0 +1,6 @@
+pages: 2
+links: 0 (avg 0.0 per page)
+broken links: 0
+orphans: 0
+stubs (<40 words): 1
+  wiki/log.md

@@ -1,0 +1,11 @@
+pages          2
+  log          1
+  index        1
+words          75
+links          0
+avg degree     0.00
+orphan rate    0.0%
+
+most linked:
+     0  wiki/log.md
+     0  wiki/index.md

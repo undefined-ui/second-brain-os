@@ -1,0 +1,9 @@
+diff --git a/wiki/log.md b/wiki/log.md
+index 6e39294..5127618 100644
+--- a/wiki/log.md
++++ b/wiki/log.md
+@@ -10,3 +10,4 @@ One line per operation, newest at the bottom. Format:
+ ```
+ DATE OPERATION target -> result
+ ```
++2026-10-19 ingest raw/karpathy-llm-wiki.md -> 1 source, 3 concepts, 5 entities, 41 links, 3 gaps
