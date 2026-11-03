@@ -235,7 +235,7 @@ body.m-read #reader{transform:none}
 body.m-read .top{right:calc(var(--reader-w) + 16px)}
 body.m-read .links{display:none}
 body.m-read .search{width:auto;flex:1;max-width:300px;min-width:110px}
-@media (min-width:761px) and (max-height:980px){#hero .lede2{display:none}}
+@media (min-width:761px) and (max-height:980px){#hero .lede2,#hero .hint{display:none}}
 @media (max-width:1100px){body.m-read .tbtn .lbl{display:none}body.m-read .search kbd{display:none}body.m-read .tbtn.tico{display:none}}
 .rbar{display:flex;align-items:center;gap:12px;padding:14px 20px 12px 24px;border-bottom:var(--edge);background:var(--card)}
 .rback{display:none;font:13px var(--mono);color:var(--accent);white-space:nowrap}
