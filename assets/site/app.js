@@ -951,6 +951,8 @@ const themeBtn = $('#btn-theme');
 const sysDark = matchMedia('(prefers-color-scheme: dark)');
 const isDark = () => (document.documentElement.dataset.theme || (sysDark.matches ? 'dark' : 'light')) === 'dark';
 function paintThemeBtn() {
+  // a page cached from before the button existed has no button: carry on without it
+  if (!themeBtn) return;
   const d = isDark();
   themeBtn.textContent = d ? '\u2600' : '\u263E';
   themeBtn.title = d ? 'Light theme' : 'Dark theme';
@@ -973,7 +975,7 @@ function recolor() {
   if (hl.list.length) buildHL(hl.list);
   document.querySelectorAll('meta[name="theme-color"]').forEach(m => { m.content = '#' + PAPER.getHexString(); });
 }
-themeBtn.onclick = () => {
+if (themeBtn) themeBtn.onclick = () => {
   const next = isDark() ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
   store.set('theme', next);

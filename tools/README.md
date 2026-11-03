@@ -36,6 +36,10 @@ The graph is drawn with [3d-force-graph](https://github.com/vasturiano/3d-force-
 and three.js, loaded from jsDelivr at pinned versions. Everything else is in the
 repo. Old links such as `index.html#02-setup/claude-md` still open that page.
 
+The builder also stamps every asset URL in `index.html` with a content hash
+(`app.js?v=…`), so a fresh page never runs against a cached old script. Rerun it
+after editing `app.css` or `app.js` as well, not only after changing the docs.
+
 ## The other pages
 
 ```bash
