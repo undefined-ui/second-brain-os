@@ -357,10 +357,14 @@ body:not(.booting) #boot{opacity:0;pointer-events:none}
     transform:translateY(105%)}
   #info h2{font-size:23px}
   #contents{left:0;top:58px;bottom:0;width:min(340px,88vw);border-radius:0 12px 0 0}
-  .dock{left:10px;right:10px;bottom:10px}
+  /* one row: the layer chips scroll on the left, the two buttons sit level on the right */
+  .dock{left:10px;right:10px;bottom:10px;align-items:stretch;height:44px}
+  .ctl{flex:none}
+  .ctl .tbtn{height:100%;width:44px}
   body.m-focus .dock{right:10px;bottom:calc(52vh + 8px)}
   body.m-focus .layers{display:none}
-  .layers{overflow-x:auto;flex-wrap:nowrap;max-width:calc(100vw - 110px);scrollbar-width:none}
+  .layers{overflow-x:auto;flex-wrap:nowrap;flex:1;min-width:0;max-width:none;align-items:center;padding:0 6px;scrollbar-width:none}
+  .layers::-webkit-scrollbar{display:none}
   .lyr .n{display:none}
   .rscroll{padding:22px 20px 70px}
   .rback{display:block}
