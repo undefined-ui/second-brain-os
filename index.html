@@ -2,7 +2,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Second Brain OS - guides and resources for AI engineers</title>
 <meta name="description" content="Guides and resources for AI engineers: a course on building agents, five handbooks, a hands-on second-brain project and a vetted reading list, all on one explorable graph.">
-<meta name="theme-color" content="#EAEEE9">
+<meta name="theme-color" content="#EAEEE9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1513" media="(prefers-color-scheme: dark)">
+<script>try{var t=JSON.parse(localStorage.getItem('sbos:theme'));if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script>
 <meta name="author" content="@undefinedKi">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F7F9F6'/%3E%3Crect x='.5' y='.5' width='31' height='31' rx='6.5' fill='none' stroke='%23D2DACF'/%3E%3Cpath d='M10 21 L16 11 L22 19 M16 11 L23 9' stroke='%231F6B52' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='10' cy='21' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='11' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='22' cy='19' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='24' cy='8' r='2' fill='%231F6B52'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/site/app.css">
@@ -23,6 +25,7 @@
     <kbd>/</kbd>
     <div class="hits" id="hits" role="listbox"></div>
   </div>
+  <button class="tbtn tico" id="btn-theme" aria-label="Switch between light and dark theme" aria-pressed="false">&#9790;</button>
   <nav class="links">
     <a href="resources.html">Resources</a>
     <a href="tree.html">Tree</a>

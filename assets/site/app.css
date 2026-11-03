@@ -5,14 +5,39 @@
   /* one hue per layer of the graph, in the same muted register */
   --c-root:#15201B; --c-guide:#1F6B52; --c-course:#8A6B23; --c-handbook:#3F5F86;
   --c-term:#A24E36; --c-tool:#6B4C80; --c-res:#7D6B5D;
+  /* the same colours as channels, for the translucent layers */
+  --paper-rgb:234,238,233; --card-rgb:247,249,246; --shadow-rgb:21,32,27;
+  --stage-glow:#F2F5F1; --grid-dot:rgba(21,32,27,.075); --accent-strong:#18563F;
+  --fig-bg:transparent; --fig-pad:0; color-scheme:light;
   --serif:Charter,"Bitstream Charter",Georgia,"Iowan Old Style",serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"DejaVu Sans Mono",monospace;
-  --glass:rgba(247,249,246,.88);
+  --glass:rgba(var(--card-rgb),.88);
   --edge:1px solid var(--rule);
-  --lift:0 1px 0 rgba(21,32,27,.03),0 18px 40px -18px rgba(21,32,27,.28);
+  --lift:0 1px 0 rgba(var(--shadow-rgb),.03),0 18px 40px -18px rgba(var(--shadow-rgb),.28);
   --info-w:400px; --reader-w:min(760px,58vw); --hero-w:440px;
   --ease:cubic-bezier(.2,.8,.2,1);
   --w:68ch;
+}
+/* dark: follows the system unless the visitor picked a theme */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1513; --card:#171F1B; --ink:#E2E8E3; --soft:#A7B4AC; --faint:#7B8981;
+    --rule:#29342F; --accent:#5DBB94; --accent-bg:#1B2C24; --num:#D4AC52;
+    --c-root:#E2E8E3; --c-guide:#5DBB94; --c-course:#D4AC52; --c-handbook:#82A6D6;
+    --c-term:#E2826A; --c-tool:#B293D4; --c-res:#BBA591;
+    --paper-rgb:15,21,19; --card-rgb:23,31,27; --shadow-rgb:0,0,0;
+    --stage-glow:#16201C; --grid-dot:rgba(226,232,227,.06); --accent-strong:#7FD0AC;
+    --fig-bg:#E4EAE5; --fig-pad:14px 12px; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1513; --card:#171F1B; --ink:#E2E8E3; --soft:#A7B4AC; --faint:#7B8981;
+  --rule:#29342F; --accent:#5DBB94; --accent-bg:#1B2C24; --num:#D4AC52;
+  --c-root:#E2E8E3; --c-guide:#5DBB94; --c-course:#D4AC52; --c-handbook:#82A6D6;
+  --c-term:#E2826A; --c-tool:#B293D4; --c-res:#BBA591;
+  --paper-rgb:15,21,19; --card-rgb:23,31,27; --shadow-rgb:0,0,0;
+  --stage-glow:#16201C; --grid-dot:rgba(226,232,227,.06); --accent-strong:#7FD0AC;
+  --fig-bg:#E4EAE5; --fig-pad:14px 12px; color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -28,8 +53,8 @@ kbd{font:11px/1 var(--mono);color:var(--faint);border:var(--edge);border-bottom-
 /* ------------------------------------------------------------ stage */
 #stage{position:fixed;inset:0;z-index:0;
   background:
-    radial-gradient(ellipse 70% 60% at 55% 45%,#F2F5F1 0%,rgba(242,245,241,0) 70%),
-    radial-gradient(circle at 1px 1px,rgba(21,32,27,.075) 1px,transparent 1.2px) 0 0/26px 26px,
+    radial-gradient(ellipse 70% 60% at 55% 45%,var(--stage-glow) 0%,transparent 70%),
+    radial-gradient(circle at 1px 1px,var(--grid-dot) 1px,transparent 1.2px) 0 0/26px 26px,
     var(--paper)}
 #stage canvas{display:block;outline:none}
 #stage .scene-container{cursor:grab}
@@ -42,7 +67,7 @@ kbd{font:11px/1 var(--mono);color:var(--faint);border:var(--edge);border-bottom-
   transform-origin:50% 0;will-change:transform,opacity;transition:color .2s;
   font:11px/1.2 var(--mono);color:var(--soft);padding:2px 5px;border-radius:3px;
   text-shadow:0 0 3px var(--paper),0 0 6px var(--paper),0 0 10px var(--paper)}
-.lb:hover{color:var(--ink);background:rgba(247,249,246,.9);text-shadow:none}
+.lb:hover{color:var(--ink);background:rgba(var(--card-rgb),.9);text-shadow:none}
 .lb.t-root{font:600 17px/1 var(--mono);color:var(--ink);letter-spacing:-.01em}
 .lb.t-collection{font:600 16px/1.1 var(--serif);color:var(--ink);letter-spacing:-.01em}
 .lb.t-collection::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;
@@ -88,6 +113,7 @@ kbd{font:11px/1 var(--mono);color:var(--faint);border:var(--edge);border-bottom-
   font:13px/1 var(--mono);color:var(--soft);transition:border-color .15s,color .15s}
 .tbtn:hover,.tbtn[aria-expanded="true"]{border-color:var(--accent);color:var(--ink)}
 .tbtn .ico{font-size:17px;line-height:1}
+.tbtn.tico{width:38px;justify-content:center;padding:0;font-size:16px}
 .search{position:relative;margin-left:auto;width:min(360px,34vw)}
 .search input{width:100%;height:38px;font:13.5px/1 var(--mono);color:var(--ink);
   background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
@@ -120,7 +146,7 @@ kbd{font:11px/1 var(--mono);color:var(--faint);border:var(--edge);border-bottom-
 body:not(.m-overview) #hero{opacity:0;transform:translateX(-24px);pointer-events:none}
 /* a paper veil behind the hero, so the graph never runs through the text */
 #veil{position:fixed;z-index:3;left:0;top:0;bottom:0;width:calc(var(--hero-w) + 110px);pointer-events:none;
-  background:linear-gradient(90deg,rgba(234,238,233,.97) 0%,rgba(234,238,233,.9) 60%,rgba(234,238,233,0) 100%);
+  background:linear-gradient(90deg,rgba(var(--paper-rgb),.97) 0%,rgba(var(--paper-rgb),.9) 60%,rgba(var(--paper-rgb),0) 100%);
   transition:opacity .6s var(--ease)}
 body:not(.m-overview) #veil{opacity:0}
 #hero .kick{font:11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
@@ -172,7 +198,7 @@ body.m-focus #info{transform:none}
   transition:background .15s,color .15s}
 .btn:hover{background:var(--accent-bg);text-decoration:none}
 .btn.primary{background:var(--accent);color:var(--card)}
-.btn.primary:hover{background:#18563F}
+.btn.primary:hover{background:var(--accent-strong)}
 .grp{margin-top:18px}
 .grp h3{display:flex;justify-content:space-between;font:600 10.5px/1 var(--mono);letter-spacing:.12em;
   text-transform:uppercase;color:var(--faint);padding-bottom:8px;border-bottom:var(--edge);margin-bottom:4px}
@@ -201,7 +227,7 @@ body.m-focus #info{transform:none}
 
 /* ------------------------------------------------------------ reader */
 #reader{position:fixed;z-index:20;top:0;right:0;bottom:0;width:var(--reader-w);background:var(--card);
-  border-left:var(--edge);box-shadow:-30px 0 60px -40px rgba(21,32,27,.35);display:flex;flex-direction:column;
+  border-left:var(--edge);box-shadow:-30px 0 60px -40px rgba(var(--shadow-rgb),.35);display:flex;flex-direction:column;
   transform:translateX(105%);transition:transform .6s var(--ease)}
 body.m-read #reader{transform:none}
 /* the top bar makes room for the reader instead of sitting on it */
@@ -209,7 +235,7 @@ body.m-read #reader{transform:none}
 body.m-read .top{right:calc(var(--reader-w) + 16px)}
 body.m-read .links{display:none}
 body.m-read .search{width:auto;flex:1;max-width:300px;min-width:110px}
-@media (max-width:1100px){body.m-read .tbtn .lbl{display:none}body.m-read .search kbd{display:none}}
+@media (max-width:1100px){body.m-read .tbtn .lbl{display:none}body.m-read .search kbd{display:none}body.m-read .tbtn.tico{display:none}}
 .rbar{display:flex;align-items:center;gap:12px;padding:14px 20px 12px 24px;border-bottom:var(--edge);background:var(--card)}
 .rback{display:none;font:13px var(--mono);color:var(--accent);white-space:nowrap}
 .rcrumb{flex:1;min-width:0;font:12px/1.4 var(--mono);color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -237,6 +263,8 @@ body.m-read .search{width:auto;flex:1;max-width:300px;min-width:110px}
 .prose th{text-align:left;font-weight:600;padding:7px 10px 7px 0;border-bottom:1px solid var(--ink)}
 .prose td{padding:8px 10px 8px 0;border-bottom:var(--edge);vertical-align:top}
 .prose img{max-width:100%;height:auto;display:block;margin:20px auto}
+/* the figures are drawn for paper; on a dark page each sits on its own paper plate */
+.prose img[src$=".svg"]{background:var(--fig-bg);padding:var(--fig-pad);border-radius:8px}
 .prose a.wiki{color:var(--accent);border-radius:2px;transition:background .15s}
 .prose a.wiki::before{content:"[[";color:var(--faint)}
 .prose a.wiki::after{content:"]]";color:var(--faint)}
@@ -313,7 +341,7 @@ body:not(.booting) #boot{opacity:0;pointer-events:none}
   .search{width:auto;flex:1}
   .search kbd{display:none}
   #hero{left:16px;right:16px;top:auto;bottom:118px;width:auto;max-height:46vh}
-  #veil{top:auto;width:auto;right:0;height:62vh;background:linear-gradient(0deg,var(--paper) 0%,rgba(234,238,233,.94) 60%,rgba(234,238,233,0) 100%)}
+  #veil{top:auto;width:auto;right:0;height:62vh;background:linear-gradient(0deg,var(--paper) 0%,rgba(var(--paper-rgb),.94) 60%,rgba(var(--paper-rgb),0) 100%)}
   #hero h1{font-size:28px}
   #hero .lede{font-size:15.5px}
   #hero .lede2,#hero .hint,#hero .stats{display:none}

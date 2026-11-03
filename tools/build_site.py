@@ -20,8 +20,14 @@ CSS = """
 :root{
   --paper:#EAEEE9; --card:#F7F9F6; --ink:#15201B; --soft:#4B5A52; --faint:#7C8A82;
   --rule:#D2DACF; --accent:#1F6B52; --accent-bg:#E1EDE5; --num:#8A6B23;
+  --paper-rgb:234,238,233; --on-accent:#F7F9F6; color-scheme:light;
   --w:68ch;
 }
+/* dark: follows the system unless the visitor picked a theme */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F1513;--card:#171F1B;--ink:#E2E8E3;--soft:#A7B4AC;--faint:#7B8981;--rule:#29342F;--accent:#5DBB94;--accent-bg:#1B2C24;--num:#D4AC52;--paper-rgb:15,21,19;--on-accent:#0F1513;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1513;--card:#171F1B;--ink:#E2E8E3;--soft:#A7B4AC;--faint:#7B8981;--rule:#29342F;--accent:#5DBB94;--accent-bg:#1B2C24;--num:#D4AC52;--paper-rgb:15,21,19;--on-accent:#0F1513;color-scheme:dark}
+.theme{font:15px/1 ui-monospace,Menlo,monospace;color:var(--soft);background:none;border:1px solid var(--rule);border-radius:6px;width:32px;height:30px;cursor:pointer;flex:none}
+.theme:hover{color:var(--ink);border-color:var(--accent)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);
@@ -32,7 +38,7 @@ a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:3px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 
-header{position:sticky;top:0;z-index:40;background:rgba(234,238,233,.94);
+header{position:sticky;top:0;z-index:40;background:rgba(var(--paper-rgb),.94);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 .bar{max-width:1500px;margin:0 auto;padding:13px 22px;display:flex;gap:20px;align-items:center}
 .brand{font:600 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);letter-spacing:-.01em}
@@ -161,7 +167,7 @@ article.page a.wiki::after{content:"]]";color:var(--faint)}
   padding-bottom:18px;border-bottom:1px solid var(--rule)}
 .chip{font:13px/1 ui-monospace,Menlo,monospace;background:var(--card);color:var(--soft);
   border:1px solid var(--rule);border-radius:20px;padding:7px 13px;cursor:pointer}
-.chip.on{background:var(--accent);border-color:var(--accent);color:#F7F9F6}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .controls input{margin-left:auto;font:14px ui-monospace,Menlo,monospace;
   background:var(--card);border:1px solid var(--rule);border-radius:3px;padding:8px 11px;width:230px}
 .count{font:12px ui-monospace,Menlo,monospace;color:var(--faint);padding:14px 0 4px}
@@ -192,6 +198,7 @@ def header(active):
     <a href="tree.html">Tree</a>
     <a href="{REPO}">Repo</a>
   </nav>
+  <button class="theme" id="theme" aria-label="Switch between light and dark theme">&#9790;</button>
   {'<button class="toc-btn" id="toc">Index</button>' if active=='guide' else ''}
   {SEARCHBOX if active=='guide' else ''}
 </div></header>"""
@@ -391,7 +398,7 @@ for r in R:
 
 RES = f"""<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-{ICON}<title>Second Brain OS - resources</title>
+<script>try{{var t=JSON.parse(localStorage.getItem('sbos:theme'));if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}}catch(e){{}}</script>{ICON}<title>Second Brain OS - resources</title>
 <meta name="description" content="{len(R)} checked links: Obsidian plugins by installs, repositories by stars, papers, tools and reading.">
 <style>{CSS}</style>{BEACON}
 </head><body>
@@ -434,7 +441,7 @@ document.getElementById('ctl').addEventListener('click',e=>{{
 }});
 document.getElementById('rq').addEventListener('input',e=>{{term=e.target.value.trim().toLowerCase();draw();}});
 draw();
-</script></body></html>"""
+</script><script>(function(){{var b=document.getElementById('theme'),r=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');function d(){{return (r.dataset.theme||(m.matches?'dark':'light'))==='dark'}}function p(){{b.textContent=d()?'\u2600':'\u263E';b.title=d()?'Light theme':'Dark theme'}}b.onclick=function(){{var t=d()?'light':'dark';r.dataset.theme=t;try{{localStorage.setItem('sbos:theme',JSON.stringify(t))}}catch(e){{}}p()}};m.addEventListener('change',p);p()}})()</script></body></html>"""
 
 open(f"{OUT}/resources.html","w").write(RES)
 print("resources.html", os.path.getsize(f"{OUT}/resources.html")//1024, "KB")

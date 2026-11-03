@@ -290,12 +290,17 @@ def main():
 
 TEMPLATE = """<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The full component tree - Second Brain OS</title>
+<script>try{var t=JSON.parse(localStorage.getItem('sbos:theme'));if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script><title>The full component tree - Second Brain OS</title>
 <meta name="description" content="Every component in second-brain-os on one page: the agents course, five handbooks, the second-brain project, skills, commands, agents, scripts and resources, each line a link.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F7F9F6'/%3E%3Crect x='.5' y='.5' width='31' height='31' rx='6.5' fill='none' stroke='%23D2DACF'/%3E%3Cpath d='M10 21 L16 11 L22 19 M16 11 L23 9' stroke='%231F6B52' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='10' cy='21' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='11' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='22' cy='19' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='24' cy='8' r='2' fill='%231F6B52'/%3E%3C/svg%3E">
 <style>
 :root{--paper:#EAEEE9;--card:#F7F9F6;--ink:#15201B;--soft:#4B5A52;--faint:#7C8A82;
-  --rule:#D2DACF;--accent:#1F6B52;--accent-bg:#E1EDE5}
+  --rule:#D2DACF;--accent:#1F6B52;--accent-bg:#E1EDE5;color-scheme:light}
+/* dark: follows the system unless the visitor picked a theme */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F1513;--card:#171F1B;--ink:#E2E8E3;--soft:#A7B4AC;--faint:#7B8981;--rule:#29342F;--accent:#5DBB94;--accent-bg:#1B2C24;--num:#D4AC52;--paper-rgb:15,21,19;--on-accent:#0F1513;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1513;--card:#171F1B;--ink:#E2E8E3;--soft:#A7B4AC;--faint:#7B8981;--rule:#29342F;--accent:#5DBB94;--accent-bg:#1B2C24;--num:#D4AC52;--paper-rgb:15,21,19;--on-accent:#0F1513;color-scheme:dark}
+.theme{font:15px/1 ui-monospace,Menlo,monospace;color:var(--soft);background:none;border:1px solid var(--rule);border-radius:6px;width:32px;height:30px;cursor:pointer;flex:none}
+.theme:hover{color:var(--ink);border-color:var(--accent)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);
   font:13px/1.7 ui-monospace,Menlo,Consolas,monospace}
@@ -343,6 +348,7 @@ footer{border-top:1px solid var(--rule);padding:22px;text-align:center;color:var
     <a href="tree.html" class="on">Tree</a>
     <a href="https://github.com/undefined-ui/second-brain-os">Repo</a>
   </nav>
+  <button class="theme" id="theme" aria-label="Switch between light and dark theme">&#9790;</button>
 </div></header>
 <div class="wrap">
   <h1>The full component tree</h1>
@@ -355,7 +361,7 @@ footer{border-top:1px solid var(--rule);padding:22px;text-align:center;color:var
   <div class="counts"><b>{{COUNTS}}</b><span>generated from the repo</span></div>
 </div>
 <footer>Generated from the repository. <a href="https://github.com/undefined-ui/second-brain-os">github.com/undefined-ui/second-brain-os</a> · by <a href="https://x.com/undefinedKi" rel="noopener">@undefinedKi</a></footer>
-</body></html>"""
+<script>(function(){var b=document.getElementById('theme'),r=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');function d(){return (r.dataset.theme||(m.matches?'dark':'light'))==='dark'}function p(){b.textContent=d()?'\u2600':'\u263E';b.title=d()?'Light theme':'Dark theme'}b.onclick=function(){var t=d()?'light':'dark';r.dataset.theme=t;try{localStorage.setItem('sbos:theme',JSON.stringify(t))}catch(e){}p()};m.addEventListener('change',p);p()})()</script></body></html>"""
 
 
 if __name__ == "__main__":

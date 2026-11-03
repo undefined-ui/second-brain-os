@@ -32,6 +32,11 @@ const COLOR = {
   term: tok('--c-term'), tool: tok('--c-tool'), res: tok('--c-res'),
 };
 const PAPER = new THREE.Color(tok('--paper'));
+function readColors() {
+  const r = getComputedStyle(document.documentElement);
+  for (const k of Object.keys(COLOR)) COLOR[k] = r.getPropertyValue('--c-' + k).trim();
+  PAPER.set(r.getPropertyValue('--paper').trim());
+}
 const LAYERS = [
   { key: 'course', label: 'Course' },
   { key: 'handbook', label: 'Handbooks' },
@@ -58,6 +63,8 @@ for (const l of links) {
 const FLAT = G.order.flatMap(s => byId.get(s).pages);
 const sectionsOf = col => G.order.filter(s => byId.get(s).group === col);
 const dotOf = n => COLOR[n.group] || COLOR.root;
+// for HTML: a CSS variable, so labels and panels follow a theme switch on their own
+const cssDot = n => `var(--c-${COLOR[n.group] ? n.group : 'root'})`;
 
 const layerOn = Object.assign(Object.fromEntries(LAYERS.map(l => [l.key, !l.off])), store.get('layers', {}));
 const visible = n => n.group === 'root' || !!layerOn[n.group];
@@ -148,7 +155,7 @@ function makeNode(n) {
 const tooltip = n => {
   const sec = n.sec ? byId.get(n.sec) : null;
   const ctx = sec ? ` · ${sec.badge} ${sec.label}` : n.sub ? ` · ${n.sub}` : '';
-  return `<span class="tt-k" style="--dot:${dotOf(n)}">${TYPE[n.type]}${esc(ctx)}</span>` +
+  return `<span class="tt-k" style="--dot:${cssDot(n)}">${TYPE[n.type]}${esc(ctx)}</span>` +
     `<span class="tt-t">${esc(n.label)}</span>` +
     (n.desc && n.type !== 'root' ? `<span class="tt-d">${esc(clip(n.desc, 120))}</span>` : '');
 };
@@ -378,7 +385,7 @@ function refreshLabels() {
     if (!el) {
       el = document.createElement('div');
       el.className = `lb t-${TOOLISH.has(n.type) ? 'tool' : n.type}`;
-      el.style.setProperty('--dot', dotOf(n));
+      el.style.setProperty('--dot', cssDot(n));
       el.dataset.id = n.id;
       el.style.opacity = '0';
       labelBox.appendChild(el);
@@ -643,9 +650,9 @@ addEventListener('hashchange', route);
 const info = $('#info');
 const li = (id, meta = '', extra = '') => {
   const n = byId.get(id); if (!n) return '';
-  return `<button class="li${extra}" data-go="${esc(id)}" style="--dot:${dotOf(n)}"><span class="d"></span><span>${n.type === 'command' || n.type === 'skill' || n.type === 'script' ? `<code>${esc(n.label)}</code>` : esc(n.label)}</span>${meta ? `<span class="m">${meta}</span>` : ''}</button>`;
+  return `<button class="li${extra}" data-go="${esc(id)}" style="--dot:${cssDot(n)}"><span class="d"></span><span>${n.type === 'command' || n.type === 'skill' || n.type === 'script' ? `<code>${esc(n.label)}</code>` : esc(n.label)}</span>${meta ? `<span class="m">${meta}</span>` : ''}</button>`;
 };
-const chip = id => { const n = byId.get(id); return n ? `<button class="chip${n.type === 'term' ? ' term' : ''}" data-go="${esc(id)}" style="--dot:${dotOf(n)}"><span class="d"></span>${esc(n.label)}</button>` : ''; };
+const chip = id => { const n = byId.get(id); return n ? `<button class="chip${n.type === 'term' ? ' term' : ''}" data-go="${esc(id)}" style="--dot:${cssDot(n)}"><span class="d"></span>${esc(n.label)}</button>` : ''; };
 const group = (title, body, count) => body ? `<div class="grp"><h3>${title}${count != null ? `<span>${count}</span>` : ''}</h3>${body}</div>` : '';
 const listOf = (ids, meta, max = 14) => {
   if (!ids.length) return '';
@@ -656,7 +663,7 @@ const listOf = (ids, meta, max = 14) => {
 const edgeIds = (n, kind, dir) => linksOf.get(n.id).filter(l => l.kind === kind && (dir === 'out' ? l.s === n.id : dir === 'in' ? l.t === n.id : true)).map(l => l.s === n.id ? l.t : l.s);
 const words = n => n.words ? `${n.words.toLocaleString('en')} words` : '';
 const mins = w => Math.max(1, Math.round(w / 230));
-const kicker = (n, ctx) => `<div class="ik" style="--dot:${dotOf(n)}"><span class="sw"></span>${TYPE[n.type]}${ctx ? `<i>· ${ctx}</i>` : ''}</div>`;
+const kicker = (n, ctx) => `<div class="ik" style="--dot:${cssDot(n)}"><span class="sw"></span>${TYPE[n.type]}${ctx ? `<i>· ${ctx}</i>` : ''}</div>`;
 const ghBtn = (url, label = 'GitHub') => url ? `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${label} &#8599;</a>` : '';
 
 function renderInfo(n) {
@@ -693,7 +700,7 @@ function renderInfo(n) {
     h += kicker(n, `${esc(col.label)} · ${esc(n.badge)}`) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
       `<div class="meta"><span><b>${n.pages.length}</b> pages</span><span><b>${w.toLocaleString('en')}</b> words</span><span>~${mins(w)} min</span></div>` +
       `<div class="acts"><button class="btn primary" data-read="${esc(n.pages[0])}">Start reading &rarr;</button></div>` +
-      group('Pages', n.pages.map((id, k) => `<button class="li" data-go="${esc(id)}" style="--dot:${dotOf(n)}"><span class="n">${k + 1}</span><span>${esc(byId.get(id).label)}</span><span class="m">${mins(byId.get(id).words || 0)}m</span></button>`).join(''), n.pages.length) +
+      group('Pages', n.pages.map((id, k) => `<button class="li" data-go="${esc(id)}" style="--dot:${cssDot(n)}"><span class="n">${k + 1}</span><span>${esc(byId.get(id).label)}</span><span class="m">${mins(byId.get(id).words || 0)}m</span></button>`).join(''), n.pages.length) +
       group(n.group === 'handbook' ? 'The module it deepens' : 'Its handbook', hb.map(id => li(id, esc(byId.get(id).badge))).join('')) +
       group('Leans on', bars(lean)) + group('Leaned on by', bars(leanedBy));
   } else if (T === 'collection') {
@@ -726,7 +733,7 @@ function renderInfo(n) {
     const rel = Object.entries(co).sort((a, b) => b[1] - a[1]).slice(0, 8).map(x => x[0]);
     const pagesHtml = byCount.slice(0, 14).map(([id, c]) => {
       const p = byId.get(id);
-      return `<button class="li" data-go="${esc(id)}" style="--dot:${dotOf(p)}"><span class="d"></span><span>${esc(p.label)}</span><span class="bar" style="width:${Math.max(6, c / mx * 54)}px"></span><span class="m">${c}</span></button>`;
+      return `<button class="li" data-go="${esc(id)}" style="--dot:${cssDot(p)}"><span class="d"></span><span>${esc(p.label)}</span><span class="bar" style="width:${Math.max(6, c / mx * 54)}px"></span><span class="m">${c}</span></button>`;
     }).join('');
     const rest = byCount.slice(14).map(x => x[0]);
     h += kicker(n, 'glossary') + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
@@ -779,7 +786,7 @@ let pendingAnchor = null;
 function renderReader(n) {
   const P = PAGES[n.id], sec = byId.get(n.sec);
   const i = FLAT.indexOf(n.id), prev = FLAT[i - 1], next = FLAT[i + 1];
-  rCrumb.innerHTML = `<b style="color:${dotOf(n)}">${esc(sec.badge)}</b><button data-go="${esc(sec.id)}">${esc(sec.label)}</button> · page ${n.pos} of ${n.of}`;
+  rCrumb.innerHTML = `<b style="color:${cssDot(n)}">${esc(sec.badge)}</b><button data-go="${esc(sec.id)}">${esc(sec.label)}</button> · page ${n.pos} of ${n.of}`;
   rBody.innerHTML = !P ? '<p>This page did not load. Try reloading.</p>' :
     `<h1>${esc(n.label)}</h1>${P.html}` +
     ((n.terms || []).length ? `<div class="rterms"><h4>terms on this page</h4><div class="chips">${n.terms.slice(0, 18).map(chip).join('')}</div></div>` : '') +
@@ -807,7 +814,7 @@ $('#paths').innerHTML = [
   ['guide', '01–10', 'Second brain', 'A hands-on project: a knowledge base an agent builds and maintains for you.'],
 ].map(([k, badge, label, p]) => {
   const pages = sectionsOf(k).reduce((a, s) => a + byId.get(s).pages.length, 0);
-  return `<button class="path" data-go="col:${k}" style="--dot:${COLOR[k]}"><span class="pk">${badge}</span><b>${label}</b><span class="pn">${pages} pages</span><p>${p}</p></button>`;
+  return `<button class="path" data-go="col:${k}" style="--dot:var(--c-${k})"><span class="pk">${badge}</span><b>${label}</b><span class="pn">${pages} pages</span><p>${p}</p></button>`;
 }).join('');
 $('#paths').addEventListener('click', e => { const t = e.target.closest('[data-go]'); if (t) go(t.dataset.go); });
 const st = G.stats;
@@ -819,7 +826,7 @@ const layersBox = $('#layers');
 function renderLayers() {
   layersBox.innerHTML = LAYERS.map(L => {
     const c = nodes.filter(n => n.group === L.key && n.type !== 'collection' && n.type !== 'hub' && n.type !== 'section').length;
-    return `<button class="lyr" data-layer="${L.key}" aria-pressed="${!!layerOn[L.key]}" style="--dot:${COLOR[L.key]}" title="Show or hide: ${L.label}"><span class="d"></span>${L.label}<span class="n">${c}</span></button>`;
+    return `<button class="lyr" data-layer="${L.key}" aria-pressed="${!!layerOn[L.key]}" style="--dot:var(--c-${L.key})" title="Show or hide: ${L.label}"><span class="d"></span>${L.label}<span class="n">${c}</span></button>`;
   }).join('');
 }
 renderLayers();
@@ -848,10 +855,10 @@ $('#btn-home').onclick = () => go('root');
 const contents = $('#contents'), cBtn = $('#btn-contents');
 function renderContents() {
   const cur = S.sel?.id;
-  const block = (col, title) => `<div class="cg" style="--dot:${COLOR[col]}"><h4><span class="d"></span>${title}</h4>` +
+  const block = (col, title) => `<div class="cg" style="--dot:var(--c-${col})"><h4><span class="d"></span>${title}</h4>` +
     sectionsOf(col).map(sid => {
       const s = byId.get(sid), open = cur && (cur === sid || s.pages.includes(cur));
-      return `<div class="cs${open ? ' open' : ''}" style="--dot:${COLOR[col]}"><button data-sec="${esc(sid)}"><span class="k">${esc(s.badge)}</span>${esc(s.label)}<span class="n">${s.pages.length}</span></button><ol>` +
+      return `<div class="cs${open ? ' open' : ''}" style="--dot:var(--c-${col})"><button data-sec="${esc(sid)}"><span class="k">${esc(s.badge)}</span>${esc(s.label)}<span class="n">${s.pages.length}</span></button><ol>` +
         s.pages.map(pid => `<li><button data-page="${esc(pid)}" data-node="${esc(pid)}" class="${pid === cur ? 'cur' : ''}">${esc(byId.get(pid).label)}</button></li>`).join('') + '</ol></div>';
     }).join('') + '</div>';
   $('#c-body').innerHTML = block('course', 'the agents course') + block('handbook', 'handbooks') + block('guide', 'second brain');
@@ -894,7 +901,7 @@ function paintHits() {
   hits.innerHTML = hitList.length ? hitList.map((h, i) => {
     const n = h.n, sec = n.sec ? byId.get(n.sec) : null;
     const ctx = sec ? `${sec.badge} ${sec.label}` : n.sub || '';
-    return `<button class="hit${i === hitIdx ? ' on' : ''}" data-i="${i}" style="--dot:${dotOf(n)}"><span class="d"></span><span><b>${esc(n.label)}</b><i>${TYPE[n.type]}${ctx ? ' · ' + esc(ctx) : ''}</i>${h.snip ? `<em>${h.snip}</em>` : ''}</span></button>`;
+    return `<button class="hit${i === hitIdx ? ' on' : ''}" data-i="${i}" style="--dot:${cssDot(n)}"><span class="d"></span><span><b>${esc(n.label)}</b><i>${TYPE[n.type]}${ctx ? ' · ' + esc(ctx) : ''}</i>${h.snip ? `<em>${h.snip}</em>` : ''}</span></button>`;
   }).join('') : '<div class="none">nothing on the site matches that</div>';
   hits.classList.add('open');
 }
@@ -936,6 +943,44 @@ document.addEventListener('keydown', e => {
     if (t) read(t);
   }
 });
+
+// ------------------------------------------------------------------ theme
+// The page follows the system theme until the visitor picks one; the pick is
+// shared with the resources and tree pages through the same storage key.
+const themeBtn = $('#btn-theme');
+const sysDark = matchMedia('(prefers-color-scheme: dark)');
+const isDark = () => (document.documentElement.dataset.theme || (sysDark.matches ? 'dark' : 'light')) === 'dark';
+function paintThemeBtn() {
+  const d = isDark();
+  themeBtn.textContent = d ? '\u2600' : '\u263E';
+  themeBtn.title = d ? 'Light theme' : 'Dark theme';
+  themeBtn.setAttribute('aria-pressed', String(d));
+}
+function recolor() {
+  readColors();
+  scene.fog.color.copy(PAPER);
+  for (const n of nodes) {
+    if (!n._core) continue;
+    n._core.material.color.set(dotOf(n));
+    if (n._shell) n._shell.material.uniforms.color.value.set(dotOf(n));
+  }
+  VL.forEach((l, i) => {
+    const a = new THREE.Color(dotOf(l._S)), b = new THREE.Color(dotOf(l._T)), o = i * 8;
+    lcol[o] = a.r; lcol[o + 1] = a.g; lcol[o + 2] = a.b;
+    lcol[o + 4] = b.r; lcol[o + 5] = b.g; lcol[o + 6] = b.b;
+  });
+  lgeo.attributes.color.needsUpdate = true;
+  if (hl.list.length) buildHL(hl.list);
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => { m.content = '#' + PAPER.getHexString(); });
+}
+themeBtn.onclick = () => {
+  const next = isDark() ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  store.set('theme', next);
+  paintThemeBtn(); recolor();
+};
+sysDark.addEventListener('change', () => { if (!document.documentElement.dataset.theme) { paintThemeBtn(); recolor(); } });
+paintThemeBtn();
 
 // ------------------------------------------------------------------ resize
 addEventListener('resize', () => {
