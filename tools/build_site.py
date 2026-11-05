@@ -5,7 +5,7 @@ The home page is no longer built here: index.html is the graph page, and its
 data comes from tools/build_graph_site.py. The old guide template below is kept
 for reference but never written.
 """
-import json, os, html
+import hashlib, html, json, os, re
 
 D = json.load(open("site_data.json"))
 OUT = "."
@@ -14,7 +14,7 @@ REPO = "https://github.com/undefined-ui/second-brain-os"
 # the bits every page shares: favicon, analytics, author
 ICON = '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\'%3E%3Crect width=\'32\' height=\'32\' rx=\'7\' fill=\'%23F7F9F6\'/%3E%3Crect x=\'.5\' y=\'.5\' width=\'31\' height=\'31\' rx=\'6.5\' fill=\'none\' stroke=\'%23D2DACF\'/%3E%3Cpath d=\'M10 21 L16 11 L22 19 M16 11 L23 9\' stroke=\'%231F6B52\' stroke-width=\'1.6\' fill=\'none\'/%3E%3Ccircle cx=\'10\' cy=\'21\' r=\'3\' fill=\'%23F7F9F6\' stroke=\'%231F6B52\' stroke-width=\'1.6\'/%3E%3Ccircle cx=\'16\' cy=\'11\' r=\'3\' fill=\'%23F7F9F6\' stroke=\'%231F6B52\' stroke-width=\'1.6\'/%3E%3Ccircle cx=\'22\' cy=\'19\' r=\'3\' fill=\'%23F7F9F6\' stroke=\'%231F6B52\' stroke-width=\'1.6\'/%3E%3Ccircle cx=\'24\' cy=\'8\' r=\'2\' fill=\'%231F6B52\'/%3E%3C/svg%3E">'
 BEACON = '<!-- Cloudflare Web Analytics --><script type=\'module\' src=\'https://static.cloudflareinsights.com/beacon.min.js\' data-cf-beacon=\'{"token": "251090521ca24c01bde87a953db3dea4"}\'></script><!-- End Cloudflare Web Analytics -->'
-AUTHOR = ' · by <a href="https://x.com/undefinedKi" rel="noopener">@undefinedKi</a>'
+AUTHOR = ' · <span data-i18n="by">by</span> <a href="https://x.com/undefinedKi" rel="noopener">@undefinedKi</a>'
 
 CSS = """
 :root{
@@ -193,14 +193,15 @@ def header(active):
     return f"""<header><div class="bar">
   <a class="brand" href="index.html">[[ second<span>brain</span>os ]]</a>
   <nav>
-    <a href="index.html" class="{'on' if active=='guide' else ''}">Map</a>
-    <a href="resources.html" class="{'on' if active=='res' else ''}">Resources</a>
-    <a href="tree.html">Tree</a>
-    <a href="{REPO}">Repo</a>
+    <a href="index.html" class="{'on' if active=='guide' else ''}" data-i18n="Map">Map</a>
+    <a href="resources.html" class="{'on' if active=='res' else ''}" data-i18n="Resources">Resources</a>
+    <a href="tree.html" data-i18n="Tree">Tree</a>
+    <a href="{REPO}" data-i18n="Repo">Repo</a>
   </nav>
-  <button class="theme" id="theme" aria-label="Switch between light and dark theme">&#9790;</button>
+  <button class="theme" id="theme" data-i18n-aria-label="Switch between light and dark theme" aria-label="Switch between light and dark theme">&#9790;</button>
   {'<button class="toc-btn" id="toc">Index</button>' if active=='guide' else ''}
   {SEARCHBOX if active=='guide' else ''}
+  <button class="language-toggle" type="button" data-language-toggle>中文</button>
 </div></header>"""
 
 # ---------------- graph: sections on a ring in reading order, links as chords
@@ -280,7 +281,7 @@ GUIDE = f"""<!DOCTYPE html><html lang="en"><head>
   <main id="main"></main>
   <div class="rail" id="rail"></div>
 </div>
-<footer>Generated from the repository. <a href="{REPO}">github.com/undefined-ui/second-brain-os</a></footer>
+<footer><span data-i18n="Generated from the repository.">Generated from the repository.</span> <a href="{REPO}">github.com/undefined-ui/second-brain-os</a></footer>
 <script id="data" type="application/json">{json.dumps({k:D[k] for k in ['pages','sections','order']})}</script>
 <script>
 const D=JSON.parse(document.getElementById('data').textContent);
@@ -398,50 +399,70 @@ for r in R:
 
 RES = f"""<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<script>try{{var t=JSON.parse(localStorage.getItem('sbos:theme'));if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}}catch(e){{}}</script>{ICON}<title>Second Brain OS - resources</title>
+<script>try{{var t=JSON.parse(localStorage.getItem('sbos:theme'));if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}}catch(e){{}}</script>{ICON}<title data-i18n="Second Brain OS - resources">Second Brain OS - resources</title>
 <meta name="description" content="{len(R)} checked links: Obsidian plugins by installs, repositories by stars, papers, tools and reading.">
 <style>{CSS}</style>{BEACON}
+<link rel="stylesheet" href="assets/site/i18n.css">
+<script src="assets/site/i18n.js"></script>
+<script src="assets/site/catalog-i18n.js"></script>
+<script src="assets/site/resource-i18n.js"></script>
 </head><body>
 {header('res')}
 <div class="rwrap">
-  <h1>Everything worth opening</h1>
-  <p class="lede">{len(R)} links, each one checked. Plugins are ranked by installs from Obsidian's own community stats rather than by stars, because in this ecosystem the two disagree by an order of magnitude. Figures are from September 2026 and will drift.</p>
+  <h1 data-i18n="Everything worth opening">Everything worth opening</h1>
+  <p class="lede" data-i18n="{{count}} links, each one checked. Plugins are ranked by installs from Obsidian's own community stats rather than by stars, because in this ecosystem the two disagree by an order of magnitude. Figures are from September 2026 and will drift." data-i18n-params='{json.dumps({"count": len(R)})}'>{len(R)} links, each one checked. Plugins are ranked by installs from Obsidian's own community stats rather than by stars, because in this ecosystem the two disagree by an order of magnitude. Figures are from September 2026 and will drift.</p>
+  <p class="content-language" data-i18n="Linked sources retain their original language.">Linked sources retain their original language.</p>
   <div class="controls" id="ctl">
-    <button class="chip on" data-k="all">All</button>
-    {"".join(f'<button class="chip" data-k="{html.escape(k)}">{html.escape(k)}</button>' for k in kinds)}
-    <input id="rq" type="search" placeholder="filter" autocomplete="off">
+    <button class="chip on" data-k="all" data-i18n="All" aria-pressed="true">All</button>
+    {"".join(f'<button class="chip" data-k="{html.escape(k)}" data-i18n="{html.escape(k)}" aria-pressed="false">{html.escape(k)}</button>' for k in kinds)}
+    <input id="rq" type="search" data-i18n-placeholder="filter" placeholder="filter" data-i18n-aria-label="Filter resources" aria-label="Filter resources" autocomplete="off">
   </div>
-  <div class="count" id="count"></div>
+  <div class="count" id="count" role="status"></div>
   <div id="rows"></div>
 </div>
-<footer>Generated from the repository. <a href="{REPO}">github.com/undefined-ui/second-brain-os</a>{AUTHOR}</footer>
+<footer><span data-i18n="Generated from the repository.">Generated from the repository.</span> <a href="{REPO}">github.com/undefined-ui/second-brain-os</a>{AUTHOR}</footer>
 <script id="rdata" type="application/json">{json.dumps(R)}</script>
 <script>
+(function(){{
 const R=JSON.parse(document.getElementById('rdata').textContent);
+const t=(key,params,language)=>window.SBOS_I18N.t(key,params,language);
+const chineseDescription=r=>window.SBOS_RESOURCE_ZH?.[r.name.replace(/\\s+/g,' ').trim()];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]));
 let kind='all', term='';
 function draw(){{
   const f=R.filter(r=>(kind==='all'||r.kind===kind) &&
-    (!term || (r.name+' '+r.desc+' '+r.group).toLowerCase().includes(term)));
-  document.getElementById('count').textContent=f.length+' of '+R.length+' shown';
+    (!term || (r.name+' '+r.desc+' '+(chineseDescription(r)||'')+' '+r.group+' '+r.kind+' '+t(r.group,{{}},'zh-CN')+' '+t(r.kind,{{}},'zh-CN')).toLowerCase().includes(term)));
+  document.getElementById('count').textContent=t('{{count}} of {{total}} shown',{{count:f.length,total:R.length}});
   let h='', g=null;
   f.forEach(r=>{{
+    const zh=window.SBOS_I18N.locale==='zh-CN' && chineseDescription(r);
     const key=r.kind+' / '+r.group;
-    if(key!==g){{g=key; h+=`<div class="grp-h">${{r.group||r.kind}}</div>`;}}
+    if(key!==g){{g=key; h+=`<div class="grp-h">${{esc(t(r.group||r.kind))}}</div>`;}}
     h+=`<div class="row">
-      <div><a class="nm" href="${{r.url}}">${{r.name}}</a><span class="kd">${{r.kind}}</span></div>
-      <div class="mt">${{r.metric||''}}</div>
-      <div class="ds">${{r.desc||''}}</div></div>`;
+      <div><a class="nm" lang="en" href="${{esc(r.url)}}">${{esc(r.name)}}</a><span class="kd">${{esc(t(r.kind))}}</span></div>
+      <div class="mt">${{esc(t(r.metric||''))}}</div>
+      <div class="ds" lang="${{zh?'zh-CN':'en'}}">${{esc(zh||r.desc||'')}}</div></div>`;
   }});
-  document.getElementById('rows').innerHTML=h||'<div class="count">nothing matches that filter</div>';
+  document.getElementById('rows').innerHTML=h||`<div class="count">${{esc(t('nothing matches that filter'))}}</div>`;
 }}
 document.getElementById('ctl').addEventListener('click',e=>{{
   const b=e.target.closest('.chip'); if(!b)return;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c===b));
+  document.querySelectorAll('.chip').forEach(c=>{{c.classList.toggle('on',c===b);c.setAttribute('aria-pressed',String(c===b));}});
   kind=b.dataset.k; draw();
 }});
 document.getElementById('rq').addEventListener('input',e=>{{term=e.target.value.trim().toLowerCase();draw();}});
+addEventListener('sbos:languagechange',draw);
 draw();
-</script><script>(function(){{var b=document.getElementById('theme'),r=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');function d(){{return (r.dataset.theme||(m.matches?'dark':'light'))==='dark'}}function p(){{b.textContent=d()?'\u2600':'\u263E';b.title=d()?'Light theme':'Dark theme'}}b.onclick=function(){{var t=d()?'light':'dark';r.dataset.theme=t;try{{localStorage.setItem('sbos:theme',JSON.stringify(t))}}catch(e){{}}p()}};m.addEventListener('change',p);p()}})()</script></body></html>"""
+}})();
+</script><script>(function(){{var b=document.getElementById('theme'),r=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');function d(){{return (r.dataset.theme||(m.matches?'dark':'light'))==='dark'}}function p(){{b.textContent=d()?'\u2600':'\u263E';b.title=window.SBOS_I18N.t(d()?'Light theme':'Dark theme')}}b.onclick=function(){{var t=d()?'light':'dark';r.dataset.theme=t;try{{localStorage.setItem('sbos:theme',JSON.stringify(t))}}catch(e){{}}p()}};m.addEventListener('change',p);addEventListener('sbos:languagechange',p);p()}})()</script></body></html>"""
 
+def stamp_asset(match):
+    path = match.group(1)
+    with open(path, "rb") as asset:
+        version = hashlib.md5(asset.read()).hexdigest()[:10]
+    return f"{path}?v={version}"
+
+
+RES = re.sub(r"(assets/site/[a-z0-9-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?", stamp_asset, RES)
 open(f"{OUT}/resources.html","w").write(RES)
 print("resources.html", os.path.getsize(f"{OUT}/resources.html")//1024, "KB")

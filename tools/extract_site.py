@@ -11,6 +11,8 @@ pages = []          # {id, section, section_title, title, html, headings, links}
 
 for secdir in sorted(glob.glob(f"{ROOT}/docs/*/")):
     sec = os.path.basename(secdir.rstrip("/"))
+    if sec == "zh-CN":
+        continue  # Translations share the original page IDs; they are built separately.
     idx = open(secdir + "README.md").read()
     stitle = re.search(r"^# (.+)$", idx, re.M).group(1)
     sblurb = ""

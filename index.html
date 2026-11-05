@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Second Brain OS - guides and resources for AI engineers</title>
+<title data-i18n="Second Brain OS - guides and resources for AI engineers">Second Brain OS - guides and resources for AI engineers</title>
 <meta name="description" content="Guides and resources for AI engineers: a course on building agents, five handbooks, a hands-on second-brain project and a vetted reading list, all on one explorable graph.">
 <meta name="theme-color" content="#EAEEE9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0F1513" media="(prefers-color-scheme: dark)">
@@ -8,6 +8,11 @@
 <meta name="author" content="@undefinedKi">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F7F9F6'/%3E%3Crect x='.5' y='.5' width='31' height='31' rx='6.5' fill='none' stroke='%23D2DACF'/%3E%3Cpath d='M10 21 L16 11 L22 19 M16 11 L23 9' stroke='%231F6B52' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='10' cy='21' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='11' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='22' cy='19' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='24' cy='8' r='2' fill='%231F6B52'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/site/app.css?v=c6d3a35810">
+<link rel="stylesheet" href="assets/site/i18n.css?v=58b5bbe4c1">
+<script src="assets/site/i18n.js?v=8cd2bad61d"></script>
+<script src="assets/site/catalog-i18n.js?v=b2e3de8277"></script>
+<script src="assets/site/graph-i18n.js?v=5842e24e9f"></script>
+<script src="assets/site/resource-i18n.js?v=f47309fda3"></script>
 <!-- Cloudflare Web Analytics, everywhere except a local preview -->
 <script>if(location.protocol!=='file:'&&!/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)){const s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.dataset.cfBeacon='{"token": "251090521ca24c01bde87a953db3dea4"}';document.head.appendChild(s);}</script>
 </head><body class="booting">
@@ -18,58 +23,60 @@
 <div id="veil" aria-hidden="true"></div>
 
 <header class="top">
-  <a class="brand" href="#/" title="Back to the whole map">[[ second<span>brain</span>os ]]</a>
-  <button class="tbtn" id="btn-contents" aria-controls="contents" aria-expanded="false"><span class="ico">&#8801;</span><span class="lbl">Contents</span></button>
+  <a class="brand" href="#/" title="Back to the whole map" data-i18n-title="Back to the whole map">[[ second<span>brain</span>os ]]</a>
+  <button class="tbtn" id="btn-contents" aria-controls="contents" aria-expanded="false"><span class="ico">&#8801;</span><span class="lbl" data-i18n="Contents">Contents</span></button>
   <div class="search" role="search">
-    <input id="q" type="search" placeholder="search pages, terms, tools" autocomplete="off" spellcheck="false" aria-label="Search the site">
+    <input id="q" type="search" placeholder="search pages, terms, tools" data-i18n-placeholder="search pages, terms, tools" autocomplete="off" spellcheck="false" aria-label="Search the site" data-i18n-aria-label="Search the site">
     <kbd>/</kbd>
     <div class="hits" id="hits" role="listbox"></div>
   </div>
-  <button class="tbtn tico" id="btn-theme" aria-label="Switch between light and dark theme" aria-pressed="false">&#9790;</button>
+  <button class="tbtn tico" id="btn-theme" aria-label="Switch between light and dark theme" data-i18n-aria-label="Switch between light and dark theme" aria-pressed="false">&#9790;</button>
+  <button type="button" class="language-toggle" data-language-toggle aria-label="Switch to Chinese">中文</button>
   <nav class="links">
-    <a href="resources.html">Resources</a>
-    <a href="tree.html">Tree</a>
-    <a href="https://github.com/undefined-ui/second-brain-os" rel="noopener">Repo</a>
+    <a href="resources.html" data-i18n="Resources">Resources</a>
+    <a href="tree.html" data-i18n="Tree">Tree</a>
+    <a href="https://github.com/undefined-ui/second-brain-os" rel="noopener" data-i18n="Repo">Repo</a>
   </nav>
 </header>
 
 <section id="hero" aria-labelledby="hero-h">
-  <p class="kick">the whole site, as one graph</p>
-  <h1 id="hero-h">Guides and resources for AI engineers</h1>
-  <p class="lede">A course on building agents from a single prompt to production, five handbooks that go deep on one layer each, a hands-on second-brain project, and the links worth your time. Free, plain markdown.</p>
-  <p class="lede2">Every page, term and tool on this site is a bubble. The lines are the real links between them. Click one to see what it leans on.</p>
+  <p class="kick" data-i18n="the whole site, as one graph">the whole site, as one graph</p>
+  <h1 id="hero-h" data-i18n="Guides and resources for AI engineers">Guides and resources for AI engineers</h1>
+  <p class="lede" data-i18n="A course on building agents from a single prompt to production, five handbooks that go deep on one layer each, a hands-on second-brain project, and the links worth your time. Free, plain markdown.">A course on building agents from a single prompt to production, five handbooks that go deep on one layer each, a hands-on second-brain project, and the links worth your time. Free, plain markdown.</p>
+  <p class="lede2" data-i18n="Every page, term and tool on this site is a bubble. The lines are the real links between them. Click one to see what it leans on.">Every page, term and tool on this site is a bubble. The lines are the real links between them. Click one to see what it leans on.</p>
   <div class="paths" id="paths"></div>
   <div class="stats" id="stats"></div>
-  <p class="hint"><span>drag</span> orbit <span>scroll</span> zoom <span>click</span> open <span>esc</span> back</p>
-  <p class="by">made by <a href="https://x.com/undefinedKi" target="_blank" rel="noopener">@undefinedKi</a></p>
+  <p class="hint"><span data-i18n="drag">drag</span> <i data-i18n="orbit">orbit</i> <span data-i18n="scroll">scroll</span> <i data-i18n="zoom">zoom</i> <span data-i18n="click">click</span> <i data-i18n="open">open</i> <span>esc</span> <i data-i18n="back">back</i></p>
+  <p class="by"><span data-i18n="made by">made by</span> <a href="https://x.com/undefinedKi" target="_blank" rel="noopener">@undefinedKi</a></p>
 </section>
 
-<aside id="info" aria-live="polite" aria-label="Selected item"></aside>
+<aside id="info" aria-live="polite" aria-label="Selected item" data-i18n-aria-label="Selected item"></aside>
 
-<aside id="reader" aria-label="Reader">
+<aside id="reader" aria-label="Reader" data-i18n-aria-label="Reader">
   <div class="rbar">
-    <button class="rback" id="r-graph" title="Back to the graph (Esc)">&larr; <span>graph</span></button>
+    <button class="rback" id="r-graph" title="Back to the graph (Esc)" data-i18n-title="Back to the graph (Esc)">&larr; <span data-i18n="graph">graph</span></button>
     <div class="rcrumb" id="r-crumb"></div>
-    <button class="rx" id="r-close" title="Close (Esc)" aria-label="Close the reader">&times;</button>
+    <button class="rx" id="r-close" title="Close (Esc)" data-i18n-title="Close (Esc)" aria-label="Close the reader" data-i18n-aria-label="Close the reader">&times;</button>
   </div>
   <div class="rscroll" id="r-scroll"><article class="prose" id="r-body"></article></div>
 </aside>
 
-<aside id="contents" aria-label="Contents"><div class="cin" id="c-body"></div></aside>
+<aside id="contents" aria-label="Contents" data-i18n-aria-label="Contents"><div class="cin" id="c-body"></div></aside>
 
 <div class="dock">
-  <div class="layers" id="layers" role="group" aria-label="Show or hide layers"></div>
+  <div class="layers" id="layers" role="group" aria-label="Show or hide layers" data-i18n-aria-label="Show or hide layers"></div>
   <div class="ctl">
     <button class="tbtn" id="btn-spin" title="Pause the rotation" aria-pressed="true">&#10227;</button>
-    <button class="tbtn" id="btn-home" title="Whole map">&#8962;</button>
+    <button class="tbtn" id="btn-home" title="Whole map" data-i18n-title="Whole map">&#8962;</button>
   </div>
 </div>
 
-<div id="boot"><div><b>[[ second<span>brain</span>os ]]</b><i>drawing the map&hellip;</i></div></div>
+<div id="boot"><div><b>[[ second<span>brain</span>os ]]</b><i data-i18n="drawing the map…">drawing the map&hellip;</i></div></div>
 
 <noscript><div class="nojs">This page draws the site as a 3D graph and needs JavaScript. The guide is also readable on <a href="https://github.com/undefined-ui/second-brain-os/tree/main/docs">GitHub</a>.</div></noscript>
 
 <script src="assets/site/graph-data.js?v=755ea20446"></script>
 <script src="assets/site/pages-data.js?v=626fcdea36" defer></script>
-<script type="module" src="assets/site/app.js?v=efb3d47691"></script>
+<script src="assets/site/pages-zh-cn.js?v=fbf18c05cb" defer></script>
+<script type="module" src="assets/site/app.js?v=2232214601"></script>
 </body></html>

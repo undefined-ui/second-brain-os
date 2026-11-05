@@ -18,6 +18,7 @@ resource all come from the files, so a rerun stays true.
 import glob, hashlib, html as H, importlib.util, io, json, math, os, posixpath, re
 
 import markdown
+from site_links import tool_for_path
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets", "site")
@@ -140,6 +141,8 @@ for m in re.finditer(r"\]\(([a-z0-9-]+)/README\.md\)", index_md):
         sec_order.append(m.group(1))
 for d in sorted(glob.glob(os.path.join(ROOT, "docs", "*", "README.md"))):
     s = os.path.basename(os.path.dirname(d))
+    if s == "zh-CN":
+        continue
     if s not in sec_order:
         sec_order.append(s)
 
@@ -333,37 +336,6 @@ pages_out = {}
 mentions = {}  # tool or resource id -> {page id: count}
 
 
-def tool_for_path(rel):
-    """Map a repo-relative path to a toolkit node, if it is one."""
-    rel = rel.rstrip("/")
-    m = re.match(r"^skills/([a-z0-9-]+)(?:/SKILL\.md)?$", rel)
-    if m and f"skill:{m.group(1)}" in nodes:
-        return f"skill:{m.group(1)}"
-    for pat, pre in ((r"^commands/([a-z0-9-]+)\.md$", "cmd"), (r"^agents/([a-z0-9-]+)\.md$", "agent"),
-                     (r"^scripts/([a-z0-9_]+\.py)$", "script"),
-                     (r"^plugins/agents-course/(?:skills|agents)/([a-z0-9-]+)(?:/SKILL\.md|\.md)?$", "plug")):
-        m = re.match(pat, rel)
-        if m and f"{pre}:{m.group(1)}" in nodes:
-            return f"{pre}:{m.group(1)}"
-    if rel in ("skills", "skills/README.md"):
-        return "hub:skills"
-    if rel in ("commands", "commands/README.md"):
-        return "hub:commands"
-    if rel in ("agents", "agents/README.md"):
-        return "hub:agents"
-    if rel in ("scripts", "scripts/README.md"):
-        return "hub:scripts"
-    if rel.startswith("plugins"):
-        return "hub:plugin"
-    if rel.startswith("vault-template"):
-        return "hub:vault"
-    m = re.match(r"^resources/([a-z]+)\.md$", rel)
-    if m and f"rcat:{m.group(1)}" in nodes:
-        return f"rcat:{m.group(1)}"
-    if rel in ("resources", "resources/README.md"):
-        return "col:resources"
-    return None
-
 
 def bump(target, pid, n=1):
     mentions.setdefault(target, {})
@@ -399,7 +371,7 @@ for pid, body in page_src.items():
                 return f'<a href="#/n/sec:{parts[0]}" class="wiki" data-node="sec:{parts[0]}"{rest}>'
         if rel in ("docs/README.md", "README.md", "docs/ROADMAP.md"):
             return f'<a href="#/" class="wiki" data-node="root"{rest}>'
-        tool = tool_for_path(rel)
+        tool = tool_for_path(rel, nodes)
         if tool:
             bump(tool, pid, 3)
             url = nodes[tool].get("url") or (GH_BLOB + rel)
@@ -516,6 +488,10 @@ with io.open(os.path.join(OUT, "pages-data.js"), "w", encoding="utf-8", newline=
     json.dump(pages_out, f, ensure_ascii=False, separators=(",", ":"))
     f.write(";\n")
 
+# Keep translated reader content separate from the canonical English graph.
+from build_translations import render_translations
+render_translations(list(nodes.values()), pages_out)
+
 # ---------------------------------------------------------------- cache-busting
 # GitHub Pages lets browsers keep files for ten minutes. A content hash on every
 # asset URL in index.html means a fresh page never runs against a cached old
@@ -526,7 +502,7 @@ def stamp(m):
 
 
 page = read("index.html")
-stamped = re.sub(r"(assets/site/[a-z-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?", stamp, page)
+stamped = re.sub(r"(assets/site/[a-z0-9-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?", stamp, page)
 if stamped != page:
     io.open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8", newline="\n").write(stamped)
 
