@@ -1,0 +1,34 @@
+/* Shared language control: the same preference applies to all three pages. */
+.language-toggle{
+  flex:none;white-space:nowrap;cursor:pointer;color:var(--soft);background:var(--card);
+  border:1px solid var(--rule);border-radius:6px;padding:8px 10px;
+  font:13px/1.2 ui-monospace,SFMono-Regular,Menlo,"PingFang SC","Microsoft YaHei",monospace;
+}
+.language-toggle:hover{color:var(--ink);border-color:var(--accent)}
+.language-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.top .language-toggle{height:38px;border-radius:8px;background:var(--glass)}
+header>.bar>.theme{margin-left:auto}
+header>.bar>.language-toggle{margin-left:0}
+.content-language{color:var(--soft);font-size:13px;margin:0 0 18px}
+.hint i{font-style:normal}
+html[lang="zh-CN"]{--serif:Charter,Georgia,"Songti SC","Noto Serif CJK SC",serif;--mono:ui-monospace,SFMono-Regular,Menlo,"PingFang SC","Microsoft YaHei",monospace}
+html[lang="zh-CN"] #hero h1{line-height:1.25;letter-spacing:0;text-wrap:balance}
+html[lang="zh-CN"] #hero .kick{letter-spacing:.06em}
+@media(min-width:761px) and (max-width:1399px){
+  body.m-read .top .brand{display:none}
+}
+@media(max-width:760px){
+  header>.bar{flex-wrap:wrap;gap:10px;padding:11px 16px}
+  header>.bar .brand{font-size:13px;white-space:nowrap;margin-right:auto}
+  header>.bar nav{order:9;width:100%;gap:16px}
+  header>.bar .theme{flex:none}
+  .top{flex-wrap:wrap}
+  .top .brand{margin-right:auto}
+  .top .search{order:10;flex:1 0 100%;width:100%}
+  .top .language-toggle{padding:8px}
+  #contents{top:104px}
+  body.m-read .top{display:flex;right:10px;pointer-events:none}
+  body.m-read .top>:not(.language-toggle){display:none}
+  body.m-read .top .language-toggle{margin-left:auto;pointer-events:auto}
+  body.m-read .rbar{padding-right:100px}
+}

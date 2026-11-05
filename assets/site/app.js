@@ -9,8 +9,12 @@ import { LineSegments2 } from 'https://cdn.jsdelivr.net/npm/three@0.186.1/exampl
 import { LineSegmentsGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineSegmentsGeometry.js/+esm';
 import { LineMaterial } from 'https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineMaterial.js/+esm';
 
+const I18N = window.SBOS_I18N;
+const { t } = I18N;
 const G = window.SBOS_GRAPH;
 const PAGES = window.SBOS_PAGES || {};
+const CHINESE_PAGES = window.SBOS_PAGES_ZH || {};
+const pageFor = id => I18N.locale === 'zh-CN' && CHINESE_PAGES[id] ? CHINESE_PAGES[id] : PAGES[id];
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const clip = (s, n) => (s = String(s || '')).length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s;
@@ -52,6 +56,23 @@ const TYPE = {
 
 // ------------------------------------------------------------------ data
 const nodes = G.nodes;
+// Translate display fields only; IDs, URLs and graph topology stay unchanged.
+const originalNodes = new Map(nodes.map(n => [n.id, { label: n.label, desc: n.desc, sub: n.sub }]));
+function localizeNodes() {
+  for (const n of nodes) {
+    const original = originalNodes.get(n.id);
+    const translated = I18N.locale === 'zh-CN' ? window.SBOS_NODE_ZH?.[n.id] : null;
+    for (const field of ['label', 'desc', 'sub']) n[field] = translated?.[field] ?? original[field];
+    if (n.type === 'page' && I18N.locale === 'zh-CN' && CHINESE_PAGES[n.id]) {
+      n.label = CHINESE_PAGES[n.id].title;
+      n.desc = CHINESE_PAGES[n.id].desc;
+    }
+    if (n.type === 'resource' && I18N.locale === 'zh-CN') {
+      n.desc = window.SBOS_RESOURCE_ZH?.[original.label.replace(/\s+/g, ' ').trim()] || original.desc;
+    }
+  }
+}
+localizeNodes();
 const byId = new Map(nodes.map(n => [n.id, n]));
 const links = G.edges.map(e => ({ source: e.s, target: e.t, s: e.s, t: e.t, kind: e.k, w: e.w || 1, hidden: !!e.h }));
 const nbr = new Map(nodes.map(n => [n.id, new Set()]));
@@ -154,8 +175,8 @@ function makeNode(n) {
 
 const tooltip = n => {
   const sec = n.sec ? byId.get(n.sec) : null;
-  const ctx = sec ? ` · ${sec.badge} ${sec.label}` : n.sub ? ` · ${n.sub}` : '';
-  return `<span class="tt-k" style="--dot:${cssDot(n)}">${TYPE[n.type]}${esc(ctx)}</span>` +
+  const ctx = sec ? ` · ${sec.badge} ${sec.label}` : n.sub ? ` · ${t(n.sub)}` : '';
+  return `<span class="tt-k" style="--dot:${cssDot(n)}">${t(TYPE[n.type])}${esc(ctx)}</span>` +
     `<span class="tt-t">${esc(n.label)}</span>` +
     (n.desc && n.type !== 'root' ? `<span class="tt-d">${esc(clip(n.desc, 120))}</span>` : '');
 };
@@ -634,7 +655,7 @@ function route() {
   if (r.mode === 'overview') {
     select(null);
     fly(homeCenter, homeDistance, { ms: prevMode === 'boot' ? 3200 : 1900, spin: prevMode === 'boot' ? 1.7 : .9, phi: 1.2 });
-    document.title = 'Second Brain OS - guides and resources for AI engineers';
+    document.title = t('Second Brain OS - guides and resources for AI engineers');
     return;
   }
   if (n !== prev) select(n);
@@ -653,37 +674,37 @@ const li = (id, meta = '', extra = '') => {
   return `<button class="li${extra}" data-go="${esc(id)}" style="--dot:${cssDot(n)}"><span class="d"></span><span>${n.type === 'command' || n.type === 'skill' || n.type === 'script' ? `<code>${esc(n.label)}</code>` : esc(n.label)}</span>${meta ? `<span class="m">${meta}</span>` : ''}</button>`;
 };
 const chip = id => { const n = byId.get(id); return n ? `<button class="chip${n.type === 'term' ? ' term' : ''}" data-go="${esc(id)}" style="--dot:${cssDot(n)}"><span class="d"></span>${esc(n.label)}</button>` : ''; };
-const group = (title, body, count) => body ? `<div class="grp"><h3>${title}${count != null ? `<span>${count}</span>` : ''}</h3>${body}</div>` : '';
+const group = (title, body, count) => body ? `<div class="grp"><h3>${t(title)}${count != null ? `<span>${count}</span>` : ''}</h3>${body}</div>` : '';
 const listOf = (ids, meta, max = 14) => {
   if (!ids.length) return '';
   const head = ids.slice(0, max).map(id => li(id, meta ? meta(id) : '')).join('');
   const rest = ids.slice(max);
-  return head + (rest.length ? `<div class="restwrap" hidden>${rest.map(id => li(id, meta ? meta(id) : '')).join('')}</div><button class="more" data-more>+ ${rest.length} more</button>` : '');
+  return head + (rest.length ? `<div class="restwrap" hidden>${rest.map(id => li(id, meta ? meta(id) : '')).join('')}</div><button class="more" data-more>${t('+ {count} more', { count: rest.length })}</button>` : '');
 };
 const edgeIds = (n, kind, dir) => linksOf.get(n.id).filter(l => l.kind === kind && (dir === 'out' ? l.s === n.id : dir === 'in' ? l.t === n.id : true)).map(l => l.s === n.id ? l.t : l.s);
-const words = n => n.words ? `${n.words.toLocaleString('en')} words` : '';
+const words = n => n.words ? t('{count} words', { count: n.words.toLocaleString(I18N.locale) }) : '';
 const mins = w => Math.max(1, Math.round(w / 230));
-const kicker = (n, ctx) => `<div class="ik" style="--dot:${cssDot(n)}"><span class="sw"></span>${TYPE[n.type]}${ctx ? `<i>· ${ctx}</i>` : ''}</div>`;
-const ghBtn = (url, label = 'GitHub') => url ? `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${label} &#8599;</a>` : '';
+const kicker = (n, ctx) => `<div class="ik" style="--dot:${cssDot(n)}"><span class="sw"></span>${t(TYPE[n.type])}${ctx ? `<i>· ${ctx}</i>` : ''}</div>`;
+const ghBtn = (url, label = 'GitHub') => url ? `<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${t(label)} &#8599;</a>` : '';
 
 function renderInfo(n) {
-  let h = `<button class="x" data-close aria-label="Back to the whole map">&times;</button>`;
+  let h = `<button class="x" data-close aria-label="${t('Back to the whole map')}">&times;</button>`;
   const T = n.type;
   if (T === 'page') {
-    const sec = byId.get(n.sec), P = PAGES[n.id];
+    const sec = byId.get(n.sec), P = pageFor(n.id);
     const out = edgeIds(n, 'link', 'out'), inn = edgeIds(n, 'link', 'in');
     const tools = [...edgeIds(n, 'uses', 'out'), ...edgeIds(n, 'cites', 'out')];
     const i = sec.pages.indexOf(n.id), prev = sec.pages[i - 1], next = sec.pages[i + 1];
     h += kicker(n, `${esc(sec.badge)} ${esc(sec.label)} · ${n.pos}/${n.of}`) +
       `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
-      `<div class="meta"><span><b>${n.words?.toLocaleString('en')}</b> words</span><span>~${mins(n.words)} min</span><span><b>${out.length}</b> links out</span><span><b>${inn.length}</b> linked from</span></div>` +
-      `<div class="acts"><button class="btn primary" data-read="${esc(n.id)}">Read the page &rarr;</button>${ghBtn('https://github.com/undefined-ui/second-brain-os/blob/main/' + n.path, 'Source')}</div>` +
+      `<div class="meta"><span><b>${n.words?.toLocaleString(I18N.locale)}</b> ${t('words')}</span><span>~${mins(n.words)} ${t('min')}</span><span><b>${out.length}</b> ${t('links out')}</span><span><b>${inn.length}</b> ${t('linked from')}</span></div>` +
+      `<div class="acts"><button class="btn primary" data-read="${esc(n.id)}">${t('Read the page')} &rarr;</button>${ghBtn('https://github.com/undefined-ui/second-brain-os/blob/main/' + (P?.path || n.path), 'Source')}</div>` +
       group('On this page', P && P.heads.length ? P.heads.map((x, k) => `<button class="li" data-read="${esc(n.id)}" data-anchor="${esc(x.id)}" style="--dot:var(--rule)"><span class="n">${String(k + 1).padStart(2, '0')}</span><span>${esc(x.t)}</span></button>`).join('') : '') +
       group('Links to', listOf(out, id => byId.get(id).sec ? esc(byId.get(byId.get(id).sec).badge) : ''), out.length) +
       group('Linked from', listOf(inn, id => byId.get(id).sec ? esc(byId.get(byId.get(id).sec).badge) : ''), inn.length) +
       group('Terms on this page', (n.terms || []).length ? `<div class="chips">${n.terms.slice(0, 16).map(chip).join('')}</div>` : '', (n.terms || []).length) +
       group('Toolkit and sources', listOf(tools), tools.length) +
-      `<div class="sibs">${prev ? `<button data-go="${esc(prev)}"><span>&larr; previous</span>${esc(byId.get(prev).label)}</button>` : '<span></span>'}${next ? `<button data-go="${esc(next)}"><span>next &rarr;</span>${esc(byId.get(next).label)}</button>` : '<span></span>'}</div>`;
+      `<div class="sibs">${prev ? `<button data-go="${esc(prev)}"><span>&larr; ${t('previous')}</span>${esc(byId.get(prev).label)}</button>` : '<span></span>'}${next ? `<button data-go="${esc(next)}"><span>${t('next')} &rarr;</span>${esc(byId.get(next).label)}</button>` : '<span></span>'}</div>`;
   } else if (T === 'section') {
     const col = byId.get('col:' + n.group);
     const w = n.pages.reduce((a, id) => a + (byId.get(id).words || 0), 0);
@@ -698,9 +719,9 @@ function renderInfo(n) {
     const bars = o => { const t = top(o), mx = t[0]?.[1] || 1; return t.map(([id, c]) => li(id, `${c}`, '')).join(''); };
     const hb = edgeIds(n, 'handbook');
     h += kicker(n, `${esc(col.label)} · ${esc(n.badge)}`) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
-      `<div class="meta"><span><b>${n.pages.length}</b> pages</span><span><b>${w.toLocaleString('en')}</b> words</span><span>~${mins(w)} min</span></div>` +
-      `<div class="acts"><button class="btn primary" data-read="${esc(n.pages[0])}">Start reading &rarr;</button></div>` +
-      group('Pages', n.pages.map((id, k) => `<button class="li" data-go="${esc(id)}" style="--dot:${cssDot(n)}"><span class="n">${k + 1}</span><span>${esc(byId.get(id).label)}</span><span class="m">${mins(byId.get(id).words || 0)}m</span></button>`).join(''), n.pages.length) +
+      `<div class="meta"><span><b>${n.pages.length}</b> ${t('pages')}</span><span><b>${w.toLocaleString(I18N.locale)}</b> ${t('words')}</span><span>~${mins(w)} ${t('min')}</span></div>` +
+      `<div class="acts"><button class="btn primary" data-read="${esc(n.pages[0])}">${t('Start reading')} &rarr;</button></div>` +
+      group('Pages', n.pages.map((id, k) => `<button class="li" data-go="${esc(id)}" style="--dot:${cssDot(n)}"><span class="n">${k + 1}</span><span>${esc(byId.get(id).label)}</span><span class="m">${t('{count}m', { count: mins(byId.get(id).words || 0) })}</span></button>`).join(''), n.pages.length) +
       group(n.group === 'handbook' ? 'The module it deepens' : 'Its handbook', hb.map(id => li(id, esc(byId.get(id).badge))).join('')) +
       group('Leans on', bars(lean)) + group('Leaned on by', bars(leanedBy));
   } else if (T === 'collection') {
@@ -709,14 +730,14 @@ function renderInfo(n) {
     let body = '';
     if (['guide', 'course', 'handbook'].includes(cid)) {
       const secs = sectionsOf(cid);
-      body = group('Sections', secs.map(id => li(id, `${byId.get(id).pages.length} pages`)).join(''), secs.length);
+      body = group('Sections', secs.map(id => li(id, t('{count} pages', { count: byId.get(id).pages.length }))).join(''), secs.length);
       h += kicker(n) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
-        `<div class="meta"><span><b>${secs.reduce((a, s) => a + byId.get(s).pages.length, 0)}</b> pages</span><span><b>${secs.length}</b> sections</span></div>` +
-        `<div class="acts"><button class="btn primary" data-read="${esc(byId.get(secs[0]).pages[0])}">Start at the beginning &rarr;</button></div>` + body;
+        `<div class="meta"><span><b>${secs.reduce((a, s) => a + byId.get(s).pages.length, 0)}</b> ${t('pages')}</span><span><b>${secs.length}</b> ${t('sections')}</span></div>` +
+        `<div class="acts"><button class="btn primary" data-read="${esc(byId.get(secs[0]).pages[0])}">${t('Start at the beginning')} &rarr;</button></div>` + body;
     } else if (cid === 'glossary') {
       const terms = members.sort((a, b) => byId.get(b).inpages.length - byId.get(a).inpages.length);
       h += kicker(n) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
-        group('Terms, by reach', listOf(terms, id => `${byId.get(id).inpages.length} pages`, 60), terms.length);
+        group('Terms, by reach', listOf(terms, id => t('{count} pages', { count: byId.get(id).inpages.length }), 60), terms.length);
     } else {
       h += kicker(n) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
         group('Inside', members.map(id => li(id, `${edgeIds(byId.get(id), 'contains', 'out').length}`)).join(''), members.length);
@@ -736,18 +757,18 @@ function renderInfo(n) {
       return `<button class="li" data-go="${esc(id)}" style="--dot:${cssDot(p)}"><span class="d"></span><span>${esc(p.label)}</span><span class="bar" style="width:${Math.max(6, c / mx * 54)}px"></span><span class="m">${c}</span></button>`;
     }).join('');
     const rest = byCount.slice(14).map(x => x[0]);
-    h += kicker(n, 'glossary') + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
-      `<div class="meta"><span>on <b>${n.inpages.length}</b> pages</span><span><b>${n.total}</b> mentions</span></div>` +
-      `<div class="acts"><button class="btn primary" data-read="${esc(n.inpages[0][0])}">Read where it is defined &rarr;</button></div>` +
-      group('Leans on it hardest', pagesHtml + (rest.length ? `<div class="restwrap" hidden>${rest.map(id => li(id)).join('')}</div><button class="more" data-more>+ ${rest.length} more</button>` : ''), n.inpages.length) +
+    h += kicker(n, t('glossary')) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
+      `<div class="meta"><span>${t('on {count} pages', { count: '<b>' + n.inpages.length + '</b>' })}</span><span><b>${n.total}</b> ${t('mentions')}</span></div>` +
+      `<div class="acts"><button class="btn primary" data-read="${esc(n.inpages[0][0])}">${t('Read where it is defined')} &rarr;</button></div>` +
+      group('Leans on it hardest', pagesHtml + (rest.length ? `<div class="restwrap" hidden>${rest.map(id => li(id)).join('')}</div><button class="more" data-more>${t('+ {count} more', { count: rest.length })}</button>` : ''), n.inpages.length) +
       group('Often alongside', rel.length ? `<div class="chips">${rel.map(chip).join('')}</div>` : '');
   } else if (T === 'resource') {
     const cat = byId.get(edgeIds(n, 'contains', 'in')[0]);
     const cited = (n.inpages || []).map(x => x[0]);
     let host = ''; try { host = new URL(n.url).hostname.replace(/^www\./, ''); } catch { }
-    h += kicker(n, `${esc(cat?.label || '')}${n.sub ? ' · ' + esc(n.sub) : ''}`) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
-      (n.metric ? `<div class="meta"><span><b>${esc(n.metric)}</b></span></div>` : '') +
-      `<div class="acts"><a class="btn primary" href="${esc(n.url)}" target="_blank" rel="noopener">Open ${esc(host)} &#8599;</a></div>` +
+    h += kicker(n, `${esc(cat?.label || '')}${n.sub ? ' · ' + esc(t(n.sub)) : ''}`) + `<h2>${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
+      (n.metric ? `<div class="meta"><span><b>${esc(t(n.metric))}</b></span></div>` : '') +
+      `<div class="acts"><a class="btn primary" href="${esc(n.url)}" target="_blank" rel="noopener">${t('Open {host}', { host: esc(host) })} &#8599;</a></div>` +
       group('Cited in', listOf(cited), cited.length) + group('Related terms', edgeIds(n, 'related').map(chip).join('') ? `<div class="chips">${edgeIds(n, 'related').map(chip).join('')}</div>` : '');
   } else {
     // toolkit: skills, commands, subagents, scripts, hubs
@@ -756,8 +777,8 @@ function renderInfo(n) {
     const via = n.via ? [n.via] : [];
     const mentioned = (n.inpages || []).map(x => x[0]);
     const mono = T !== 'hub';
-    h += kicker(n, n.group === 'res' ? 'resources' : n.sub ? esc(n.sub) : 'toolkit') + `<h2 class="${mono ? 'mono' : ''}">${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
-      (n.tools ? `<div class="meta"><span>tools: <b>${esc(n.tools)}</b></span></div>` : '') +
+    h += kicker(n, n.group === 'res' ? t('resources') : n.sub ? esc(t(n.sub)) : t('toolkit')) + `<h2 class="${mono ? 'mono' : ''}">${esc(n.label)}</h2><p class="desc">${esc(n.desc)}</p>` +
+      (n.tools ? `<div class="meta"><span>${t('tools:')} <b>${esc(n.tools)}</b></span></div>` : '') +
       `<div class="acts">${ghBtn(n.url, 'View on GitHub')}</div>` +
       group('Follows the skill', via.map(id => li(id)).join('')) +
       group('Called by', listOf(calledBy, null, 20), calledBy.length) +
@@ -784,15 +805,17 @@ for (const box of [info, $('#hero'), $('#contents'), $('#reader')]) {
 const reader = $('#reader'), rBody = $('#r-body'), rScroll = $('#r-scroll'), rCrumb = $('#r-crumb');
 let pendingAnchor = null;
 function renderReader(n) {
-  const P = PAGES[n.id], sec = byId.get(n.sec);
+  const P = pageFor(n.id), sec = byId.get(n.sec);
+  const contentLanguage = P?.lang || 'en';
+  const sourcePath = P?.path || n.path;
   const i = FLAT.indexOf(n.id), prev = FLAT[i - 1], next = FLAT[i + 1];
-  rCrumb.innerHTML = `<b style="color:${cssDot(n)}">${esc(sec.badge)}</b><button data-go="${esc(sec.id)}">${esc(sec.label)}</button> · page ${n.pos} of ${n.of}`;
-  rBody.innerHTML = !P ? '<p>This page did not load. Try reloading.</p>' :
-    `<h1>${esc(n.label)}</h1>${P.html}` +
-    ((n.terms || []).length ? `<div class="rterms"><h4>terms on this page</h4><div class="chips">${n.terms.slice(0, 18).map(chip).join('')}</div></div>` : '') +
-    `<nav class="pager">${prev ? `<a href="#/read/${esc(prev)}" data-node="${esc(prev)}"><span class="lbl">&larr; previous</span>${esc(byId.get(prev).label)}</a>` : '<span></span>'}` +
-    `${next ? `<a href="#/read/${esc(next)}" data-node="${esc(next)}" style="text-align:right"><span class="lbl">next &rarr;</span>${esc(byId.get(next).label)}</a>` : '<span></span>'}</nav>` +
-    `<div class="src">source: <a class="ext" href="https://github.com/undefined-ui/second-brain-os/blob/main/${esc(n.path)}" target="_blank" rel="noopener">${esc(n.path)}</a></div>`;
+  rCrumb.innerHTML = `<b style="color:${cssDot(n)}">${esc(sec.badge)}</b><button data-go="${esc(sec.id)}">${esc(sec.label)}</button> · ${t('page {position} of {count}', { position: n.pos, count: n.of })}`;
+  rBody.innerHTML = !P ? `<p>${t('This page did not load. Try reloading.')}</p>` :
+    `<h1>${esc(n.label)}</h1>${I18N.locale === 'zh-CN' && contentLanguage !== 'zh-CN' ? `<p class="content-language">${t('This article is available in English.')}</p>` : ''}<div data-article-body lang="${contentLanguage}">${P.html}</div>` +
+    ((n.terms || []).length ? `<div class="rterms"><h4>${t('terms on this page')}</h4><div class="chips">${n.terms.slice(0, 18).map(chip).join('')}</div></div>` : '') +
+    `<nav class="pager">${prev ? `<a href="#/read/${esc(prev)}" data-node="${esc(prev)}"><span class="lbl">&larr; ${t('previous')}</span>${esc(byId.get(prev).label)}</a>` : '<span></span>'}` +
+    `${next ? `<a href="#/read/${esc(next)}" data-node="${esc(next)}" style="text-align:right"><span class="lbl">${t('next')} &rarr;</span>${esc(byId.get(next).label)}</a>` : '<span></span>'}</nav>` +
+    `<div class="src">${t('source:')} <a class="ext" href="https://github.com/undefined-ui/second-brain-os/blob/main/${esc(sourcePath)}" target="_blank" rel="noopener">${esc(sourcePath)}</a></div>`;
   rScroll.style.scrollBehavior = 'auto';
   rScroll.scrollTop = 0;
   if (pendingAnchor) { const el = rBody.querySelector('#' + CSS.escape(pendingAnchor)); if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 450); pendingAnchor = null; }
@@ -808,25 +831,28 @@ $('#r-close').onclick = () => go(S.sel ? S.sel.id : 'root');
 $('#r-graph').onclick = () => go(S.sel ? S.sel.id : 'root');
 
 // ------------------------------------------------------------------ hero
-$('#paths').innerHTML = [
-  ['course', 'C0–C6', 'The agents course', 'Seven modules from a single prompt to a production agent.'],
-  ['handbook', 'T1–T5', 'Handbooks', 'One layer at a time, each ending in a build you can finish in an evening.'],
-  ['guide', '01–10', 'Second brain', 'A hands-on project: a knowledge base an agent builds and maintains for you.'],
-].map(([k, badge, label, p]) => {
-  const pages = sectionsOf(k).reduce((a, s) => a + byId.get(s).pages.length, 0);
-  return `<button class="path" data-go="col:${k}" style="--dot:var(--c-${k})"><span class="pk">${badge}</span><b>${label}</b><span class="pn">${pages} pages</span><p>${p}</p></button>`;
-}).join('');
-$('#paths').addEventListener('click', e => { const t = e.target.closest('[data-go]'); if (t) go(t.dataset.go); });
-const st = G.stats;
-$('#stats').innerHTML = [[st.pages, 'pages'], [Math.round(st.words / 1000) + 'k', 'words'], [st.terms, 'terms'], [st.tools, 'tools'], [st.edges.toLocaleString('en'), 'connections']]
-  .map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('');
+function renderHero() {
+  $('#paths').innerHTML = [
+    ['course', 'C0–C6', 'The agents course', 'Seven modules from a single prompt to a production agent.'],
+    ['handbook', 'T1–T5', 'Handbooks', 'One layer at a time, each ending in a build you can finish in an evening.'],
+    ['guide', '01–10', 'Second brain', 'A hands-on project: a knowledge base an agent builds and maintains for you.'],
+  ].map(([k, badge, label, p]) => {
+    const pages = sectionsOf(k).reduce((a, s) => a + byId.get(s).pages.length, 0);
+    return `<button class="path" data-go="col:${k}" style="--dot:var(--c-${k})"><span class="pk">${badge}</span><b>${t(label)}</b><span class="pn">${t('{count} pages', { count: pages })}</span><p>${t(p)}</p></button>`;
+  }).join('');
+  const st = G.stats;
+  $('#stats').innerHTML = [[st.pages, 'pages'], [Math.round(st.words / 1000) + 'k', 'words'], [st.terms, 'terms'], [st.tools, 'tools'], [st.edges.toLocaleString(I18N.locale), 'connections']]
+    .map(([b, s]) => `<div class="stat"><b>${b}</b><span>${t(s)}</span></div>`).join('');
+}
+renderHero();
+$('#paths').addEventListener('click', e => { const target = e.target.closest('[data-go]'); if (target) go(target.dataset.go); });
 
 // ------------------------------------------------------------------ layers
 const layersBox = $('#layers');
 function renderLayers() {
   layersBox.innerHTML = LAYERS.map(L => {
     const c = nodes.filter(n => n.group === L.key && n.type !== 'collection' && n.type !== 'hub' && n.type !== 'section').length;
-    return `<button class="lyr" data-layer="${L.key}" aria-pressed="${!!layerOn[L.key]}" style="--dot:var(--c-${L.key})" title="Show or hide: ${L.label}"><span class="d"></span>${L.label}<span class="n">${c}</span></button>`;
+    return `<button class="lyr" data-layer="${L.key}" aria-pressed="${!!layerOn[L.key]}" style="--dot:var(--c-${L.key})" title="${t('Show or hide: {layer}', { layer: t(L.label) })}"><span class="d"></span>${t(L.label)}<span class="n">${c}</span></button>`;
   }).join('');
 }
 renderLayers();
@@ -846,7 +872,7 @@ layersBox.addEventListener('mouseover', e => {
 layersBox.addEventListener('mouseout', () => setPreview(null, 'list'));
 
 const spinBtn = $('#btn-spin');
-const paintSpin = () => { spinBtn.setAttribute('aria-pressed', S.spin); spinBtn.title = S.spin ? 'Pause the rotation' : 'Resume the rotation'; };
+const paintSpin = () => { spinBtn.setAttribute('aria-pressed', S.spin); spinBtn.title = t(S.spin ? 'Pause the rotation' : 'Resume the rotation'); };
 paintSpin();
 spinBtn.onclick = () => { S.spin = !S.spin; store.set('spin', S.spin); paintSpin(); resumeSpin(); };
 $('#btn-home').onclick = () => go('root');
@@ -855,7 +881,7 @@ $('#btn-home').onclick = () => go('root');
 const contents = $('#contents'), cBtn = $('#btn-contents');
 function renderContents() {
   const cur = S.sel?.id;
-  const block = (col, title) => `<div class="cg" style="--dot:var(--c-${col})"><h4><span class="d"></span>${title}</h4>` +
+  const block = (col, title) => `<div class="cg" style="--dot:var(--c-${col})"><h4><span class="d"></span>${t(title)}</h4>` +
     sectionsOf(col).map(sid => {
       const s = byId.get(sid), open = cur && (cur === sid || s.pages.includes(cur));
       return `<div class="cs${open ? ' open' : ''}" style="--dot:var(--c-${col})"><button data-sec="${esc(sid)}"><span class="k">${esc(s.badge)}</span>${esc(s.label)}<span class="n">${s.pages.length}</span></button><ol>` +
@@ -881,16 +907,21 @@ function search(v) {
   for (const n of nodes) {
     if (n.type === 'root') continue;
     const l = n.label.toLowerCase();
-    let sc = l === v ? 120 : l.startsWith(v) ? 70 : l.includes(v) ? 45 : 0;
+    // Keep original English names searchable in Chinese, and vice versa.
+    const names = [l, originalNodes.get(n.id).label.toLowerCase(), (CHINESE_PAGES[n.id]?.title || window.SBOS_NODE_ZH?.[n.id]?.label || '').toLowerCase()];
+    let sc = Math.max(...names.map(name => name === v ? 120 : name.startsWith(v) ? 70 : name.includes(v) ? 45 : 0));
     let snip = '';
     if (n.type === 'page') {
-      const t = PAGES[n.id]?.text || '', tl = t.toLowerCase();
-      const at = tl.indexOf(v);
-      if (at >= 0) {
-        sc += 10 + Math.min(tl.split(v).length - 1, 8) * 2;
-        if (!l.includes(v)) snip = (at > 40 ? '…' : '') + esc(t.slice(Math.max(0, at - 40), at)) + '<mark>' + esc(t.slice(at, at + v.length)) + '</mark>' + esc(t.slice(at + v.length, at + v.length + 70)) + '…';
+      const texts = I18N.locale === 'zh-CN' ? [CHINESE_PAGES[n.id]?.text, PAGES[n.id]?.text] : [PAGES[n.id]?.text, CHINESE_PAGES[n.id]?.text];
+      const text = texts.find(text => text && text.toLowerCase().includes(v));
+      if (text) {
+        const lower = text.toLowerCase(), at = lower.indexOf(v);
+        sc += 10 + Math.min(lower.split(v).length - 1, 8) * 2;
+        if (!l.includes(v)) snip = (at > 40 ? '…' : '') + esc(text.slice(Math.max(0, at - 40), at)) + '<mark>' + esc(text.slice(at, at + v.length)) + '</mark>' + esc(text.slice(at + v.length, at + v.length + 70)) + '…';
       }
-    } else if (sc === 0 && (n.desc || '').toLowerCase().includes(v)) sc = 8;
+    } else if (sc === 0 && [n.desc, originalNodes.get(n.id).desc, window.SBOS_NODE_ZH?.[n.id]?.desc,
+      window.SBOS_RESOURCE_ZH?.[originalNodes.get(n.id).label.replace(/\s+/g, ' ').trim()]]
+      .some(desc => (desc || '').toLowerCase().includes(v))) sc = 8;
     if (!sc) continue;
     sc += { section: 8, term: 7, page: 4, collection: 6, hub: 2, skill: 1, agent: 1, command: -2, resource: -4 }[n.type] || 0;
     out.push({ n, sc, snip });
@@ -900,9 +931,9 @@ function search(v) {
 function paintHits() {
   hits.innerHTML = hitList.length ? hitList.map((h, i) => {
     const n = h.n, sec = n.sec ? byId.get(n.sec) : null;
-    const ctx = sec ? `${sec.badge} ${sec.label}` : n.sub || '';
-    return `<button class="hit${i === hitIdx ? ' on' : ''}" data-i="${i}" style="--dot:${cssDot(n)}"><span class="d"></span><span><b>${esc(n.label)}</b><i>${TYPE[n.type]}${ctx ? ' · ' + esc(ctx) : ''}</i>${h.snip ? `<em>${h.snip}</em>` : ''}</span></button>`;
-  }).join('') : '<div class="none">nothing on the site matches that</div>';
+    const ctx = sec ? `${sec.badge} ${sec.label}` : t(n.sub || '');
+    return `<button class="hit${i === hitIdx ? ' on' : ''}" data-i="${i}" style="--dot:${cssDot(n)}"><span class="d"></span><span><b>${esc(n.label)}</b><i>${t(TYPE[n.type])}${ctx ? ' · ' + esc(ctx) : ''}</i>${h.snip ? `<em>${h.snip}</em>` : ''}</span></button>`;
+  }).join('') : `<div class="none">${t('nothing on the site matches that')}</div>`;
   hits.classList.add('open');
 }
 function pickHit(i) {
@@ -955,7 +986,7 @@ function paintThemeBtn() {
   if (!themeBtn) return;
   const d = isDark();
   themeBtn.textContent = d ? '\u2600' : '\u263E';
-  themeBtn.title = d ? 'Light theme' : 'Dark theme';
+  themeBtn.title = t(d ? 'Light theme' : 'Dark theme');
   themeBtn.setAttribute('aria-pressed', String(d));
 }
 function recolor() {
@@ -1004,7 +1035,42 @@ function failed(err) {
   document.body.classList.remove('booting');
   const d = document.createElement('div');
   d.className = 'fail';
-  d.innerHTML = '<div><p>The 3D map needs WebGL, which is not available here.</p><p><a href="https://github.com/undefined-ui/second-brain-os/tree/main/docs">Read the guide on GitHub</a></p></div>';
+  d.innerHTML = `<div><p data-i18n="The 3D map needs WebGL, which is not available here.">${t('The 3D map needs WebGL, which is not available here.')}</p><p><a href="https://github.com/undefined-ui/second-brain-os/tree/main/docs" data-i18n="Read the guide on GitHub">${t('Read the guide on GitHub')}</a></p><button class="language-toggle" data-language-toggle></button></div>`;
+  I18N.translate(d);
   document.body.appendChild(d);
 }
+addEventListener('sbos:languagechange', () => {
+  localizeNodes();
+  renderHero(); renderLayers(); paintSpin(); paintThemeBtn();
+  const expanded = [...contents.querySelectorAll('.cs.open [data-sec]')].map(el => el.dataset.sec);
+  renderContents();
+  contents.querySelectorAll('[data-sec]').forEach(el => el.parentElement.classList.toggle('open', expanded.includes(el.dataset.sec)));
+  if (S.sel && S.mode === 'focus') {
+    const scrollTop = info.scrollTop;
+    const expandedLists = [...info.querySelectorAll('.restwrap')].map(el => !el.hidden);
+    renderInfo(S.sel);
+    info.querySelectorAll('.restwrap').forEach((el, i) => {
+      if (expandedLists[i]) { el.hidden = false; el.nextElementSibling?.remove(); }
+    });
+    info.scrollTop = scrollTop;
+  }
+  if (S.sel && S.mode === 'read') {
+    // Keep the same paragraph in view when translated text has a different height.
+    const top = rScroll.getBoundingClientRect().top;
+    const blocks = [...rBody.querySelectorAll('[data-article-body] > *')];
+    const index = blocks.findIndex(el => el.getBoundingClientRect().bottom > top);
+    const offset = index < 0 ? 0 : blocks[index].getBoundingClientRect().top - top;
+    const scrollTop = rScroll.scrollTop;
+    renderReader(S.sel);
+    const replacement = rBody.querySelectorAll('[data-article-body] > *')[index];
+    rScroll.style.scrollBehavior = 'auto';
+    rScroll.scrollTop = scrollTop > 0 && replacement
+      ? replacement.getBoundingClientRect().top - rScroll.getBoundingClientRect().top - offset
+      : scrollTop;
+    rScroll.style.scrollBehavior = '';
+  }
+  if (hits.classList.contains('open')) { hitList = search(q.value); hitIdx = Math.min(hitIdx, Math.max(0, hitList.length - 1)); paintHits(); }
+  refreshLabels(); measure();
+  document.title = S.sel ? S.sel.label + ' - Second Brain OS' : t('Second Brain OS - guides and resources for AI engineers');
+});
 window.__sbos = { graph, S, byId }; // for poking at the graph from the console

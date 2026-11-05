@@ -7,12 +7,13 @@ themselves (frontmatter, docstrings, page titles), so a rerun stays true.
 
     python3 scripts/build_tree.py
 """
-import io, json, os, re
+import hashlib, html, io, json, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 GH = "https://github.com/undefined-ui/second-brain-os/blob/main/"
 GHT = "https://github.com/undefined-ui/second-brain-os/tree/main/"
+TOOL_IDS = {}
 
 COMMAND_GROUPS = {
     "ingestion": ["ingest", "ingest-url", "ingest-youtube", "ingest-pdf",
@@ -99,22 +100,53 @@ def site_pages():
     s = io.open(os.path.join(ROOT, "assets", "site", "graph-data.js"), encoding="utf-8").read()
     G = json.loads(s[s.index("=") + 1:].rstrip().rstrip(";"))
     N = {n["id"]: n for n in G["nodes"]}
+    TOOL_IDS.update({n["url"]: n["id"] for n in G["nodes"]
+                     if n["type"] in ("skill", "command", "agent", "script")})
     order = {sid[4:]: N[sid]["pages"] for sid in G["order"]}
     return {"pages": [{"id": n["id"], "title": n["label"]} for n in G["nodes"] if n["type"] == "page"],
             "order": order,
             "sections": {sec: {"title": N["sec:" + sec]["label"]} for sec in order}}
 
 
-def row(name, href, desc, cls=""):
+def localized(key, params=None):
+    """Keep the English source next to its translation key in generated HTML."""
+    if isinstance(key, tuple):
+        key, params = key
+    params = params or {}
+    attrs = f' data-i18n="{html.escape(key, quote=True)}"'
+    if params:
+        attrs += f" data-i18n-params='{html.escape(json.dumps(params), quote=True)}'"
+    return f'<span{attrs}>{esc(key.format(**params) if params else key)}</span>'
+
+
+def annotation(desc, node_id=None, count=None, field="label"):
+    if node_id:
+        text = f'<span data-node-{field}="{html.escape(node_id, quote=True)}">{esc(desc)}</span>'
+        if count is not None:
+            text += ' · ' + localized('{count} pages', {'count': count})
+    else:
+        text = localized(desc)
+    return f'<span class="c"># {text}</span>'
+
+
+def row(name, href, desc, cls="", node_id=None):
+    tool_id = TOOL_IDS.get(href) or TOOL_IDS.get(href.removesuffix('/SKILL.md').replace(GH, GHT))
     return (f'<div class="r {cls}"><a href="{href}">{esc(name)}</a>'
-            f'<span class="c"># {esc(desc)}</span></div>')
+            f'{annotation(desc, node_id or tool_id, field="label" if node_id else "description")}</div>')
 
 
-def branch(label, href, desc, rows, open_=True):
+def branch(label, href, desc, rows, open_=True, node_id=None, count=None):
     inner = "".join(rows)
     return (f'<details{" open" if open_ else ""}><summary><a href="{href}">'
-            f'{esc(label)}</a><span class="c"># {esc(desc)}</span></summary>'
+            f'{localized(label)}</a>{annotation(desc, node_id, count)}</summary>'
             f'<div class="kids">{inner}</div></details>')
+
+
+def stamp_asset(match):
+    path = match.group(1)
+    with open(os.path.join(ROOT, path), "rb") as asset:
+        version = hashlib.md5(asset.read()).hexdigest()[:10]
+    return f"{path}?v={version}"
 
 
 def main():
@@ -130,7 +162,7 @@ def main():
     ag = sorted(f for f in os.listdir(os.path.join(ROOT, "agents"))
                 if f.endswith(".md") and f != "README.md")
     out.append('<div class="sec">' + branch(
-        "agents/", GHT + "agents", f"{len(ag)} subagents, 4 of them read-only",
+        "agents/", GHT + "agents", ("{count} subagents, 4 of them read-only", {"count": len(ag)}),
         [row(a, GH + "agents/" + a, fm_desc(os.path.join(ROOT, "agents", a)))
          for a in ag]) + "</div>")
 
@@ -138,7 +170,7 @@ def main():
     sk = sorted(d for d in os.listdir(os.path.join(ROOT, "skills"))
                 if os.path.isdir(os.path.join(ROOT, "skills", d)))
     out.append('<div class="sec">' + branch(
-        "skills/", GHT + "skills", f"{len(sk)} skills, one per workflow",
+        "skills/", GHT + "skills", ("{count} skills, one per workflow", {"count": len(sk)}),
         [row(d + "/", GH + f"skills/{d}/SKILL.md",
              fm_desc(os.path.join(ROOT, "skills", d, "SKILL.md")))
          for d in sk]) + "</div>")
@@ -189,8 +221,8 @@ def main():
             open_=False))
     out.append('<div class="sec"><details open><summary>'
                f'<a href="{GHT}commands">commands/</a>'
-               f'<span class="c"># {len(cmd_desc)} slash commands, thin by design'
-               '</span></summary><div class="kids">'
+               + annotation(('{count} slash commands, thin by design', {'count': len(cmd_desc)}))
+               + '</summary><div class="kids">'
                + "".join(groups_html) + "</div></details></div>")
 
     # scripts
@@ -218,12 +250,13 @@ def main():
         n_guide += len(ids)
         guide_secs.append(branch(
             sec + "/", "index.html#" + ids[0],
-            f"{meta['title']} · {len(ids)} pages",
-            [row(i.split("/")[1] + ".md", "index.html#" + i, title[i])
-             for i in ids], open_=False))
+            meta["title"],
+            [row(i.split("/")[1] + ".md", "index.html#" + i, title[i], node_id=i)
+             for i in ids], open_=False, node_id="sec:" + sec, count=len(ids)))
     guide_block = ('<div class="sec"><details open><summary>'
-                   f'<a href="index.html">docs/</a><span class="c"># Second brain, '
-                   f'a hands-on project. 10 sections, {n_guide} pages</span></summary>'
+                   '<a href="index.html">docs/</a>'
+                   + annotation(('Second brain, a hands-on project. 10 sections, {count} pages', {'count': n_guide}))
+                   + '</summary>'
                    '<div class="kids">' + "".join(guide_secs) + "</div></details></div>")
 
     # the course
@@ -235,13 +268,13 @@ def main():
         n_course += len(ids)
         course_secs.append(branch(
             sec + "/", "index.html#" + ids[0],
-            f"{meta['title']} · {len(ids)} pages",
-            [row(i.split("/")[1] + ".md", "index.html#" + i, title[i])
-             for i in ids], open_=False))
+            meta["title"],
+            [row(i.split("/")[1] + ".md", "index.html#" + i, title[i], node_id=i)
+             for i in ids], open_=False, node_id="sec:" + sec, count=len(ids)))
     out.append('<div class="sec"><details open><summary>'
-               f'<a href="index.html">docs/course-*/</a><span class="c"># '
-               f'The agents course. 7 modules, {n_course} pages'
-               '</span></summary><div class="kids">'
+               '<a href="index.html">docs/course-*/</a>'
+               + annotation(('The agents course. 7 modules, {count} pages', {'count': n_course}))
+               + '</summary><div class="kids">'
                + "".join(course_secs) + "</div></details></div>")
 
     # the tracks
@@ -253,13 +286,13 @@ def main():
         n_track += len(ids)
         track_secs.append(branch(
             sec + "/", "index.html#" + ids[0],
-            f"{meta['title']} · {len(ids)} pages",
-            [row(i.split("/")[1] + ".md", "index.html#" + i, title[i])
-             for i in ids], open_=False))
+            meta["title"],
+            [row(i.split("/")[1] + ".md", "index.html#" + i, title[i], node_id=i)
+             for i in ids], open_=False, node_id="sec:" + sec, count=len(ids)))
     out.append('<div class="sec"><details open><summary>'
-               f'<a href="index.html">docs/track-*/</a><span class="c"># '
-               f'Five handbooks, {n_track} pages, each ends in a build'
-               '</span></summary><div class="kids">'
+               '<a href="index.html">docs/track-*/</a>'
+               + annotation(('Five handbooks, {count} pages, each ends in a build', {'count': n_track}))
+               + '</summary><div class="kids">'
                + "".join(track_secs) + "</div></details></div>")
     out.append(guide_block)
 
@@ -270,27 +303,29 @@ def main():
                  .read().count("](http") for f in res)
     out.append('<div class="sec">' + branch(
         "resources/", "resources.html",
-        f"{nlinks} vetted links, checked September to November 2026",
+        ("{count} vetted links, checked September to November 2026", {"count": nlinks}),
         [row(f, "resources.html", RESOURCES_DESC.get(f, "")) for f in res])
         + "</div>")
 
-    counts = (f"{len(sk)} skills · {len(cmd_desc)} commands · "
-              f"{len(ag)} subagents · {n_plug_tools} plugin tools · "
-              f"{len(py)} scripts · "
-              f"{n_course} course pages · {n_track} handbook pages · "
-              f"{n_guide} second-brain pages · "
-              f"{nlinks} vetted links")
+    counts = " · ".join(localized(key, {"count": count}) for key, count in [
+        ("{count} skills", len(sk)), ("{count} commands", len(cmd_desc)),
+        ("{count} subagents", len(ag)), ("{count} plugin tools", n_plug_tools),
+        ("{count} scripts", len(py)), ("{count} course pages", n_course),
+        ("{count} handbook pages", n_track), ("{count} second-brain pages", n_guide),
+        ("{count} vetted links", nlinks),
+    ])
 
     page = TEMPLATE.replace("{{TREE}}", "".join(out)) \
                    .replace("{{COUNTS}}", counts)
+    page = re.sub(r"(assets/site/[a-z0-9-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?", stamp_asset, page)
     io.open(os.path.join(ROOT, "tree.html"), "w", encoding="utf-8",
             newline="\n").write(page)
-    print("tree.html written ·", counts)
+    print("tree.html written")
 
 
 TEMPLATE = """<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<script>try{var t=JSON.parse(localStorage.getItem('sbos:theme'));if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script><title>The full component tree - Second Brain OS</title>
+<script>try{var t=JSON.parse(localStorage.getItem('sbos:theme'));if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script><title data-i18n="The full component tree - Second Brain OS">The full component tree - Second Brain OS</title>
 <meta name="description" content="Every component in second-brain-os on one page: the agents course, five handbooks, the second-brain project, skills, commands, agents, scripts and resources, each line a link.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F7F9F6'/%3E%3Crect x='.5' y='.5' width='31' height='31' rx='6.5' fill='none' stroke='%23D2DACF'/%3E%3Cpath d='M10 21 L16 11 L22 19 M16 11 L23 9' stroke='%231F6B52' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='10' cy='21' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='16' cy='11' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='22' cy='19' r='3' fill='%23F7F9F6' stroke='%231F6B52' stroke-width='1.6'/%3E%3Ccircle cx='24' cy='8' r='2' fill='%231F6B52'/%3E%3C/svg%3E">
 <style>
@@ -339,29 +374,35 @@ summary a{font-weight:700}
 .counts b{color:var(--ink);font-weight:600}
 footer{border-top:1px solid var(--rule);padding:22px;text-align:center;color:var(--faint)}
 </style><!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "251090521ca24c01bde87a953db3dea4"}'></script><!-- End Cloudflare Web Analytics -->
+<link rel="stylesheet" href="assets/site/i18n.css">
+<script src="assets/site/i18n.js"></script>
+<script src="assets/site/catalog-i18n.js"></script>
+<script src="assets/site/graph-i18n.js"></script>
 </head><body>
 <header><div class="bar">
   <a class="brand" href="index.html">[[ second<span>brain</span>os ]]</a>
   <nav>
-    <a href="index.html">Map</a>
-    <a href="resources.html">Resources</a>
-    <a href="tree.html" class="on">Tree</a>
-    <a href="https://github.com/undefined-ui/second-brain-os">Repo</a>
+    <a href="index.html" data-i18n="Map">Map</a>
+    <a href="resources.html" data-i18n="Resources">Resources</a>
+    <a href="tree.html" class="on" data-i18n="Tree">Tree</a>
+    <a href="https://github.com/undefined-ui/second-brain-os" data-i18n="Repo">Repo</a>
   </nav>
-  <button class="theme" id="theme" aria-label="Switch between light and dark theme">&#9790;</button>
+  <button class="theme" id="theme" data-i18n-aria-label="Switch between light and dark theme" aria-label="Switch between light and dark theme">&#9790;</button>
+  <button class="language-toggle" type="button" data-language-toggle>中文</button>
 </div></header>
 <div class="wrap">
-  <h1>The full component tree</h1>
-  <p class="lede">Everything in the repository on one page, annotated. Every line is a link: pages open on this site, code opens on GitHub. Click a branch to fold it.</p>
+  <h1 data-i18n="The full component tree">The full component tree</h1>
+  <p class="lede" data-i18n="Everything in the repository on one page, annotated. Every line is a link: pages open on this site, code opens on GitHub. Click a branch to fold it.">Everything in the repository on one page, annotated. Every line is a link: pages open on this site, code opens on GitHub. Click a branch to fold it.</p>
+  <p class="content-language" data-i18n="Linked sources retain their original language.">Linked sources retain their original language.</p>
   <div class="ctl">
-    <button onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">expand all</button>
-    <button onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">collapse all</button>
+    <button data-i18n="expand all" onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">expand all</button>
+    <button data-i18n="collapse all" onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">collapse all</button>
   </div>
   <div class="cols">{{TREE}}</div>
-  <div class="counts"><b>{{COUNTS}}</b><span>generated from the repo</span></div>
+  <div class="counts"><b>{{COUNTS}}</b><span data-i18n="generated from the repo">generated from the repo</span></div>
 </div>
-<footer>Generated from the repository. <a href="https://github.com/undefined-ui/second-brain-os">github.com/undefined-ui/second-brain-os</a> · by <a href="https://x.com/undefinedKi" rel="noopener">@undefinedKi</a></footer>
-<script>(function(){var b=document.getElementById('theme'),r=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');function d(){return (r.dataset.theme||(m.matches?'dark':'light'))==='dark'}function p(){b.textContent=d()?'\u2600':'\u263E';b.title=d()?'Light theme':'Dark theme'}b.onclick=function(){var t=d()?'light':'dark';r.dataset.theme=t;try{localStorage.setItem('sbos:theme',JSON.stringify(t))}catch(e){}p()};m.addEventListener('change',p);p()})()</script></body></html>"""
+<footer><span data-i18n="Generated from the repository.">Generated from the repository.</span> <a href="https://github.com/undefined-ui/second-brain-os">github.com/undefined-ui/second-brain-os</a> · <span data-i18n="by">by</span> <a href="https://x.com/undefinedKi" rel="noopener">@undefinedKi</a></footer>
+<script>(function(){var b=document.getElementById('theme'),r=document.documentElement,m=matchMedia('(prefers-color-scheme: dark)');function d(){return (r.dataset.theme||(m.matches?'dark':'light'))==='dark'}function p(){b.textContent=d()?'\u2600':'\u263E';b.title=window.SBOS_I18N.t(d()?'Light theme':'Dark theme')}b.onclick=function(){var t=d()?'light':'dark';r.dataset.theme=t;try{localStorage.setItem('sbos:theme',JSON.stringify(t))}catch(e){}p()};m.addEventListener('change',p);addEventListener('sbos:languagechange',p);p()})()</script></body></html>"""
 
 
 if __name__ == "__main__":
