@@ -83,6 +83,7 @@ on each are in [`resources/`](resources/README.md).
 - [**ai-memory 3.0**](https://github.com/akitaonrails/ai-memory/releases/tag/v3.0.0) - A git-backed wiki of `.md` files fed by hooks from 20+ agents, now installable as a Claude Code plugin · 14.9K, MIT
 - [**agent-memory**](https://github.com/tigerless-labs/agent-memory) - One markdown file per memory under a `MEMORY.md` index, with a search index you can delete and rebuild · 4.3K, MIT
 - [**Hindsight 1.0**](https://github.com/vectorize-io/hindsight/releases/tag/v1.0.0) - The database-backed alternative, with knowledge pages it can write out as markdown · 57.7K, MIT
+- [**deja-vu**](https://github.com/vshulcz/deja-vu) - Indexes the JSONL and SQLite transcripts 43 coding agents already write to disk into a local FTS5 store, with a git-committed `.deja/memory.jsonl` file · 1.4K, MIT
 - [**LLM Wikis From First Principles**](https://github.com/decodingai-magazine/llm-wiki-workshop) - A hands-on workshop: three exercises, from a basic `raw/` to `wiki/` setup to a wiki that learns from queries
 - [**EvalMem**](https://arxiv.org/abs/2609.22231) - Splits memory failures into not stored, not found and not used; a wiki layer on top gained 2.5 points
 
